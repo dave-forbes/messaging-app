@@ -13,8 +13,8 @@ const UserSchema = new Schema(
   {
     username: { type: String, required: true },
     password: { type: String, required: true },
-    avatar: { type: String },
-    bio: { type: String },
+    avatar: { type: String, default: "" },
+    bio: { type: String, default: "" },
   },
   { timestamps: true }
 );
