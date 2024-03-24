@@ -31,8 +31,36 @@ router.post(
   "/create",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-    } catch (error) {
-      next(error);
+      const user = req.body;
+      const { username, password } = user;
+      const doesUsernameAllReadyExist = await UserModel.findOne({
+        username: username,
+      });
+      if (doesUsernameAllReadyExist) {
+        res.status(400).json({
+          status: 400,
+          message: "Email all ready in use",
+        });
+        return;
+      }
+
+      const newUser = await UserModel.create({
+        username,
+        password,
+      });
+
+      res.status(200).json({
+        status: 201,
+        success: true,
+        message: " User created Successfully",
+        user: newUser,
+      });
+    } catch (error: any) {
+      console.log(error);
+      res.status(400).json({
+        status: 400,
+        message: error.message.toString(),
+      });
     }
   }
 );
