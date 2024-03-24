@@ -66,7 +66,10 @@ router.post("/create", [
     }
     return true;
   }),
-  body("bio").trim().escape(),
+  body("bio")
+    .trim()
+    .isLength({ max: 500 })
+    .withMessage("Bio cannot exceed 500 characters"),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const errors = validationResult(req);
@@ -187,6 +190,12 @@ router.put("/update/:id", [
     .withMessage("Bio cannot exceed 500 characters"),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
       const user = await UserModel.findById(req.params.id);
       if (!user) {
         res.status(404).json({
