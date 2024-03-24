@@ -1,11 +1,29 @@
 import express, { Request, Response, NextFunction } from "express";
 import { connectDB } from "./database";
+import userRouter from "./controllers/userController";
+import conversationRouter from "./controllers/conversationController";
+import messageRouter from "./controllers/messageController";
+import cors from "cors";
+import corsOptions from "./utils/corsOptions";
 
 const app = express();
 
 // connect to db
 
 connectDB().catch(console.dir);
+
+// middleware
+
+app.use(express.json({ limit: "3mb" }));
+app.use(express.urlencoded({ limit: "3mb", extended: true }));
+app.use(cors(corsOptions));
+app.use(express.static("public"));
+
+// routes
+
+app.use("/users", userRouter);
+app.use("/conversations", conversationRouter);
+app.use("/messages", messageRouter);
 
 // generic error handling
 
