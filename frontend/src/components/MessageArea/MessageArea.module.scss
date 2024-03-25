@@ -3,9 +3,16 @@
 .messageAreaContainer {
   flex: 1;
   background-color: variables.$background-color;
-  padding: 5% 10%;
+  padding: 2% 5%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+
+.messageAreaInnerWrapper{
+  margin-inline: auto;
+  max-width: 1100px;
+  width: 100%;
 }
 
 @media (max-width:850px) {
@@ -34,11 +41,12 @@
   padding-inline:variables.$spacing-sm;
   gap: variables.$spacing-lg;
   overflow-y: scroll;
+  height:60vh;
 }
 
 @media (max-width:600px) {
   .centralDiv {
-    height:calc(100vh - 350px);
+    height:50vh;
   }
 }
 
@@ -53,7 +61,6 @@
   justify-content: space-between;
   align-items: center;
   padding-top: variables.$spacing-sm;
-  
 }
 
 .flex {
