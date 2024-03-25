@@ -1,0 +1,17 @@
+@use '../../styles/variables' as variables;
+
+.navbarContainer {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: variables.$spacing-lg;
+}
+
+.centralIcons {
+  display: flex;
+  gap: variables.$spacing-lg;
+  flex-direction: column;
+}
