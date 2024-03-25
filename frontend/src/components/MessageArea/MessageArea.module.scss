@@ -1,0 +1,6 @@
+@use '../../styles/variables' as variables;
+
+.messageAreaContainer {
+  flex: 1;
+  background-color: variables.$background-color;
+}
