@@ -26,43 +26,16 @@
   gap: variables.$spacing-lg
 }
 
-.conversation {
-  list-style: none;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  gap:variables.$spacing-lg;
-  padding: variables.$spacing-md;
-  transition: box-shadow 0.3s;
+.button {
+  background-color: white;
+  border-radius: 50px;
+  padding: variables.$spacing-sm
 }
 
-.conversation:hover,.conversation:focus {
+.button:hover, .button:focus {
+  background-color: black;
+  color: white;
   cursor: pointer;
-  border-left: 2px solid rgb(246, 246, 246);
-  border-top: 2px solid rgb(246, 246, 246);
-  box-shadow: variables.$box-shadow;
 }
 
-.conversationContent {
-  display:flex;
-  flex-direction: column;
-  gap: variables.$spacing-md;
-  flex: 1;
-}
-.conversationContent p {
-  margin: 0;
-}
 
-.lastReceived {
-  font-size: variables.$small-font-size;
-}
-
-.conversationText {
-  font-size: variables.$small-font-size
-}
-
-.flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}

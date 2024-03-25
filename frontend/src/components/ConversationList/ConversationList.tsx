@@ -1,4 +1,4 @@
-import Avatar from "../Avatar/Avatar";
+import Conversation from "../Conversation/Conversation";
 import styles from "./ConversationList.module.scss";
 
 export default function ConversationList() {
@@ -7,62 +7,33 @@ export default function ConversationList() {
       <div className={styles.listWrapper}>
         <h1 className={styles.title}>Conversations</h1>
         <ul className={styles.conversationList}>
-          <li className={styles.conversation}>
-            <Avatar />
-            <div className={styles.conversationContent}>
-              <div className={styles.flex}>
-                <p>Meghan Ridge</p>
-                <p className={styles.lastReceived}>2m</p>
-              </div>
-              <p className={styles.conversationText}>A new Message</p>
-            </div>
-          </li>
-          <li className={styles.conversation}>
-            <Avatar />
-            <div className={styles.conversationContent}>
-              <div className={styles.flex}>
-                <p>Ryan James</p>
-                <p className={styles.lastReceived}>1h</p>
-              </div>
-              <p className={styles.conversationText}>A new Message</p>
-            </div>
-          </li>
-          <li className={styles.conversation}>
-            <Avatar />
-            <div className={styles.conversationContent}>
-              <div className={styles.flex}>
-                <p>Jared Wesley</p>
-                <p className={styles.lastReceived}>4h</p>
-              </div>
-              <p className={styles.conversationText}>A new Message</p>
-            </div>
-          </li>
+          <Conversation
+            title="Meghan Ridge"
+            lastReceived="2m"
+            text="Sent a file"
+          />
+          <Conversation
+            title="Ryan James"
+            lastReceived="1h"
+            text="Thanks! How the meeting went?"
+          />
+          <Conversation
+            title="Jared Wesley"
+            lastReceived="4h"
+            text="You: Got it, I'll let you know, no worries"
+          />
+          <Conversation
+            title="Sam Norton"
+            lastReceived="1d"
+            text="Haha, Yeah, sounds good! Thanks so much"
+          />
+          <Conversation
+            title="Alicia Wu"
+            lastReceived="1d"
+            text="Sure, that's completely fine. Don't forget to sign up"
+          />
         </ul>
-      </div>
-      <div className={styles.listWrapper}>
-        <h1 className={styles.title}>Contacts</h1>
-        <ul className={styles.conversationList}>
-          <li className={styles.conversation}>
-            <Avatar />
-            <div className={styles.conversationContent}>
-              <div className={styles.flex}>
-                <p>Sam Norton</p>
-                <p className={styles.lastReceived}>1d</p>
-              </div>
-              <p className={styles.conversationText}>A new Message</p>
-            </div>
-          </li>
-          <li className={styles.conversation}>
-            <Avatar />
-            <div className={styles.conversationContent}>
-              <div className={styles.flex}>
-                <p>Alicia Wu</p>
-                <p className={styles.lastReceived}>1d</p>
-              </div>
-              <p className={styles.conversationText}>A new Message</p>
-            </div>
-          </li>
-        </ul>
+        <button className={styles.button}>Create</button>
       </div>
     </div>
   );
