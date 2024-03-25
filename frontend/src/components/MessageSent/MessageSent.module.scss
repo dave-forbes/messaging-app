@@ -27,3 +27,12 @@
     }
   }
 }
+
+@media (max-width:600px) {
+  .messageSent {
+  .messageContent {
+    flex-direction: column;
+    width:70%;
+  }
+}
+}

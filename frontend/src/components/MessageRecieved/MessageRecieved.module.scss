@@ -16,3 +16,12 @@
     width: 40%;
     }
 }
+
+@media (max-width:600px) {
+  .messageRecieved {
+  .messageContent {
+    flex-direction: column;
+    width:70%;
+  }
+}
+}
