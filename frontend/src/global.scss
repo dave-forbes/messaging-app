@@ -1,0 +1,15 @@
+@import 'normalize.css';
+
+:root {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif; 
+  letter-spacing: 1px;
+}
+
+.appContainer {
+  height: 100vh;
+  display: flex;
+}
