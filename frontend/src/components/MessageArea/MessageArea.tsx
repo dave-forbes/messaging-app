@@ -3,7 +3,8 @@ import styles from "./MessageArea.module.scss";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SendIcon from "@mui/icons-material/Send";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
+import MessageSent from "../MessageSent/MessageSent";
+import MessageRecieved from "../MessageRecieved/MessageRecieved";
 
 export default function MessageArea() {
   const largeIcon = { fontSize: 40 };
@@ -21,44 +22,17 @@ export default function MessageArea() {
       </div>
       <div className={styles.centralDiv}>
         <p className={styles.date}>Today 12 April </p>
-        <div className={styles.messageSent}>
-          <div className={styles.messageContent}>
-            <p>
-              Hey! I am going to start a book club channel, how that sounds?
-            </p>
-            <div className={styles.messageInfo}>
-              <p>13:52</p>
-              <DoneAllIcon />
-            </div>
-          </div>
-        </div>
-        <div className={styles.messageRecieved}>
-          <Avatar />
-          <div className={styles.messageContent}>
-            <p> Hello! great, I love the idea!</p>
-          </div>
-        </div>
-        <div className={styles.messageRecieved}>
-          <Avatar />
-          <div className={styles.messageContent}>
-            <p> I'm in!</p>
-          </div>
-        </div>
-        <div className={styles.messageSent}>
-          <div className={styles.messageContent}>
-            <p>Super, i'll add you shortly</p>
-            <div className={styles.messageInfo}>
-              <p>13:52</p>
-              <DoneAllIcon />
-            </div>
-          </div>
-        </div>
-        <div className={styles.messageRecieved}>
-          <Avatar />
-          <div className={styles.messageContent}>
-            <p> Thanks! How that meeting went?</p>
-          </div>
-        </div>
+        <MessageSent
+          content="Hey! I am going to start a book club channel, how that sounds?"
+          createdAt={"13:52"}
+        />
+        <MessageRecieved content="Hello! great, I love the idea!" />
+        <MessageRecieved content="I'm in!" />
+        <MessageSent
+          content="Super, i'll add you shortly"
+          createdAt={"13:52"}
+        />
+        <MessageRecieved content="Thanks! How that meeting went?" />
       </div>
       <div className={styles.bottomDiv}>
         <div className={styles.flex}>

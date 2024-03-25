@@ -34,50 +34,6 @@
   color: variables.$text-color
 }
 
-.messageSent {
-  display: flex;
-  justify-content: flex-end;
-
-  .messageContent {
-  background: rgb(131,58,180);
-  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 85%, rgba(252,176,69,1) 100%);
-  border-radius: 50px 50px 0 50px;
-  display: flex;
-  justify-content: space-between;
-  color: variables.$light-text-color;
-  padding: variables.$spacing-md;
-  width: 40%;
-  p {
-    margin:variables.$spacing-sm;
-  }
-  }
-  .messageInfo {
-    display: flex;
-    align-self: flex-end;
-    align-items: center;
-    gap: variables.$spacing-sm;
-    p {
-      font-size: variables.$small-font-size;
-    }
-  }
-}
-
-.messageRecieved {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: variables.$spacing-md;
-  .messageContent {
-    background-color: variables.$secondary-color;
-    border-radius: 50px 50px 50px 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: variables.$spacing-md;
-    width: 40%;
-    }
-}
-
 .bottomDiv {
   border-top: 2px solid variables.$secondary-color;
   display: flex;
