@@ -1,0 +1,72 @@
+@use '../../styles/variables' as variables;
+
+.loginPageWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.appDescription {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  svg {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.loginFormContainer {
+  border: 1px solid variables.$secondary-color;
+  padding: variables.$spacing-lg;
+  border-radius: variables.$border-radius-lg;
+  width: 30%;
+  h2 {
+    text-align: center;
+  }
+}
+
+@media (max-width: 1200px) {
+  .loginFormContainer {
+    width: 40%;
+  }
+}
+@media (max-width: 700px) {
+  .loginFormContainer {
+    width: 80%;
+  }
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap:variables.$spacing-lg;
+  align-items: center;
+  button {
+    width: 30%;
+  }
+}
+
+.inputGroup {
+  label {
+    font-size: variables.$base-font-size;
+    display: flex;
+    align-items: center;
+    gap: variables.$spacing-xs;
+    svg {
+      width: variables.$base-font-size;
+      height: variables.$base-font-size;
+    }
+  }
+  input {
+    font-size: variables.$base-font-size;
+    padding: variables.$spacing-xs;
+    width: 100%;
+  }
+  
+}
+
