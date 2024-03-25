@@ -1,7 +1,7 @@
 import ConversationList from "./components/ConversationList/ConversationList";
 import MessageArea from "./components/MessageArea/MessageArea";
 import Navbar from "./components/Navbar/Navbar";
-import "./index.scss";
+import "./global.scss";
 
 function App() {
   return (
