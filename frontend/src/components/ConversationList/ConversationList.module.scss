@@ -1,0 +1,64 @@
+@use '../../styles/variables' as variables;
+
+.conversationListContainer {
+  border-inline: 2px solid variables.$secondary-color;
+;
+  padding: variables.$spacing-lg;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.title {
+  font-weight: 500;
+  color: variables.$text-color;
+  margin: 0;
+}
+
+.conversationList {
+  margin: 0;
+  padding: 0;
+}
+
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-lg
+}
+
+.conversation {
+  list-style: none;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap:variables.$spacing-lg;
+  padding: variables.$spacing-md;
+  transition: box-shadow 0.3s;
+}
+
+.conversation:hover,.conversation:focus {
+  cursor: pointer;
+  border-left: 2px solid rgb(246, 246, 246);
+  border-top: 2px solid rgb(246, 246, 246);
+  box-shadow: variables.$box-shadow;
+}
+
+.conversationContent {
+  display:flex;
+  flex-direction: column;
+  gap: variables.$spacing-md;
+}
+.conversationContent>p {
+  margin: 0;
+}
+
+.conversationText {
+  font-size: variables.$small-font-size
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(161, 161, 161);
+}
