@@ -3,7 +3,7 @@
 .conversationListContainer {
   border-inline: 2px solid variables.$secondary-color;
   width: 300px;
-  padding: variables.$spacing-lg;
+  padding: 0 variables.$spacing-lg;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
