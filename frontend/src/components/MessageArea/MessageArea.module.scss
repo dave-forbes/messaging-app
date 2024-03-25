@@ -8,6 +8,12 @@
   flex-direction: column;
 }
 
+@media (max-width:850px) {
+  .messageAreaContainer {
+  padding: 5% variables.$spacing-md;
+  }
+}
+
 .topDiv {
   display: flex;
   align-items: center;
@@ -22,11 +28,18 @@
 }
 
 .centralDiv {
-  flex: 1;
   display:flex;
   flex-direction: column;
   padding-block: variables.$spacing-lg;
+  padding-inline:variables.$spacing-sm;
   gap: variables.$spacing-lg;
+  overflow-y: scroll;
+}
+
+@media (max-width:600px) {
+  .centralDiv {
+    height:calc(100vh - 350px);
+  }
 }
 
 .date {

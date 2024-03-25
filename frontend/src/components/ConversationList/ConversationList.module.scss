@@ -9,6 +9,23 @@
   justify-content: space-evenly;
 }
 
+@media (max-width: 1400px) {
+  .conversationListContainer {
+  position: absolute;
+  background-color: white;
+  height: 100vh;
+  left: 100px;
+  }
+}
+
+@media (max-width:600px) {
+  .conversationListContainer {
+    left:0;
+    top:0;
+    height: calc(100vh - 150px);
+  }
+}
+
 .title {
   font-weight: 500;
   color: variables.$text-color;
