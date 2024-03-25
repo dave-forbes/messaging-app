@@ -2,15 +2,20 @@ import ConversationList from "./components/ConversationList/ConversationList";
 import MessageArea from "./components/MessageArea/MessageArea";
 import Navbar from "./components/Navbar/Navbar";
 import "./global.scss";
+import { useState } from "react";
 
-function App() {
+export default function App() {
+  const [conversationListOpen, setConversationListOpen] = useState(false);
+
+  // Function to toggle the conversation list visibility
+  const toggleConversationList = () => {
+    setConversationListOpen(!conversationListOpen);
+  };
   return (
     <div className="appContainer">
-      <Navbar />
-      <ConversationList />
+      <Navbar toggleConversationList={toggleConversationList} />
+      {conversationListOpen && <ConversationList />}
       <MessageArea />
     </div>
   );
 }
-
-export default App;
