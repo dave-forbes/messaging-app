@@ -2,7 +2,7 @@
 
 .conversationListContainer {
   border-inline: 2px solid variables.$secondary-color;
-;
+  width: 300px;
   padding: variables.$spacing-lg;
   display: flex;
   flex-direction: column;
@@ -47,11 +47,22 @@
   display:flex;
   flex-direction: column;
   gap: variables.$spacing-md;
+  flex: 1;
 }
-.conversationContent>p {
+.conversationContent p {
   margin: 0;
+}
+
+.lastReceived {
+  font-size: variables.$small-font-size;
 }
 
 .conversationText {
   font-size: variables.$small-font-size
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
