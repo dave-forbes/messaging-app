@@ -13,6 +13,8 @@ interface NavContextType {
   setIsConversationListOpen: Dispatch<SetStateAction<boolean>>;
   isProfileOpen: boolean;
   setIsProfileOpen: Dispatch<SetStateAction<boolean>>;
+  isCreateConversationOpen: boolean;
+  setIsCreateConversationOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultContextValue: NavContextType = {
@@ -20,6 +22,8 @@ const defaultContextValue: NavContextType = {
   setIsConversationListOpen: () => {},
   isProfileOpen: false,
   setIsProfileOpen: () => {},
+  isCreateConversationOpen: false,
+  setIsCreateConversationOpen: () => {},
 };
 
 const NavbarContext = createContext(defaultContextValue);
@@ -31,20 +35,32 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [isConversationListOpen, setIsConversationListOpen] = useState(true);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isCreateConversationOpen, setIsCreateConversationOpen] =
+    useState(false);
 
   useEffect(() => {
-    // If conversationListOpen is open, close isProfileOpen
+    // If conversationListOpen is open, close isProfileOpen and isCreateConversationOpen
     if (isConversationListOpen) {
       setIsProfileOpen(false);
+      setIsCreateConversationOpen(false);
     }
   }, [isConversationListOpen]);
 
   useEffect(() => {
-    // If isProfileOpen is open, close conversationListOpen
+    // If isProfileOpen is open, close conversationListOpen and isCreateConversationOpen
     if (isProfileOpen) {
       setIsConversationListOpen(false);
+      setIsCreateConversationOpen(false);
     }
   }, [isProfileOpen]);
+
+  useEffect(() => {
+    // If isCreateConversationOpen is open, close conversationListOpen and isProfileOpen
+    if (isCreateConversationOpen) {
+      setIsConversationListOpen(false);
+      setIsProfileOpen(false);
+    }
+  }, [isCreateConversationOpen]);
 
   return (
     <NavbarContext.Provider
@@ -53,6 +69,8 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
         setIsConversationListOpen,
         isProfileOpen,
         setIsProfileOpen,
+        isCreateConversationOpen,
+        setIsCreateConversationOpen,
       }}
     >
       {children}
