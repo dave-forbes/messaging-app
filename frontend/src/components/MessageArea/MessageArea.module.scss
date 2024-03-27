@@ -26,6 +26,7 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 2px solid variables.$secondary-color;
+  padding-bottom:variables.$spacing-sm;;
   h1 {
     font-size: variables.$heading-font-size;
   }
@@ -57,19 +58,10 @@
 
 .bottomDiv {
   border-top: 2px solid variables.$secondary-color;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: variables.$spacing-sm;
-
-  svg {
-    width: 40px;
-    height: 40px;
-  }
+  padding-top: variables.$spacing-lg;
 }
 
 .flex {
   display: flex;
-  align-items: center;
   gap: variables.$spacing-lg;
 }
