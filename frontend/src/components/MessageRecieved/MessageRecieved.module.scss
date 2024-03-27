@@ -13,15 +13,26 @@
     justify-content: center;
     align-items: center;
     padding: variables.$spacing-md;
+    gap: variables.$spacing-md;
     width: 40%;
+    
+    
+
+    
     }
+    
 }
+
 
 @media (max-width:600px) {
   .messageRecieved {
   .messageContent {
-    flex-direction: column;
+   
     width:70%;
+  }
+  p {
+    margin: 0;
   }
 }
 }
+
