@@ -5,15 +5,17 @@ interface ConversationProps {
   title: string;
   lastReceived: string;
   text: string;
+  onClick: React.MouseEventHandler<HTMLLIElement>;
 }
 
 export default function Conversation({
   title,
   lastReceived,
   text,
+  onClick,
 }: ConversationProps) {
   return (
-    <li className={styles.conversation}>
+    <li className={styles.conversation} onClick={onClick}>
       <Avatar />
       <div className={styles.conversationContent}>
         <div className={styles.flex}>
