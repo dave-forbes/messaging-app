@@ -3,6 +3,7 @@ import { UserI, useAuth } from "../../contexts/AuthContext";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import styles from "./CreateConversation.module.scss";
+import { useNavbar } from "../../contexts/NavbarContext";
 
 export default function CreateConversation() {
   const { user } = useAuth();
@@ -10,6 +11,8 @@ export default function CreateConversation() {
   const [selectedUsers, setSelectedUsers] = useState<[] | any>([]);
   const [users, setUsers] = useState<UserI[]>([]);
   const animatedComponents = makeAnimated();
+  const { setIsCreateConversationOpen, setIsConversationListOpen } =
+    useNavbar();
 
   // Fetch users from API
   useEffect(() => {
@@ -78,6 +81,7 @@ export default function CreateConversation() {
 
       const data = await response.json();
       console.log(data);
+      setIsConversationListOpen(true);
     } catch (error: any) {
       console.log(error);
     }
@@ -113,6 +117,9 @@ export default function CreateConversation() {
           />
         </div>
         <button type="submit">Create Conversation</button>
+        <button onClick={() => setIsCreateConversationOpen(false)}>
+          Close
+        </button>
       </form>
     </div>
   );
