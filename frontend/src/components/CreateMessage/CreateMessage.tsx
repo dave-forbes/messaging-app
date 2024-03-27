@@ -5,7 +5,11 @@ import styles from "./CreateMessage.module.scss";
 import { useConversation } from "../../contexts/ConversationContext";
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function CreateMessage() {
+interface CreateMessageProps {
+  onMessageSent: () => void;
+}
+
+export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
   const [content, setContent] = useState("");
   const { currentConversation } = useConversation();
   const { user } = useAuth();
@@ -37,6 +41,7 @@ export default function CreateMessage() {
 
         const data = await response.json();
         console.log(data);
+        onMessageSent();
       } catch (error: any) {
         console.log(error);
       }
