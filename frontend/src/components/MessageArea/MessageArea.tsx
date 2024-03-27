@@ -5,23 +5,54 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SendIcon from "@mui/icons-material/Send";
 import MessageSent from "../MessageSent/MessageSent";
 import MessageRecieved from "../MessageRecieved/MessageRecieved";
+import { useConversation } from "../../contexts/ConversationContext";
+import { useEffect, useState } from "react";
 
 export default function MessageArea() {
+  const { currentConversation } = useConversation();
+  const [messages, setMessages] = useState<[] | null>(null);
+
+  useEffect(() => {
+    // Fetch messages belonging to the current conversation
+    if (currentConversation) {
+      fetchMessages(currentConversation._id);
+    }
+  }, [currentConversation]);
+
+  const fetchMessages = async (conversationId: string) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/messages/${conversationId}`
+      );
+      const data = await response.json();
+      setMessages(data);
+      console.log(messages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
   return (
     <div className={styles.messageAreaContainer}>
       <div className={styles.messageAreaInnerWrapper}>
-        <div className={styles.topDiv}>
-          <div className={styles.flex}>
-            <Avatar />
-            <div>
-              <h1>Ryan James</h1>
-              <p>...typing</p>
+        {!messages ? (
+          <h1>Please select a conversation</h1>
+        ) : (
+          <>
+            <div className={styles.topDiv}>
+              <div className={styles.flex}>
+                <Avatar />
+                <div>
+                  <h1>Ryan James</h1>
+                  <p>...typing</p>
+                </div>
+              </div>
+              <MoreVertIcon />
             </div>
-          </div>
-          <MoreVertIcon />
-        </div>
-        <div className={styles.centralDiv}>
-          <p className={styles.date}>Today 12 April </p>
+            <div className={styles.centralDiv}>
+              {messages.map((message: any) => (
+                <MessageRecieved key={message._id} content={message.content} />
+              ))}
+              {/* <p className={styles.date}>Today 12 April </p>
           <MessageSent
             content="Hey! I am going to start a book club channel, how that sounds?"
             createdAt={"13:52"}
@@ -32,15 +63,17 @@ export default function MessageArea() {
             content="Super, i'll add you shortly"
             createdAt={"13:52"}
           />
-          <MessageRecieved content="Thanks! How that meeting went?" />
-        </div>
-        <div className={styles.bottomDiv}>
-          <div className={styles.flex}>
-            <AttachFileIcon />
-            <p>Write a message...</p>
-          </div>
-          <SendIcon />
-        </div>
+          <MessageRecieved content="Thanks! How that meeting went?" /> */}
+            </div>
+            <div className={styles.bottomDiv}>
+              <div className={styles.flex}>
+                <AttachFileIcon />
+                <p>Write a message...</p>
+              </div>
+              <SendIcon />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
