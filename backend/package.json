@@ -4,6 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/server.js",
     "dev": "nodemon"
   },
   "keywords": [],
