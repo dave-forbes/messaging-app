@@ -1,5 +1,4 @@
 import styles from "./Navbar.module.scss";
-import ChatIcon from "@mui/icons-material/Chat";
 import HearingIcon from "@mui/icons-material/Hearing";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -18,7 +17,6 @@ export default function Navbar() {
       <GroupsIcon
         onClick={() => setConversationListOpen(!conversationListOpen)}
       />
-      <ChatIcon />
       <AccountCircleIcon onClick={() => setIsProfileOpen(!isProfileOpen)} />
     </div>
   );
