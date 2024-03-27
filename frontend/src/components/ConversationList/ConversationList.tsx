@@ -7,7 +7,8 @@ import { useNavbar } from "../../contexts/NavbarContext";
 
 export default function ConversationList() {
   const { user } = useAuth();
-  const { setIsConversationListOpen } = useNavbar();
+  const { setIsConversationListOpen, setIsCreateConversationOpen } =
+    useNavbar();
   const { setCurrentConversation } = useConversation();
   const [conversations, setConversations] = useState([]);
 
@@ -57,7 +58,12 @@ export default function ConversationList() {
             />
           ))}
         </ul>
-        <button className={styles.button}>Create</button>
+        <button
+          className={styles.button}
+          onClick={() => setIsCreateConversationOpen(true)}
+        >
+          Create
+        </button>
       </div>
     </div>
   );
