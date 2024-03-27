@@ -6,10 +6,11 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
+import { UserI } from "./AuthContext";
 
 export interface ConversationI {
   title: string;
-  participants: string[]; // Array of user IDs participating in this conversation
+  participants: UserI[];
   createdAt: Date;
   updatedAt: Date;
   _id: string;
