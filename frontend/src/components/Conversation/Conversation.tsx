@@ -3,15 +3,13 @@ import styles from "./Conversation.module.scss";
 
 interface ConversationProps {
   title: string;
-  lastReceived: string;
-  text: string;
+  lastUpdated: string;
   onClick: React.MouseEventHandler<HTMLLIElement>;
 }
 
 export default function Conversation({
   title,
-  lastReceived,
-  text,
+  lastUpdated,
   onClick,
 }: ConversationProps) {
   return (
@@ -20,9 +18,8 @@ export default function Conversation({
       <div className={styles.conversationContent}>
         <div className={styles.flex}>
           <p>{title}</p>
-          <p className={styles.lastReceived}>{lastReceived}</p>
         </div>
-        <p className={styles.conversationText}>{text}</p>
+        <p className={styles.conversationText}>last updated {lastUpdated}</p>
       </div>
     </li>
   );
