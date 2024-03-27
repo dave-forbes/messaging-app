@@ -1,5 +1,6 @@
 import Avatar from "../Avatar/Avatar";
 import styles from "./Conversation.module.scss";
+import formatTimeAgo from "../../utils/formatTimeAgo";
 
 interface ConversationProps {
   title: string;
@@ -19,7 +20,9 @@ export default function Conversation({
         <div className={styles.flex}>
           <p>{title}</p>
         </div>
-        <p className={styles.conversationText}>last updated {lastUpdated}</p>
+        <p className={styles.conversationText}>
+          last updated {formatTimeAgo(lastUpdated)}
+        </p>
       </div>
     </li>
   );
