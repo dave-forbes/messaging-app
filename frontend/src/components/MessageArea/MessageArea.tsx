@@ -1,7 +1,6 @@
 import Avatar from "../Avatar/Avatar";
 import styles from "./MessageArea.module.scss";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
 import MessageSent from "../MessageSent/MessageSent";
 import MessageRecieved from "../MessageRecieved/MessageRecieved";
 import { useConversation } from "../../contexts/ConversationContext";
@@ -31,6 +30,14 @@ export default function MessageArea() {
       console.error("Error fetching messages:", error);
     }
   };
+
+  const handleMessageSent = () => {
+    // After a message is sent, refetch messages to update the list
+    if (currentConversation) {
+      fetchMessages(currentConversation._id);
+    }
+  };
+
   return (
     <div className={styles.messageAreaContainer}>
       <div className={styles.messageAreaInnerWrapper}>
@@ -54,22 +61,19 @@ export default function MessageArea() {
             </div>
             <div className={styles.centralDiv}>
               {messages.map((message: any) =>
-                message.sender === user?._id ? (
-                  <MessageSent
-                    key={message._id}
-                    content={message.content}
-                    createdAt="0"
-                  />
+                message.sender._id === user?._id ? (
+                  <MessageSent key={message._id} content={message.content} />
                 ) : (
                   <MessageRecieved
                     key={message._id}
                     content={message.content}
+                    sender={message.sender.username}
                   />
                 )
               )}
             </div>
             <div className={styles.bottomDiv}>
-              <CreateMessage />
+              <CreateMessage onMessageSent={handleMessageSent} />
             </div>
           </>
         )}
