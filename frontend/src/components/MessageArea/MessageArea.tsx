@@ -1,13 +1,13 @@
 import Avatar from "../Avatar/Avatar";
 import styles from "./MessageArea.module.scss";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-import SendIcon from "@mui/icons-material/Send";
+
 import MessageSent from "../MessageSent/MessageSent";
 import MessageRecieved from "../MessageRecieved/MessageRecieved";
 import { useConversation } from "../../contexts/ConversationContext";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import CreateMessage from "../CreateMessage/CreateMessage";
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
@@ -41,14 +41,13 @@ export default function MessageArea() {
             <div className={styles.topDiv}>
               <div className={styles.flex}>
                 <Avatar />
-                <div>
+                <div className={styles.flex}>
                   {currentConversation?.participants.map((participant) => (
                     <h1 key={participant._id}>
                       {participant.username !== user?.username &&
-                        participant.username}
+                        `${participant.username}, `}
                     </h1>
                   ))}
-                  <p>...typing</p>
                 </div>
               </div>
               <MoreVertIcon />
@@ -68,26 +67,9 @@ export default function MessageArea() {
                   />
                 )
               )}
-
-              {/* <p className={styles.date}>Today 12 April </p>
-          <MessageSent
-            content="Hey! I am going to start a book club channel, how that sounds?"
-            createdAt={"13:52"}
-          />
-          <MessageRecieved content="Hello! great, I love the idea!" />
-          <MessageRecieved content="I'm in!" />
-          <MessageSent
-            content="Super, i'll add you shortly"
-            createdAt={"13:52"}
-          />
-          <MessageRecieved content="Thanks! How that meeting went?" /> */}
             </div>
             <div className={styles.bottomDiv}>
-              <div className={styles.flex}>
-                <AttachFileIcon />
-                <p>Write a message...</p>
-              </div>
-              <SendIcon />
+              <CreateMessage />
             </div>
           </>
         )}
