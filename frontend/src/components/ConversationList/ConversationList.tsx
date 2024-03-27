@@ -7,7 +7,7 @@ import { useNavbar } from "../../contexts/NavbarContext";
 
 export default function ConversationList() {
   const { user } = useAuth();
-  const { setConversationListOpen } = useNavbar();
+  const { setIsConversationListOpen } = useNavbar();
   const { setCurrentConversation } = useConversation();
   const [conversations, setConversations] = useState([]);
 
@@ -52,7 +52,7 @@ export default function ConversationList() {
               lastUpdated={conversation.updatedAt}
               onClick={() => {
                 setCurrentConversation(conversation);
-                setConversationListOpen(false);
+                setIsConversationListOpen(false);
               }}
             />
           ))}

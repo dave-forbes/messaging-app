@@ -8,15 +8,16 @@ import Profile from "./components/Profile/Profile";
 import { useNavbar } from "./contexts/NavbarContext";
 
 export default function App() {
-  const { conversationListOpen, isProfileOpen } = useNavbar();
+  const { isConversationListOpen, isProfileOpen } = useNavbar();
   const { user } = useAuth();
 
   if (user) {
     return (
       <div className="appContainer">
         <Navbar />
-        {conversationListOpen && <ConversationList />}
+        {isConversationListOpen && <ConversationList />}
         {isProfileOpen && <Profile />}
+        {}
         <MessageArea />
       </div>
     );

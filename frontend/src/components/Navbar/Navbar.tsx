@@ -6,8 +6,8 @@ import { useNavbar } from "../../contexts/NavbarContext";
 
 export default function Navbar() {
   const {
-    conversationListOpen,
-    setConversationListOpen,
+    isConversationListOpen,
+    setIsConversationListOpen,
     isProfileOpen,
     setIsProfileOpen,
   } = useNavbar();
@@ -15,7 +15,7 @@ export default function Navbar() {
     <div className={styles.navbarContainer}>
       <HearingIcon />
       <GroupsIcon
-        onClick={() => setConversationListOpen(!conversationListOpen)}
+        onClick={() => setIsConversationListOpen(!isConversationListOpen)}
       />
       <AccountCircleIcon onClick={() => setIsProfileOpen(!isProfileOpen)} />
     </div>

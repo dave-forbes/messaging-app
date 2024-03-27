@@ -9,15 +9,15 @@ import React, {
 } from "react";
 
 interface NavContextType {
-  conversationListOpen: boolean;
-  setConversationListOpen: Dispatch<SetStateAction<boolean>>;
+  isConversationListOpen: boolean;
+  setIsConversationListOpen: Dispatch<SetStateAction<boolean>>;
   isProfileOpen: boolean;
   setIsProfileOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultContextValue: NavContextType = {
-  conversationListOpen: true,
-  setConversationListOpen: () => {},
+  isConversationListOpen: true,
+  setIsConversationListOpen: () => {},
   isProfileOpen: false,
   setIsProfileOpen: () => {},
 };
@@ -29,28 +29,28 @@ export const useNavbar = () => useContext(NavbarContext);
 export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [conversationListOpen, setConversationListOpen] = useState(false);
+  const [isConversationListOpen, setIsConversationListOpen] = useState(true);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   useEffect(() => {
     // If conversationListOpen is open, close isProfileOpen
-    if (conversationListOpen) {
+    if (isConversationListOpen) {
       setIsProfileOpen(false);
     }
-  }, [conversationListOpen]);
+  }, [isConversationListOpen]);
 
   useEffect(() => {
     // If isProfileOpen is open, close conversationListOpen
     if (isProfileOpen) {
-      setConversationListOpen(false);
+      setIsConversationListOpen(false);
     }
   }, [isProfileOpen]);
 
   return (
     <NavbarContext.Provider
       value={{
-        conversationListOpen,
-        setConversationListOpen,
+        isConversationListOpen,
+        setIsConversationListOpen,
         isProfileOpen,
         setIsProfileOpen,
       }}
