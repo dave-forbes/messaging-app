@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 
-interface User {
+export interface UserI {
   username: string;
   password: string;
   token?: string;
@@ -14,8 +14,8 @@ interface User {
 }
 
 interface AuthContextType {
-  user: User | null;
-  login: (userData: User) => void;
+  user: UserI | null;
+  login: (userData: UserI) => void;
   logout: () => void;
 }
 
@@ -24,7 +24,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserI | null>(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, []);
 
-  const login = async (userData: User) => {
+  const login = async (userData: UserI) => {
     try {
       const response = await fetch(`http://localhost:3000/users/login`, {
         method: "POST",
