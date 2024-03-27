@@ -3,13 +3,18 @@ import Avatar from "../Avatar/Avatar";
 
 interface MessageRecievedProps {
   content: string;
+  sender: string;
 }
 
-export default function MessageRecieved({ content }: MessageRecievedProps) {
+export default function MessageRecieved({
+  content,
+  sender,
+}: MessageRecievedProps) {
   return (
     <div className={styles.messageRecieved}>
       <Avatar />
       <div className={styles.messageContent}>
+        <p className={styles.sender}>{sender}:</p>
         <p> {content}</p>
       </div>
     </div>
