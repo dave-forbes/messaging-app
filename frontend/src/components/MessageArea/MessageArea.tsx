@@ -7,7 +7,6 @@ import MessageSent from "../MessageSent/MessageSent";
 import MessageRecieved from "../MessageRecieved/MessageRecieved";
 
 export default function MessageArea() {
-  const largeIcon = { fontSize: 40 };
   return (
     <div className={styles.messageAreaContainer}>
       <div className={styles.messageAreaInnerWrapper}>
@@ -37,10 +36,10 @@ export default function MessageArea() {
         </div>
         <div className={styles.bottomDiv}>
           <div className={styles.flex}>
-            <AttachFileIcon sx={largeIcon} />
+            <AttachFileIcon />
             <p>Write a message...</p>
           </div>
-          <SendIcon sx={largeIcon} />
+          <SendIcon />
         </div>
       </div>
     </div>
