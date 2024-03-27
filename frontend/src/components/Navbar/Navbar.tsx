@@ -3,7 +3,7 @@ import ChatIcon from "@mui/icons-material/Chat";
 import HearingIcon from "@mui/icons-material/Hearing";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import GroupsIcon from "@mui/icons-material/Groups";
-import { useNavbar } from "../../contexts/NavBarContext";
+import { useNavbar } from "../../contexts/NavbarContext";
 
 export default function Navbar() {
   const {

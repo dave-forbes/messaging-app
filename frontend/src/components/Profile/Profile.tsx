@@ -1,6 +1,6 @@
 import { useAuth } from "../../contexts/AuthContext";
 import { useConversation } from "../../contexts/ConversationContext";
-import { useNavbar } from "../../contexts/NavBarContext";
+import { useNavbar } from "../../contexts/NavbarContext";
 
 export default function Profile() {
   const { setCurrentConversation } = useConversation();

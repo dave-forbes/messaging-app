@@ -5,7 +5,7 @@ import { useAuth } from "./contexts/AuthContext";
 import "./styles/global.scss";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
-import { useNavbar } from "./contexts/NavBarContext";
+import { useNavbar } from "./contexts/NavbarContext";
 
 export default function App() {
   const { conversationListOpen, isProfileOpen } = useNavbar();
