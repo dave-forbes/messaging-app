@@ -84,7 +84,7 @@ router.post("/create", [
       });
       if (doesUsernameAllReadyExist) {
         res.status(400).json({
-          message: "Email all ready in use",
+          message: "Username all ready in use",
         });
         return;
       }
@@ -160,6 +160,7 @@ router.post(
         success: true,
         message: "login success",
         token: token,
+        user: doesUserExist,
       });
     } catch (error: any) {
       res.status(400).json({
