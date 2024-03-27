@@ -5,23 +5,47 @@ const router = express.Router();
 
 // get all messages for a specifc conversation
 
-router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const messages = await MessageModel.find();
-    res.json(messages);
-  } catch (error) {
-    next(error);
+router.get(
+  "/:conversationId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const conversationId = req.params.conversationId;
+      const messages = await MessageModel.find({
+        conversationId: conversationId,
+      });
+      res.json(messages);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // create new message
+
+// TODO add validation and error handling
 
 router.post(
   "/create",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-    } catch (error) {
-      next(error);
+      const messageData = req.body;
+      const { conversationId, sender, content } = messageData;
+      const newMessage = await MessageModel.create({
+        conversationId,
+        sender,
+        content,
+      });
+
+      res.status(200).json({
+        success: true,
+        message: " Message created successfully",
+        newMessage: newMessage,
+      });
+    } catch (error: any) {
+      console.log(error);
+      res.status(400).json({
+        message: error.message.toString(),
+      });
     }
   }
 );
