@@ -1,7 +1,16 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface User {
-  // Define your user properties here
+  username: string;
+  password: string;
+  token?: string;
+  _id: string;
 }
 
 interface AuthContextType {
@@ -16,6 +25,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const login = async (userData: User) => {
     try {
@@ -37,11 +53,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
       const data = await response.json();
       const token = data.token;
+      const user = data.user;
+      user.token = token;
 
       // log in successful, check token and store data
 
       if (token) {
-        setUser(userData);
+        setUser(user);
+        localStorage.setItem("user", JSON.stringify(userData));
       }
     } catch (error: any) {
       console.log(error);
@@ -50,6 +69,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = () => {
     // Logic to log out user
+    localStorage.removeItem("user");
     setUser(null);
   };
 
