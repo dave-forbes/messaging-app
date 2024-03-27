@@ -1,0 +1,22 @@
+@use '../../styles/variables' as variables;
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  padding-top: variables.$spacing-sm;
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  input {
+    flex:1;
+    margin-inline: 30px;
+    background-color: variables.$background-color;
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: variables.$heading-font-size;
+  }
+}
+
