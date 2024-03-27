@@ -12,7 +12,7 @@ router.get(
       const conversationId = req.params.conversationId;
       const messages = await MessageModel.find({
         conversationId: conversationId,
-      });
+      }).populate("sender");
       res.json(messages);
     } catch (error) {
       next(error);
