@@ -6,9 +6,11 @@ import "./styles/global.scss";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import { useNavbar } from "./contexts/NavbarContext";
+import CreateConversation from "./components/CreateConversation/CreateConversation";
 
 export default function App() {
-  const { isConversationListOpen, isProfileOpen } = useNavbar();
+  const { isConversationListOpen, isProfileOpen, isCreateConversationOpen } =
+    useNavbar();
   const { user } = useAuth();
 
   if (user) {
@@ -17,7 +19,7 @@ export default function App() {
         <Navbar />
         {isConversationListOpen && <ConversationList />}
         {isProfileOpen && <Profile />}
-        {}
+        {isCreateConversationOpen && <CreateConversation />}
         <MessageArea />
       </div>
     );
