@@ -12,7 +12,29 @@ router.get("/", [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const conversations = await ConversationModel.find().populate("user");
+      const conversations = await ConversationModel.find().populate(
+        "participants"
+      );
+      res.json(conversations);
+    } catch (error: any) {
+      console.log(error);
+      res.status(400).json({
+        message: error.message.toString(),
+      });
+    }
+  },
+]);
+
+// get all conversations that the user is a part of
+
+router.get("/user/:userId", [
+  authenticateToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const participantId = req.params.userId;
+      const conversations = await ConversationModel.find({
+        participants: { $in: [participantId] },
+      }).populate("participants");
       res.json(conversations);
     } catch (error: any) {
       console.log(error);
