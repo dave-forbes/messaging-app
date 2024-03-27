@@ -3,21 +3,20 @@ import MessageArea from "./components/MessageArea/MessageArea";
 import Navbar from "./components/Navbar/Navbar";
 import { useAuth } from "./contexts/AuthContext";
 import "./styles/global.scss";
-import { useState } from "react";
 import Login from "./components/Login/Login";
+import Profile from "./components/Profile/Profile";
+import { useNavbar } from "./contexts/NavBarContext";
 
 export default function App() {
-  const [conversationListOpen, setConversationListOpen] = useState(false);
+  const { conversationListOpen, isProfileOpen } = useNavbar();
   const { user } = useAuth();
 
-  const toggleConversationList = () => {
-    setConversationListOpen(!conversationListOpen);
-  };
   if (user) {
     return (
       <div className="appContainer">
-        <Navbar toggleConversationList={toggleConversationList} />
+        <Navbar />
         {conversationListOpen && <ConversationList />}
+        {isProfileOpen && <Profile />}
         <MessageArea />
       </div>
     );
