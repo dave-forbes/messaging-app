@@ -9,7 +9,7 @@ interface Message {
 
 const MessageSchema = new Schema({
   conversationId: { type: Schema.Types.ObjectId, ref: "Conversation" },
-  sender: { type: Schema.Types.ObjectId, ref: "User" },
+  senderId: { type: Schema.Types.ObjectId, ref: "User" },
   content: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
