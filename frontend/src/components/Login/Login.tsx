@@ -1,24 +1,36 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import styles from "./Login.module.scss";
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import HearingIcon from "@mui/icons-material/Hearing";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+  const { username, password } = formData;
   const { login } = useAuth();
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formData = {
-      username: username,
-      password: password,
-    };
-
-    login(formData);
+    const response = await login(formData);
+    if (response.success) {
+      setError("");
+      navigate("/app");
+    } else {
+      setError(response.toString());
+    }
   };
 
   return (
@@ -39,8 +51,9 @@ export default function Login() {
             <input
               type="text"
               id="username"
+              name="username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleChange}
               required
             />
           </div>
@@ -53,12 +66,17 @@ export default function Login() {
             <input
               type="password"
               id="password"
+              name="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
               required
             />
           </div>
+          <p>{error}</p>
           <button type="submit">Login</button>
+          <p>
+            New user? <Link to="/register">Create an acccount</Link>
+          </p>
         </form>
       </div>
     </div>
