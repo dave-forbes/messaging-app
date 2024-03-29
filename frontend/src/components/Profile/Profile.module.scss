@@ -1,0 +1,11 @@
+@use '../../styles/variables' as variables;
+
+.profileContainer {
+  border-inline: 2px solid variables.$secondary-color;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: variables.$spacing-md
+}
