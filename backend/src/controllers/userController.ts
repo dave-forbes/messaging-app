@@ -68,8 +68,8 @@ router.post("/create", [
   }),
   body("bio")
     .trim()
-    .isLength({ max: 500 })
-    .withMessage("Bio cannot exceed 500 characters"),
+    .isLength({ max: 100 })
+    .withMessage("Bio cannot exceed 100 characters"),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const errors = validationResult(req);
