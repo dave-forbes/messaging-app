@@ -31,16 +31,6 @@
   }
 }
 
-@media (max-width: 1200px) {
-  .loginFormContainer {
-    width: 40%;
-  }
-}
-@media (max-width: 700px) {
-  .loginFormContainer {
-    width: 80%;
-  }
-}
 
 .loginForm {
   display: flex;
@@ -69,5 +59,16 @@
     width: 100%;
   }
   
+}
+
+@media (max-width: 1200px) {
+  .loginFormContainer {
+    width: 40%;
+  }
+}
+@media (max-width: 700px) {
+  .loginFormContainer {
+    width: 80%;
+  }
 }
 
