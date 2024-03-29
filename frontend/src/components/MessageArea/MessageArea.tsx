@@ -4,16 +4,18 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MessageSent from "../MessageSent/MessageSent";
 import MessageRecieved from "../MessageRecieved/MessageRecieved";
 import { useConversation } from "../../contexts/ConversationContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import CreateMessage from "../CreateMessage/CreateMessage";
+import { MessageI } from "../../interfaces/interfaces";
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
-  const [messages, setMessages] = useState<[] | null>(null);
+  const [messages, setMessages] = useState<MessageI[]>([]);
   const { user } = useAuth();
+  const centralDivRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // Fetch messages belonging to the current conversation
     if (currentConversation) {
       fetchMessages(currentConversation._id);
     }
@@ -32,16 +34,28 @@ export default function MessageArea() {
   };
 
   const handleMessageSent = () => {
-    // After a message is sent, refetch messages to update the list
     if (currentConversation) {
       fetchMessages(currentConversation._id);
     }
   };
 
+  const scrollToBottom = () => {
+    const ref = centralDivRef.current;
+    if (ref) {
+      ref.scrollTop = ref.scrollHeight;
+    } else {
+      console.log("Message container ref not found");
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <div className={styles.messageAreaContainer}>
       <div className={styles.messageAreaInnerWrapper}>
-        {!messages ? (
+        {!currentConversation ? (
           <h1>Please select a conversation</h1>
         ) : (
           <>
@@ -59,7 +73,7 @@ export default function MessageArea() {
               </div>
               <MoreVertIcon />
             </div>
-            <div className={styles.centralDiv}>
+            <div className={styles.centralDiv} ref={centralDivRef}>
               {messages.map((message: any) =>
                 message.sender._id === user?._id ? (
                   <MessageSent key={message._id} content={message.content} />
