@@ -3,27 +3,31 @@ import MessageArea from "./components/MessageArea/MessageArea";
 import Navbar from "./components/Navbar/Navbar";
 import { useAuth } from "./contexts/AuthContext";
 import "./styles/global.scss";
-import Login from "./components/Login/Login";
+import { useNavigate } from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import { useNavbar } from "./contexts/NavbarContext";
 import CreateConversation from "./components/CreateConversation/CreateConversation";
+import { useEffect } from "react";
 
 export default function App() {
   const { isConversationListOpen, isProfileOpen, isCreateConversationOpen } =
     useNavbar();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
-  if (user) {
-    return (
-      <div className="appContainer">
-        <Navbar />
-        {isConversationListOpen && <ConversationList />}
-        {isProfileOpen && <Profile />}
-        {isCreateConversationOpen && <CreateConversation />}
-        <MessageArea />
-      </div>
-    );
-  } else {
-    return <Login />;
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/"); // Redirect to the home page if user is not logged in
+    }
+  }, [user, navigate]);
+
+  return (
+    <div className="appContainer">
+      <Navbar />
+      {isConversationListOpen && <ConversationList />}
+      {isProfileOpen && <Profile />}
+      {isCreateConversationOpen && <CreateConversation />}
+      <MessageArea />
+    </div>
+  );
 }
