@@ -19,7 +19,7 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
       const formData = {
         content: content,
         conversationId: currentConversation?._id,
-        sender: user?._id,
+        senderId: user?._id,
       };
       try {
         const response = await fetch("http://localhost:3000/messages/create", {
