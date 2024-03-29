@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import styles from "./CreateMessage.module.scss";
@@ -56,6 +56,11 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
         type="text"
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSendMessage();
+          }
+        }}
         required
         placeholder="write a message..."
       />
