@@ -9,8 +9,9 @@ import { UserI } from "../interfaces/interfaces";
 
 interface AuthContextType {
   user: UserI | null;
-  login: (userData: UserI) => void;
+  login: (userData: UserI) => any;
   logout: () => void;
+  register: (userData: UserI) => any;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,6 +28,36 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, []);
 
+  const register = async (userData: UserI) => {
+    try {
+      const response = await fetch(`http://localhost:3000/users/create`, {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(userData),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        if (data.errors && Array.isArray(data.errors)) {
+          const errorMessages = data.errors.map(
+            (error: { msg: string }) => error.msg
+          );
+          const formattedErrorMessage = errorMessages.join(", ");
+          throw new Error(`${response.status}: ${formattedErrorMessage}`);
+        } else {
+          throw new Error(`${response.status}: ${data.message}`);
+        }
+      }
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
+
   const login = async (userData: UserI) => {
     try {
       const response = await fetch(`http://localhost:3000/users/login`, {
@@ -40,36 +71,32 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         body: JSON.stringify(userData),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const data = await response.json();
         throw new Error(`${response.status}: ${data.message}`);
       }
-
-      const data = await response.json();
       const token = data.token;
       const user = data.user;
       user.token = token;
-      console.log(user);
-
-      // log in successful, check token and store data
 
       if (token) {
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
       }
+      return data;
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 
   const logout = () => {
-    // Logic to log out user
     localStorage.removeItem("user");
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
