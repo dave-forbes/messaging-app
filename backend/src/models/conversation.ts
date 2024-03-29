@@ -1,8 +1,10 @@
 import mongoose, { Schema } from "mongoose";
+import { Message } from "./message";
 
 interface Conversation {
   title: string;
-  participants: string[]; // Array of user IDs participating in this conversation
+  participants: string[];
+  messages: Message[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -10,6 +12,7 @@ interface Conversation {
 const ConversationSchema = new Schema({
   title: { type: String, required: true },
   participants: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
+  messages: [{ type: Schema.Types.ObjectId, ref: "Message", required: true }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
