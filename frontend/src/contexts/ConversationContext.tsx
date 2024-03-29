@@ -6,15 +6,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { UserI } from "./AuthContext";
-
-export interface ConversationI {
-  title: string;
-  participants: UserI[];
-  createdAt: Date;
-  updatedAt: Date;
-  _id: string;
-}
+import { ConversationI } from "../interfaces/interfaces";
 
 interface ConversationContextType {
   currentConversation: ConversationI | null;

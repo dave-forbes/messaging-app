@@ -5,13 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-
-export interface UserI {
-  username: string;
-  password: string;
-  token?: string;
-  _id: string;
-}
+import { UserI } from "../interfaces/interfaces";
 
 interface AuthContextType {
   user: UserI | null;
