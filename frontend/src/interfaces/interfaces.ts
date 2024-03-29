@@ -8,7 +8,7 @@ export interface MessageI {
 export interface UserI {
   username: string;
   password: string;
-  bio: string;
+  bio?: string;
   token?: string;
   _id?: string;
 }
