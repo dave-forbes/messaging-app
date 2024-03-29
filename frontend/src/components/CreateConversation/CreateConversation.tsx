@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { UserI, useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import styles from "./CreateConversation.module.scss";
@@ -9,7 +9,7 @@ export default function CreateConversation() {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<[] | any>([]);
-  const [users, setUsers] = useState<UserI[]>([]);
+  const [users, setUsers] = useState<{ value: string; label: string }[]>([]);
   const animatedComponents = makeAnimated();
   const { setIsCreateConversationOpen, setIsConversationListOpen } =
     useNavbar();
@@ -48,11 +48,9 @@ export default function CreateConversation() {
   // Handle form submission
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    // Logic to submit conversation data
-    console.log("Title:", title);
-    console.log("Selected users:", selectedUsers);
 
     const participants = selectedUsers.map((item: any) => item.value);
+    participants.push(user?._id);
 
     const formData = {
       title: title,
@@ -110,7 +108,7 @@ export default function CreateConversation() {
             closeMenuOnSelect={false}
             components={animatedComponents}
             isMulti
-            options={users}
+            options={users.filter((item) => item.value !== user?._id)}
             onChange={
               (selectedOptions) => setSelectedUsers(selectedOptions || []) // Handle null case
             }
