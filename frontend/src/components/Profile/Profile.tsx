@@ -1,11 +1,14 @@
 import { useAuth } from "../../contexts/AuthContext";
 import { useConversation } from "../../contexts/ConversationContext";
 import { useNavbar } from "../../contexts/NavbarContext";
+import Avatar from "../Avatar/Avatar";
+import styles from "./Profile.module.scss";
 
 export default function Profile() {
   const { setCurrentConversation } = useConversation();
   const { setIsConversationListOpen, setIsProfileOpen } = useNavbar();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+  console.log(user);
 
   const handleClick = () => {
     logout();
@@ -14,5 +17,13 @@ export default function Profile() {
     setIsProfileOpen(false);
   };
 
-  return <button onClick={handleClick}>logout</button>;
+  return (
+    <div className={styles.profileContainer}>
+      <Avatar />
+      <h1>{user?.username}</h1>
+      <p>{user?.bio}</p>
+      <button onClick={handleClick}>logout</button>
+      <button>edit profile</button>
+    </div>
+  );
 }
