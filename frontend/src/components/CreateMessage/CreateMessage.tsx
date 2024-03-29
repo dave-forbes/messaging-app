@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import styles from "./CreateMessage.module.scss";
 import { useConversation } from "../../contexts/ConversationContext";
 import { useAuth } from "../../contexts/AuthContext";
+import { useState } from "react";
 
 interface CreateMessageProps {
   onMessageSent: () => void;
@@ -11,7 +11,7 @@ interface CreateMessageProps {
 
 export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
   const [content, setContent] = useState("");
-  const { currentConversation } = useConversation();
+  const { currentConversation, setCurrentConversation } = useConversation();
   const { user } = useAuth();
 
   const handleSendMessage = async () => {
@@ -41,6 +41,7 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
 
         const data = await response.json();
         console.log(data);
+        setCurrentConversation(data.updatedConversation);
         onMessageSent();
       } catch (error: any) {
         console.log(error);
