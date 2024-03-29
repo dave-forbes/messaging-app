@@ -14,6 +14,7 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 30px;
+  gap: variables.$spacing-md;
   svg {
     width: 100px;
     height: 100px;
