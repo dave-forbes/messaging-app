@@ -9,13 +9,13 @@ export default function ConversationList() {
   const { user } = useAuth();
   const { setIsConversationListOpen, setIsCreateConversationOpen } =
     useNavbar();
-  const { setCurrentConversation } = useConversation();
+  const { currentConversation, setCurrentConversation } = useConversation();
   const [conversations, setConversations] = useState([]);
 
   useEffect(() => {
     // Fetch messages belonging to the current conversation
     fetchConversations();
-  }, []);
+  }, [currentConversation]);
 
   const fetchConversations = async () => {
     try {
