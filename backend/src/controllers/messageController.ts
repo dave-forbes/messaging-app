@@ -12,7 +12,7 @@ router.get(
       const conversationId = req.params.conversationId;
       const messages = await MessageModel.find({
         conversationId: conversationId,
-      }).populate("sender");
+      }).populate("senderId");
       res.json(messages);
     } catch (error) {
       next(error);
@@ -29,10 +29,10 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const messageData = req.body;
-      const { conversationId, sender, content } = messageData;
+      const { conversationId, senderId, content } = messageData;
       const newMessage = await MessageModel.create({
         conversationId,
-        sender,
+        senderId,
         content,
       });
 
