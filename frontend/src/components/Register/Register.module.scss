@@ -1,0 +1,69 @@
+@use '../../styles/variables' as variables;
+
+.registerPageWrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.registerFormContainer {
+  border: 1px solid variables.$secondary-color;
+  padding: variables.$spacing-lg;
+  border-radius: variables.$border-radius-lg;
+  width: 30%;
+  h2, p {
+    text-align: center;
+  }
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap:variables.$spacing-lg;
+  align-items: center;
+  button {
+    width: 30%;
+  }
+  
+}
+
+.inputGroup {
+  width: 70%;
+  label {
+    font-size: variables.$base-font-size;
+    display: flex;
+    align-items: center;
+    gap: variables.$spacing-xs;
+    svg {
+      width: variables.$base-font-size;
+      height: variables.$base-font-size;
+    }
+    
+  }
+  input, textarea {
+    font-size: variables.$base-font-size;
+    padding: variables.$spacing-xs;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .registerFormContainer {
+    width: 40%;
+  }
+  .inputGroup {
+    width: 80%;
+  }
+}
+@media (max-width: 700px) {
+  .registerFormContainer {
+    width: 80%;
+  }
+  
+}
+
