@@ -1,8 +1,8 @@
 import mongoose, { Schema } from "mongoose";
 
 interface Message {
-  conversationId: string; // ID of the conversation this message belongs to
-  sender: string; // ID of the user who sent the message
+  conversationId: string;
+  senderId: string;
   content: string;
   createdAt: Date;
 }
