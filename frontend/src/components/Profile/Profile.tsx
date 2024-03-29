@@ -4,13 +4,13 @@ import { useNavbar } from "../../contexts/NavbarContext";
 
 export default function Profile() {
   const { setCurrentConversation } = useConversation();
-  const { setConversationListOpen, setIsProfileOpen } = useNavbar();
+  const { setIsConversationListOpen, setIsProfileOpen } = useNavbar();
   const { logout } = useAuth();
 
   const handleClick = () => {
     logout();
     setCurrentConversation(null);
-    setConversationListOpen(true);
+    setIsConversationListOpen(true);
     setIsProfileOpen(false);
   };
 
