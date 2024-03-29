@@ -75,13 +75,13 @@ export default function MessageArea() {
             </div>
             <div className={styles.centralDiv} ref={centralDivRef}>
               {messages.map((message: any) =>
-                message.sender._id === user?._id ? (
+                message.senderId._id === user?._id ? (
                   <MessageSent key={message._id} content={message.content} />
                 ) : (
                   <MessageRecieved
                     key={message._id}
                     content={message.content}
-                    sender={message.sender.username}
+                    sender={message.senderId.username}
                   />
                 )
               )}
