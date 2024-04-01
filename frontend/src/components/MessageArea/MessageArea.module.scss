@@ -63,6 +63,7 @@
 
 .flex {
   display: flex;
-  gap: variables.$spacing-lg;
+  gap: variables.$spacing-sm;
   align-items: center;
+  overflow: scroll;
 }
