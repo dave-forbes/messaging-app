@@ -9,6 +9,7 @@ import { useNavbar } from "./contexts/NavbarContext";
 import CreateConversation from "./components/CreateConversation/CreateConversation";
 import { useEffect } from "react";
 import AppInfo from "./components/AppInfo/AppInfo";
+import API_URL from "./utils/apiConfig";
 
 export default function App() {
   const {
@@ -19,6 +20,8 @@ export default function App() {
   } = useNavbar();
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  console.log(API_URL);
 
   useEffect(() => {
     if (!user) {
