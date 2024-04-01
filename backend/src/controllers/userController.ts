@@ -78,7 +78,7 @@ router.post("/create", [
         return res.status(400).json({ errors: errors.array() });
       }
       const user = req.body;
-      const { username, password } = user;
+      const { username, password, bio } = user;
       const doesUsernameAllReadyExist = await UserModel.findOne({
         username: username,
       });
@@ -94,6 +94,7 @@ router.post("/create", [
       const newUser = await UserModel.create({
         username,
         password: hashedPassword,
+        bio,
       });
 
       res.status(200).json({
