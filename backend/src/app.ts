@@ -14,9 +14,9 @@ connectDB().catch(console.dir);
 
 // middleware
 
+app.use(cors(corsOptions));
 app.use(express.json({ limit: "3mb" }));
 app.use(express.urlencoded({ limit: "3mb", extended: true }));
-app.use(cors(corsOptions));
 app.use(express.static("public"));
 
 // routes
