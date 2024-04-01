@@ -64,4 +64,5 @@
 .flex {
   display: flex;
   gap: variables.$spacing-lg;
+  align-items: center;
 }
