@@ -1,0 +1,34 @@
+@use '../../styles/variables' as variables;
+
+.appInfoContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  max-width: 300px;
+  gap: variables.$spacing-lg;
+  padding: 0 variables.$spacing-lg;
+  border-inline: 2px solid variables.$secondary-color;
+  svg {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .appInfoContainer {
+  position: absolute;
+  background-color: white;
+  height: 100vh;
+  left: 100px;
+  }
+}
+
+@media (max-width:600px) {
+  .appInfoContainer {
+    left:0;
+    top:0;
+    height: calc(100vh - 104px);
+  }
+}
