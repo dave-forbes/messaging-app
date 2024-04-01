@@ -8,7 +8,6 @@ export default function Profile() {
   const { setCurrentConversation } = useConversation();
   const { setIsConversationListOpen, setIsProfileOpen } = useNavbar();
   const { logout, user } = useAuth();
-  console.log(user);
 
   const handleClick = () => {
     logout();
