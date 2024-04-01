@@ -6,6 +6,7 @@ import styles from "./CreateConversation.module.scss";
 import { useNavbar } from "../../contexts/NavbarContext";
 import { useConversation } from "../../contexts/ConversationContext";
 import { UserI } from "../../interfaces/interfaces";
+import API_URL from "../../utils/apiConfig";
 
 export default function CreateConversation() {
   const { user } = useAuth();
@@ -24,7 +25,7 @@ export default function CreateConversation() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/users/`, {
+      const response = await fetch(`${API_URL}/users/`, {
         method: "GET",
         mode: "cors",
         cache: "no-cache",
@@ -63,20 +64,17 @@ export default function CreateConversation() {
     };
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/conversations/create",
-        {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.token}`,
-          },
-          referrerPolicy: "no-referrer",
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${API_URL}/conversations/create`, {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.token}`,
+        },
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(formData),
+      });
       if (!response.ok) {
         if (response.status === 404) {
           throw new Error("Network error: Unable to connect to the server.");

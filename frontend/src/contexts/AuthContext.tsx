@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import { UserI } from "../interfaces/interfaces";
+import API_URL from "../utils/apiConfig";
 
 interface AuthContextType {
   user: UserI | null;
@@ -30,7 +31,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const register = async (userData: UserI) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/create`, {
+      const response = await fetch(`${API_URL}/users/create`, {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
@@ -60,7 +61,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const login = async (userData: UserI) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/login`, {
+      const response = await fetch(`${API_URL}/users/login`, {
         method: "POST",
         mode: "cors",
         cache: "no-cache",

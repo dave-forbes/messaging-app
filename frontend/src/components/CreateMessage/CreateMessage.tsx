@@ -4,6 +4,7 @@ import styles from "./CreateMessage.module.scss";
 import { useConversation } from "../../contexts/ConversationContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
+import API_URL from "../../utils/apiConfig";
 
 interface CreateMessageProps {
   onMessageSent: () => void;
@@ -22,7 +23,7 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
         senderId: user?._id,
       };
       try {
-        const response = await fetch("http://localhost:3000/messages/create", {
+        const response = await fetch(`${API_URL}/messages/create`, {
           method: "POST",
           mode: "cors",
           cache: "no-cache",

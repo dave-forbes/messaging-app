@@ -4,6 +4,7 @@ import styles from "./ConversationList.module.scss";
 import { useAuth } from "../../contexts/AuthContext";
 import { useConversation } from "../../contexts/ConversationContext";
 import { useNavbar } from "../../contexts/NavbarContext";
+import API_URL from "../../utils/apiConfig";
 
 export default function ConversationList() {
   const { user } = useAuth();
@@ -21,7 +22,7 @@ export default function ConversationList() {
     try {
       if (user) {
         const response = await fetch(
-          `http://localhost:3000/conversations/user/${user._id}`,
+          `${API_URL}/conversations/user/${user._id}`,
           {
             method: "GET",
             mode: "cors",

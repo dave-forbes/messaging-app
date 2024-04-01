@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import CreateMessage from "../CreateMessage/CreateMessage";
 import { MessageI } from "../../interfaces/interfaces";
+import API_URL from "../../utils/apiConfig";
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
@@ -23,9 +24,7 @@ export default function MessageArea() {
 
   const fetchMessages = async (conversationId: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/messages/${conversationId}`
-      );
+      const response = await fetch(`${API_URL}/messages/${conversationId}`);
       const data = await response.json();
       setMessages(data);
     } catch (error) {
