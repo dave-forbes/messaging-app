@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import styles from "./CreateConversation.module.scss";
 import { useNavbar } from "../../contexts/NavbarContext";
+import { useConversation } from "../../contexts/ConversationContext";
+import { UserI } from "../../interfaces/interfaces";
 
 export default function CreateConversation() {
   const { user } = useAuth();
@@ -11,8 +13,9 @@ export default function CreateConversation() {
   const [selectedUsers, setSelectedUsers] = useState<[] | any>([]);
   const [users, setUsers] = useState<{ value: string; label: string }[]>([]);
   const animatedComponents = makeAnimated();
-  const { setIsCreateConversationOpen, setIsConversationListOpen } =
-    useNavbar();
+  const { setIsCreateConversationOpen } = useNavbar();
+  const { setCurrentConversation } = useConversation();
+  const [error, setError] = useState("");
 
   // Fetch users from API
   useEffect(() => {
@@ -35,27 +38,30 @@ export default function CreateConversation() {
         throw new Error("Failed to fetch users");
       }
       const data = await response.json();
-      const options = data.map((item: any) => ({
-        value: item._id,
-        label: item.username,
+      const options = data.map((user: UserI) => ({
+        value: user._id,
+        label: user.username,
       }));
       setUsers(options);
-    } catch (error) {
-      console.error("Error fetching users:", error);
+    } catch (error: any) {
+      setError(error.toString());
     }
   };
 
   // Handle form submission
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const participants = selectedUsers.map((item: any) => item.value);
+    const participants = selectedUsers.map(
+      (selectedUser: any) => selectedUser.value
+    );
     participants.push(user?._id);
 
     const formData = {
-      title: title,
-      participants: participants,
+      title,
+      participants,
     };
+
     try {
       const response = await fetch(
         "http://localhost:3000/conversations/create",
@@ -71,22 +77,23 @@ export default function CreateConversation() {
           body: JSON.stringify(formData),
         }
       );
-
       if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error("Network error: Unable to connect to the server.");
+        }
         const data = await response.json();
         throw new Error(`${response.status}: ${data.message}`);
       }
-
       const data = await response.json();
-      console.log(data);
-      setIsConversationListOpen(true);
-    } catch (error: any) {
-      console.log(error);
-    }
 
-    // Reset form fields after submission if needed
-    setTitle("");
-    setSelectedUsers([]);
+      setTitle("");
+      setSelectedUsers([]);
+      setIsCreateConversationOpen(false);
+      setCurrentConversation(data.conversation);
+      setError("");
+    } catch (error: any) {
+      setError(error.toString());
+    }
   };
 
   return (
@@ -112,12 +119,14 @@ export default function CreateConversation() {
             onChange={
               (selectedOptions) => setSelectedUsers(selectedOptions || []) // Handle null case
             }
+            required
           />
         </div>
         <button type="submit">Create Conversation</button>
         <button onClick={() => setIsCreateConversationOpen(false)}>
           Close
         </button>
+        <p>{error}</p>
       </form>
     </div>
   );
