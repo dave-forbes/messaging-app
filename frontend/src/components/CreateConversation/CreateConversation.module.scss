@@ -32,3 +32,20 @@
     box-sizing: border-box;
   }
 }
+
+@media (max-width: 1400px) {
+  .createConversationContainer {
+  position: absolute;
+  background-color: white;
+  height: 100vh;
+  left: 100px;
+  }
+}
+
+@media (max-width:600px) {
+  .createConversationContainer {
+    left:0;
+    top:0;
+    height: calc(100vh - 104px);
+  }
+}
