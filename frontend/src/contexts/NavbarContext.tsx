@@ -15,6 +15,8 @@ interface NavContextType {
   setIsProfileOpen: Dispatch<SetStateAction<boolean>>;
   isCreateConversationOpen: boolean;
   setIsCreateConversationOpen: Dispatch<SetStateAction<boolean>>;
+  isAppInfoOpen: boolean;
+  setIsAppInfoOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultContextValue: NavContextType = {
@@ -24,6 +26,8 @@ const defaultContextValue: NavContextType = {
   setIsProfileOpen: () => {},
   isCreateConversationOpen: false,
   setIsCreateConversationOpen: () => {},
+  isAppInfoOpen: false,
+  setIsAppInfoOpen: () => {},
 };
 
 const NavbarContext = createContext(defaultContextValue);
@@ -37,30 +41,39 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCreateConversationOpen, setIsCreateConversationOpen] =
     useState(false);
+  const [isAppInfoOpen, setIsAppInfoOpen] = useState(false);
 
   useEffect(() => {
-    // If conversationListOpen is open, close isProfileOpen and isCreateConversationOpen
     if (isConversationListOpen) {
       setIsProfileOpen(false);
       setIsCreateConversationOpen(false);
+      setIsAppInfoOpen(false);
     }
   }, [isConversationListOpen]);
 
   useEffect(() => {
-    // If isProfileOpen is open, close conversationListOpen and isCreateConversationOpen
     if (isProfileOpen) {
       setIsConversationListOpen(false);
       setIsCreateConversationOpen(false);
+      setIsAppInfoOpen(false);
     }
   }, [isProfileOpen]);
 
   useEffect(() => {
-    // If isCreateConversationOpen is open, close conversationListOpen and isProfileOpen
     if (isCreateConversationOpen) {
       setIsConversationListOpen(false);
       setIsProfileOpen(false);
+      setIsAppInfoOpen(false);
     }
   }, [isCreateConversationOpen]);
+
+  useEffect(() => {
+    if (isAppInfoOpen) {
+      setIsConversationListOpen(false);
+      setIsProfileOpen(false);
+      setIsCreateConversationOpen(false);
+    }
+  }, [isAppInfoOpen]);
 
   return (
     <NavbarContext.Provider
@@ -71,6 +84,8 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
         setIsProfileOpen,
         isCreateConversationOpen,
         setIsCreateConversationOpen,
+        isAppInfoOpen,
+        setIsAppInfoOpen,
       }}
     >
       {children}
