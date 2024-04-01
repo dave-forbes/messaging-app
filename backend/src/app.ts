@@ -25,6 +25,9 @@ app.use("/users", userRouter);
 app.use("/conversations", conversationRouter);
 app.use("/messages", messageRouter);
 
+// Handle preflight requests
+app.options("*", cors(corsOptions));
+
 // generic error handling
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
