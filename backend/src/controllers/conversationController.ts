@@ -103,6 +103,8 @@ router.post("/create", [
         participants,
       });
 
+      await newConversation.populate("participants");
+
       res.status(200).json({
         success: true,
         message: "Conversation created Successfully",
