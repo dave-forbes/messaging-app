@@ -10,10 +10,12 @@ export default function Navbar() {
     setIsConversationListOpen,
     isProfileOpen,
     setIsProfileOpen,
+    setIsAppInfoOpen,
+    isAppInfoOpen,
   } = useNavbar();
   return (
     <div className={styles.navbarContainer}>
-      <HearingIcon />
+      <HearingIcon onClick={() => setIsAppInfoOpen(!isAppInfoOpen)} />
       <GroupsIcon
         onClick={() => setIsConversationListOpen(!isConversationListOpen)}
       />
