@@ -6,6 +6,7 @@ import HearingIcon from "@mui/icons-material/Hearing";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import API_URL from "../../utils/apiConfig";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ export default function Login() {
   const { login, user } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState("");
+
+  console.log(API_URL);
 
   useEffect(() => {
     if (user) {
