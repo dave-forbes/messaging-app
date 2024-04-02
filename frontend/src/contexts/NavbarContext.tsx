@@ -20,7 +20,7 @@ interface NavContextType {
 }
 
 const defaultContextValue: NavContextType = {
-  isConversationListOpen: true,
+  isConversationListOpen: false,
   setIsConversationListOpen: () => {},
   isProfileOpen: false,
   setIsProfileOpen: () => {},
@@ -37,7 +37,7 @@ export const useNavbar = () => useContext(NavbarContext);
 export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isConversationListOpen, setIsConversationListOpen] = useState(true);
+  const [isConversationListOpen, setIsConversationListOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCreateConversationOpen, setIsCreateConversationOpen] =
     useState(false);
