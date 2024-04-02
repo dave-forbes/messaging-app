@@ -53,6 +53,7 @@ export default function ConversationList() {
       }
     } catch (error: any) {
       setError(error.toString());
+      setLoading(false);
     }
   };
 
