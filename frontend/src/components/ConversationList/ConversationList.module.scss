@@ -14,6 +14,7 @@
   background-color: white;
   height: 100vh;
   left: 100px;
+  z-index: 1;
   }
 }
 
@@ -46,16 +47,6 @@
   gap: variables.$spacing-lg;
 }
 
-.button {
-  background-color: white;
-  border-radius: 50px;
-  padding: variables.$spacing-sm
-}
 
-.button:hover, .button:focus {
-  background-color: black;
-  color: white;
-  cursor: pointer;
-}
 
 
