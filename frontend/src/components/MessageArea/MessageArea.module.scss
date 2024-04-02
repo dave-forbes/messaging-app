@@ -67,3 +67,27 @@
   align-items: center;
   overflow: auto;
 }
+
+.noConversation {
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-sm;
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .noConversation {
+    flex-direction: column-reverse;
+    position: absolute;
+    text-align: center;
+    bottom: 150px;
+    left: 5px;
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+  
+}

@@ -9,6 +9,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import CreateMessage from "../CreateMessage/CreateMessage";
 import { MessageI } from "../../interfaces/interfaces";
 import API_URL from "../../utils/apiConfig";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
@@ -55,7 +56,10 @@ export default function MessageArea() {
     <div className={styles.messageAreaContainer}>
       <div className={styles.messageAreaInnerWrapper}>
         {!currentConversation ? (
-          <h1>Please select a conversation</h1>
+          <div className={styles.noConversation}>
+            <ArrowBackIcon />
+            <h1>Please select a conversation</h1>
+          </div>
         ) : (
           <>
             <div className={styles.topDiv}>
