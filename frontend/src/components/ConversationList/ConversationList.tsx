@@ -77,7 +77,7 @@ export default function ConversationList() {
           {error}
         </ul>
         <button
-          className={styles.button}
+          className="button"
           onClick={() => setIsCreateConversationOpen(true)}
         >
           Create

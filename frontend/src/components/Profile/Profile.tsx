@@ -21,8 +21,10 @@ export default function Profile() {
       <Avatar />
       <h1>{user?.username}</h1>
       <p>{user?.bio}</p>
-      <button onClick={handleClick}>logout</button>
-      <button>edit profile</button>
+      <button className="button" onClick={handleClick}>
+        logout
+      </button>
+      <button className="button">edit profile</button>
     </div>
   );
 }

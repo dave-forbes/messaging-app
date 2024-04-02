@@ -87,7 +87,9 @@ export default function Register() {
             />
           </div>
           <p>{error}</p>
-          <button type="submit">Register</button>
+          <button className="button" type="submit">
+            Register
+          </button>
           <p>
             Already have an account? <Link to="/">Log in</Link>
           </p>

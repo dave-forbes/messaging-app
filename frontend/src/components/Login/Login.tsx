@@ -79,7 +79,9 @@ export default function Login() {
             />
           </div>
           <p>{error}</p>
-          <button type="submit">Login</button>
+          <button className="button" type="submit">
+            Login
+          </button>
           <p>
             New user? <Link to="/register">Create an acccount</Link>
           </p>

@@ -120,8 +120,13 @@ export default function CreateConversation() {
             required
           />
         </div>
-        <button type="submit">Create Conversation</button>
-        <button onClick={() => setIsCreateConversationOpen(false)}>
+        <button className="button" type="submit">
+          Create Conversation
+        </button>
+        <button
+          className="button"
+          onClick={() => setIsCreateConversationOpen(false)}
+        >
           Close
         </button>
         <p>{error}</p>
