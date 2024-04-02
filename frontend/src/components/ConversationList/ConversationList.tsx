@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useConversation } from "../../contexts/ConversationContext";
 import { useNavbar } from "../../contexts/NavbarContext";
 import API_URL from "../../utils/apiConfig";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function ConversationList() {
   const { user } = useAuth();
@@ -12,9 +13,11 @@ export default function ConversationList() {
     useNavbar();
   const { currentConversation, setCurrentConversation } = useConversation();
   const [conversations, setConversations] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch messages belonging to the current conversation
+    // fetch conversations when component mounts and when current conversation changes
     fetchConversations();
   }, [currentConversation]);
 
@@ -34,11 +37,22 @@ export default function ConversationList() {
             },
           }
         );
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("Network Error: Failed to connect to server.");
+          } else {
+            const data = await response.json();
+            throw new Error(`${response.status}: ${data.message}`);
+          }
+        }
         const data = await response.json();
         setConversations(data);
+        setError("");
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching messages:", error);
+    } catch (error: any) {
+      setError(error.toString());
     }
   };
 
@@ -47,6 +61,7 @@ export default function ConversationList() {
       <div className={styles.listWrapper}>
         <h1 className={styles.title}>Conversations</h1>
         <ul className={styles.conversationList}>
+          {loading && <CircularProgress />}
           {conversations.map((conversation: any): any => (
             <Conversation
               key={conversation._id}
@@ -58,6 +73,7 @@ export default function ConversationList() {
               }}
             />
           ))}
+          {error}
         </ul>
         <button
           className={styles.button}
