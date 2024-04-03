@@ -12,7 +12,7 @@ export default function MessageRecieved({
 }: MessageRecievedProps) {
   return (
     <div className={styles.messageRecieved}>
-      <Avatar />
+      <Avatar user={null} />
       <div className={styles.messageContent}>
         <p className={styles.sender}>{sender}:</p>
         <p> {content}</p>

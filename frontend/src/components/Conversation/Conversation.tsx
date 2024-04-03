@@ -15,7 +15,7 @@ export default function Conversation({
 }: ConversationProps) {
   return (
     <li className={styles.conversation} onClick={onClick}>
-      <Avatar />
+      <Avatar user={null} />
       <div className={styles.conversationContent}>
         <div className={styles.flex}>
           <p>{title}</p>

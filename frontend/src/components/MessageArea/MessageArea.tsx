@@ -81,7 +81,7 @@ export default function MessageArea() {
           <>
             <div className={styles.topDiv}>
               <div className={styles.flex}>
-                <Avatar />
+                <Avatar user={null} />
                 <div className={styles.flex}>
                   {currentConversation?.participants.map((participant) => (
                     <h1 key={participant._id}>

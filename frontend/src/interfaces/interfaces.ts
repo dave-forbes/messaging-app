@@ -11,7 +11,7 @@ export interface UserI {
   bio?: string;
   token?: string;
   _id?: string;
-  avatar: string;
+  avatar?: string;
 }
 
 export interface ConversationI {
