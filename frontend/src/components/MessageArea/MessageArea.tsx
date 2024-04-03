@@ -10,12 +10,14 @@ import CreateMessage from "../CreateMessage/CreateMessage";
 import { MessageI } from "../../interfaces/interfaces";
 import API_URL from "../../utils/apiConfig";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
   const [messages, setMessages] = useState<MessageI[]>([]);
   const { user } = useAuth();
   const centralDivRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (currentConversation) {
@@ -25,11 +27,14 @@ export default function MessageArea() {
 
   const fetchMessages = async (conversationId: string) => {
     try {
+      setLoading(true);
       const response = await fetch(`${API_URL}/messages/${conversationId}`);
       const data = await response.json();
       setMessages(data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching messages:", error);
+      setLoading(false);
     }
   };
 
@@ -43,8 +48,6 @@ export default function MessageArea() {
     const ref = centralDivRef.current;
     if (ref) {
       ref.scrollTop = ref.scrollHeight;
-    } else {
-      console.log("Message container ref not found");
     }
   };
 
@@ -55,12 +58,18 @@ export default function MessageArea() {
   return (
     <div className={styles.messageAreaContainer}>
       <div className={styles.messageAreaInnerWrapper}>
-        {!currentConversation ? (
+        {!currentConversation && (
           <div className={styles.noConversation}>
             <ArrowBackIcon />
             <h1>Please select a conversation</h1>
           </div>
-        ) : (
+        )}
+        {loading && currentConversation && (
+          <div className={styles.loadingSpinner}>
+            <CircularProgress />
+          </div>
+        )}
+        {currentConversation && !loading && (
           <>
             <div className={styles.topDiv}>
               <div className={styles.flex}>
