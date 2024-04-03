@@ -1,8 +1,11 @@
 @use '../../styles/variables' as variables;
 
-.defaultAvatar {
+.avatar, .defaultAvatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  // background-color: variables.$placeholder-color;
+}
+
+.defaultAvatar {
+  background-color: variables.$placeholder-color;
 }

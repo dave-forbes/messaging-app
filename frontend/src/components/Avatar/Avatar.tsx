@@ -7,7 +7,7 @@ interface AvatarProps {
 
 export default function Avatar({ user }: AvatarProps) {
   return (
-    <div className={styles.defaultAvatar}>
+    <div className={user ? styles.avatar : styles.defaultAvatar}>
       <img src={user?.avatar} alt={`A picture of ${user?.username}`} />
     </div>
   );
