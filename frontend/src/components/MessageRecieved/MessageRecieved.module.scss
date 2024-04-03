@@ -15,10 +15,9 @@
     padding: variables.$spacing-md;
     gap: variables.$spacing-md;
     width: 40%;
-    
-    
-
-    
+    p {
+      word-wrap: break-word;
+    }
     }
     
 }
