@@ -34,8 +34,8 @@ router.post(
     .trim()
     .notEmpty()
     .withMessage("Message content is required")
-    .isLength({ max: 50 })
-    .withMessage("Message cannot exceed 50 characters"),
+    .isLength({ max: 500 })
+    .withMessage("Message cannot exceed 500 characters"),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const errors = validationResult(req);
