@@ -4,13 +4,16 @@ import React, {
   useContext,
   useEffect,
   ReactNode,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { UserI } from "../interfaces/interfaces";
 import API_URL from "../utils/apiConfig";
-import authFetch from "../utils/authFetch";
+import apiFetch from "../utils/apiFetch";
 
 interface AuthContextType {
   user: UserI | null;
+  setUser: Dispatch<SetStateAction<UserI | null>>;
   login: (userData: UserI) => any;
   logout: () => void;
   register: (userData: UserI) => any;
@@ -32,7 +35,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const register = async (userData: UserI) => {
     try {
-      const data = await authFetch(`${API_URL}/users/create`, userData);
+      const data = await apiFetch(
+        `${API_URL}/users/create`,
+        userData,
+        undefined,
+        "POST",
+        true
+      );
       return data;
     } catch (error) {
       return error;
@@ -41,7 +50,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const login = async (userData: UserI) => {
     try {
-      const data = await authFetch(`${API_URL}/users/login`, userData);
+      const data = await apiFetch(
+        `${API_URL}/users/login`,
+        userData,
+        undefined,
+        "POST",
+        true
+      );
       const { token, user } = data;
       user.token = token;
       if (token) {
@@ -60,7 +75,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register, setUser }}>
       {children}
     </AuthContext.Provider>
   );

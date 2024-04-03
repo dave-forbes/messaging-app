@@ -5,7 +5,7 @@ import { useConversation } from "../../contexts/ConversationContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import API_URL from "../../utils/apiConfig";
-import dataFetch from "../../utils/dataFetch";
+import apiFetch from "../../utils/apiFetch";
 
 interface CreateMessageProps {
   onMessageSent: () => void;
@@ -25,11 +25,12 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
         senderId: user?._id,
       };
       try {
-        const data = await dataFetch(
+        const data = await apiFetch(
           `${API_URL}/messages/create`,
           formData,
           user?.token,
-          "POST"
+          "POST",
+          true
         );
         setCurrentConversation(data.updatedConversation);
         onMessageSent();

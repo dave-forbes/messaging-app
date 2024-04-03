@@ -11,7 +11,7 @@ import { MessageI } from "../../interfaces/interfaces";
 import API_URL from "../../utils/apiConfig";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CircularProgress from "@mui/material/CircularProgress";
-import dataFetch from "../../utils/dataFetch";
+import apiFetch from "../../utils/apiFetch";
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
@@ -30,11 +30,12 @@ export default function MessageArea() {
   const fetchMessages = async (conversationId: string) => {
     try {
       setLoading(true);
-      const data = await dataFetch(
+      const data = await apiFetch(
         `${API_URL}/messages/${conversationId}`,
         {},
         user?.token,
-        "GET"
+        "GET",
+        true
       );
       setMessages(data);
       setLoading(false);
@@ -81,7 +82,7 @@ export default function MessageArea() {
           <>
             <div className={styles.topDiv}>
               <div className={styles.flex}>
-                <Avatar user={null} />
+                <Avatar user={null} size={40} />
                 <div className={styles.flex}>
                   {currentConversation?.participants.map((participant) => (
                     <h1 key={participant._id}>

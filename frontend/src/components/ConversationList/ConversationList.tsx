@@ -6,7 +6,7 @@ import { useConversation } from "../../contexts/ConversationContext";
 import { useNavbar } from "../../contexts/NavbarContext";
 import API_URL from "../../utils/apiConfig";
 import CircularProgress from "@mui/material/CircularProgress";
-import dataFetch from "../../utils/dataFetch";
+import apiFetch from "../../utils/apiFetch";
 
 export default function ConversationList() {
   const { user } = useAuth();
@@ -24,11 +24,12 @@ export default function ConversationList() {
 
   const fetchConversations = async () => {
     try {
-      const data = await dataFetch(
+      const data = await apiFetch(
         `${API_URL}/conversations/user/${user?._id}`,
         {},
         user?.token,
-        "GET"
+        "GET",
+        true
       );
       setConversations(data);
       setError("");

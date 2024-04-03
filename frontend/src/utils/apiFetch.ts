@@ -1,27 +1,31 @@
-export default async function dataFetch(
+export default async function apiFetch(
   url: string,
   formData: any,
   token: string | undefined,
-  method: string
+  method: string,
+  sendJSON: boolean
 ) {
-  if (!token) {
-    throw new Error("Unauthorized, please login.");
-  }
   try {
     const options: any = {
       method: method,
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       referrerPolicy: "no-referrer",
     };
 
-    // For GET requests, no need to include formData in the request body
+    if (sendJSON) {
+      options.headers["Content-Type"] = "application/json";
+    }
+
     if (method !== "GET") {
-      options.body = JSON.stringify(formData);
+      if (sendJSON) {
+        options.body = JSON.stringify(formData);
+      } else {
+        options.body = formData;
+      }
     }
 
     const response = await fetch(url, options);

@@ -7,7 +7,7 @@ import { useNavbar } from "../../contexts/NavbarContext";
 import { useConversation } from "../../contexts/ConversationContext";
 import { UserI } from "../../interfaces/interfaces";
 import API_URL from "../../utils/apiConfig";
-import dataFetch from "../../utils/dataFetch";
+import apiFetch from "../../utils/apiFetch";
 
 export default function CreateConversation() {
   const { user } = useAuth();
@@ -26,7 +26,13 @@ export default function CreateConversation() {
 
   const fetchUsers = async () => {
     try {
-      const data = await dataFetch(`${API_URL}/users/`, {}, user?.token, "GET");
+      const data = await apiFetch(
+        `${API_URL}/users/`,
+        {},
+        user?.token,
+        "GET",
+        true
+      );
       const options = data.map((user: UserI) => ({
         value: user._id,
         label: user.username,
@@ -52,11 +58,12 @@ export default function CreateConversation() {
     };
 
     try {
-      const data = await dataFetch(
+      const data = await apiFetch(
         `${API_URL}/conversations/create`,
         formData,
         user?.token,
-        "POST"
+        "POST",
+        true
       );
       setTitle("");
       setSelectedUsers([]);
