@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { UserI } from "../interfaces/interfaces";
 import API_URL from "../utils/apiConfig";
+import apiErrorHandling from "../utils/apiErrorHandling";
 
 interface AuthContextType {
   user: UserI | null;
@@ -55,7 +56,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }
       return data;
     } catch (error) {
-      return error;
+      return apiErrorHandling(error);
     }
   };
 
@@ -77,8 +78,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       if (!response.ok) {
         throw new Error(`${response.status}: ${data.message}`);
       }
-      const token = data.token;
-      const user = data.user;
+      const { token, user } = data;
       user.token = token;
 
       if (token) {
@@ -87,7 +87,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }
       return data;
     } catch (error: any) {
-      return error;
+      return apiErrorHandling(error);
     }
   };
 
