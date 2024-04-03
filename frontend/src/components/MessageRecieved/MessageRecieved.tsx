@@ -1,9 +1,10 @@
 import styles from "./MessageRecieved.module.scss";
 import Avatar from "../Avatar/Avatar";
+import { UserI } from "../../interfaces/interfaces";
 
 interface MessageRecievedProps {
   content: string;
-  sender: string;
+  sender: UserI;
 }
 
 export default function MessageRecieved({
@@ -12,9 +13,9 @@ export default function MessageRecieved({
 }: MessageRecievedProps) {
   return (
     <div className={styles.messageRecieved}>
-      <Avatar user={null} size={40} />
+      <Avatar user={sender} size={40} />
       <div className={styles.messageContent}>
-        <p className={styles.sender}>{sender}:</p>
+        <p className={styles.sender}>{sender.username}:</p>
         <p> {content}</p>
       </div>
     </div>
