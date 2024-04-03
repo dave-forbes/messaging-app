@@ -42,6 +42,7 @@
   padding-inline:variables.$spacing-sm;
   gap: variables.$spacing-lg;
   overflow-y: scroll;
+  overflow-x: hidden;
   height:60vh;
 }
 
@@ -90,4 +91,10 @@
     }
   }
   
+}
+
+.loadingSpinner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
