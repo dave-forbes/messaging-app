@@ -6,13 +6,12 @@ import styles from "./Profile.module.scss";
 
 export default function Profile() {
   const { setCurrentConversation } = useConversation();
-  const { setIsConversationListOpen, setIsProfileOpen } = useNavbar();
   const { logout, user } = useAuth();
+  const { setIsProfileOpen, setIsUpdateProfileOpen } = useNavbar();
 
-  const handleClick = () => {
+  const handleLogoutClick = () => {
     logout();
     setCurrentConversation(null);
-    setIsConversationListOpen(true);
     setIsProfileOpen(false);
   };
 
@@ -21,10 +20,12 @@ export default function Profile() {
       <Avatar />
       <h1>{user?.username}</h1>
       <p>{user?.bio}</p>
-      <button className="button" onClick={handleClick}>
+      <button className="button" onClick={handleLogoutClick}>
         logout
       </button>
-      <button className="button">edit profile</button>
+      <button className="button" onClick={() => setIsUpdateProfileOpen(true)}>
+        edit profile
+      </button>
     </div>
   );
 }
