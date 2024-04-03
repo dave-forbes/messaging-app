@@ -43,11 +43,17 @@
 }
 
 .error {
-  position: absolute;
-  top: -100px;
   background-color: variables.$background-color;
   text-align: center;
   padding: variables.$spacing-sm;
   color: red;
+}
+
+.errorContainer {
+  position: absolute;
+  top: -100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
