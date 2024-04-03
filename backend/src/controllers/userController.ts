@@ -59,6 +59,7 @@ router.get("/:id", [
 // create new user
 
 router.post("/create", [
+  upload.single("avatar"),
   body("username").trim().notEmpty().withMessage("Username is required"),
   body("password")
     .isLength({ min: 8 })
@@ -92,12 +93,17 @@ router.post("/create", [
         return;
       }
 
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+
+      const imagePath = req.file ? `${baseUrl}/img/${req.file.filename}` : "";
+
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const newUser = await UserModel.create({
         username,
         password: hashedPassword,
         bio,
+        avatar: imagePath,
       });
 
       res.status(200).json({
@@ -179,17 +185,17 @@ router.post(
 router.put("/update/:id", [
   authenticateToken,
   authorizeUser,
-  upload.single("image"),
+  upload.single("avatar"),
   body("username").trim().notEmpty().withMessage("Username is required"),
-  body("password")
-    .isLength({ min: 8 })
-    .withMessage("Password must be at least 8 characters long"),
-  body("confirmPassword").custom((value, { req }) => {
-    if (value !== req.body.password) {
-      throw new Error("Passwords do not match");
-    }
-    return true;
-  }),
+  // body("password")
+  //   .isLength({ min: 8 })
+  //   .withMessage("Password must be at least 8 characters long"),
+  // body("confirmPassword").custom((value, { req }) => {
+  //   if (value !== req.body.password) {
+  //     throw new Error("Passwords do not match");
+  //   }
+  //   return true;
+  // }),
   body("bio")
     .trim()
     .isLength({ max: 500 })
@@ -210,8 +216,6 @@ router.put("/update/:id", [
         });
         return;
       }
-
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
       const baseUrl = `${req.protocol}://${req.get("host")}`;
       let imagePath = user.avatar;
@@ -241,11 +245,17 @@ router.put("/update/:id", [
         imagePath = `${baseUrl}/img/${req.file.filename}`;
       }
 
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      //  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
       const updatedUser = await UserModel.findByIdAndUpdate(
         req.params.id,
         {
           username: req.body.username,
-          password: hashedPassword,
+          // password: hashedPassword,
           bio: req.body.bio,
           avatar: imagePath,
         },
