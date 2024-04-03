@@ -5,7 +5,7 @@ import { useConversation } from "../../contexts/ConversationContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import API_URL from "../../utils/apiConfig";
-import apiErrorHandling from "../../utils/apiErrorHandling";
+import dataFetch from "../../utils/dataFetch";
 
 interface CreateMessageProps {
   onMessageSent: () => void;
@@ -25,36 +25,17 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
         senderId: user?._id,
       };
       try {
-        const response = await fetch(`${API_URL}/messages/create`, {
-          method: "POST",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user?.token}`,
-          },
-          referrerPolicy: "no-referrer",
-          body: JSON.stringify(formData),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          if (data.errors && Array.isArray(data.errors)) {
-            const errorMessages = data.errors.map(
-              (error: { msg: string }) => error.msg
-            );
-            const formattedErrorMessage = errorMessages.join(", ");
-            throw new Error(`${response.status}: ${formattedErrorMessage}`);
-          } else {
-            throw new Error(`${response.status}: ${data.message}`);
-          }
-        }
+        const data = await dataFetch(
+          `${API_URL}/messages/create`,
+          formData,
+          user?.token,
+          "POST"
+        );
         setCurrentConversation(data.updatedConversation);
         onMessageSent();
         setError("");
       } catch (error: any) {
-        setError(apiErrorHandling(error).toString());
+        setError(error.toString());
       }
       setContent("");
     }

@@ -11,6 +11,7 @@ import { MessageI } from "../../interfaces/interfaces";
 import API_URL from "../../utils/apiConfig";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CircularProgress from "@mui/material/CircularProgress";
+import dataFetch from "../../utils/dataFetch";
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
@@ -18,6 +19,7 @@ export default function MessageArea() {
   const { user } = useAuth();
   const centralDivRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (currentConversation) {
@@ -28,12 +30,17 @@ export default function MessageArea() {
   const fetchMessages = async (conversationId: string) => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/messages/${conversationId}`);
-      const data = await response.json();
+      const data = await dataFetch(
+        `${API_URL}/messages/${conversationId}`,
+        {},
+        user?.token,
+        "GET"
+      );
       setMessages(data);
       setLoading(false);
-    } catch (error) {
-      console.error("Error fetching messages:", error);
+      setError("");
+    } catch (error: any) {
+      setError(error.toString());
       setLoading(false);
     }
   };
@@ -58,18 +65,19 @@ export default function MessageArea() {
   return (
     <div className={styles.messageAreaContainer}>
       <div className={styles.messageAreaInnerWrapper}>
-        {!currentConversation && (
+        {error && error.length > 0 && <p className={styles.error}>{error}</p>}
+        {!currentConversation && !error && (
           <div className={styles.noConversation}>
             <ArrowBackIcon />
             <h1>Please select a conversation</h1>
           </div>
         )}
-        {loading && currentConversation && (
+        {loading && currentConversation && !error && (
           <div className={styles.loadingSpinner}>
             <CircularProgress />
           </div>
         )}
-        {currentConversation && !loading && (
+        {currentConversation && !loading && !error && (
           <>
             <div className={styles.topDiv}>
               <div className={styles.flex}>

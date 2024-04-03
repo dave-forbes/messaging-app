@@ -6,7 +6,7 @@ import { useConversation } from "../../contexts/ConversationContext";
 import { useNavbar } from "../../contexts/NavbarContext";
 import API_URL from "../../utils/apiConfig";
 import CircularProgress from "@mui/material/CircularProgress";
-import apiErrorHandling from "../../utils/apiErrorHandling";
+import dataFetch from "../../utils/dataFetch";
 
 export default function ConversationList() {
   const { user } = useAuth();
@@ -24,32 +24,17 @@ export default function ConversationList() {
 
   const fetchConversations = async () => {
     try {
-      if (user) {
-        const response = await fetch(
-          `${API_URL}/conversations/user/${user._id}`,
-          {
-            method: "GET",
-            mode: "cors",
-            cache: "no-cache",
-            referrerPolicy: "no-referrer",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user.token}`, // Include JWT token in the Authorization header
-            },
-          }
-        );
-
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(`${response.status}: ${data.message}`);
-        }
-        const data = await response.json();
-        setConversations(data);
-        setError("");
-        setLoading(false);
-      }
+      const data = await dataFetch(
+        `${API_URL}/conversations/user/${user?._id}`,
+        {},
+        user?.token,
+        "GET"
+      );
+      setConversations(data);
+      setError("");
+      setLoading(false);
     } catch (error: any) {
-      setError(apiErrorHandling(error).toString());
+      setError(error.toString());
       setLoading(false);
     }
   };

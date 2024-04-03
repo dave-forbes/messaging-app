@@ -7,6 +7,7 @@ import { useNavbar } from "../../contexts/NavbarContext";
 import { useConversation } from "../../contexts/ConversationContext";
 import { UserI } from "../../interfaces/interfaces";
 import API_URL from "../../utils/apiConfig";
+import dataFetch from "../../utils/dataFetch";
 
 export default function CreateConversation() {
   const { user } = useAuth();
@@ -25,20 +26,7 @@ export default function CreateConversation() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(`${API_URL}/users/`, {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-        referrerPolicy: "no-referrer",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.token}`, // Include JWT token in the Authorization header
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch users");
-      }
-      const data = await response.json();
+      const data = await dataFetch(`${API_URL}/users/`, {}, user?.token, "GET");
       const options = data.map((user: UserI) => ({
         value: user._id,
         label: user.username,
@@ -64,23 +52,12 @@ export default function CreateConversation() {
     };
 
     try {
-      const response = await fetch(`${API_URL}/conversations/create`, {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.token}`,
-        },
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(`${response.status}: ${data.message}`);
-      }
-      const data = await response.json();
-
+      const data = await dataFetch(
+        `${API_URL}/conversations/create`,
+        formData,
+        user?.token,
+        "POST"
+      );
       setTitle("");
       setSelectedUsers([]);
       setIsCreateConversationOpen(false);
