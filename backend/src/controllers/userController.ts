@@ -7,6 +7,9 @@ import dotenv from "dotenv";
 import authenticateToken from "../utils/authenticateToken";
 import { body, validationResult } from "express-validator";
 import authorizeUser from "../utils/authorizeUser";
+import upload from "../utils/multerSetup";
+import fs from "fs";
+import path from "path";
 
 dotenv.config();
 
@@ -176,6 +179,7 @@ router.post(
 router.put("/update/:id", [
   authenticateToken,
   authorizeUser,
+  upload.single("image"),
   body("username").trim().notEmpty().withMessage("Username is required"),
   body("password")
     .isLength({ min: 8 })
@@ -209,13 +213,41 @@ router.put("/update/:id", [
 
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      let imagePath = user.avatar;
+
+      if (req.file) {
+        if (imagePath) {
+          const relativeImagePath = imagePath.replace(`${baseUrl}/img/`, "");
+          const parentDir = path.resolve(__dirname, "../..");
+          const originalUrl = path.join(
+            parentDir,
+            "public/img/",
+            relativeImagePath
+          );
+
+          if (fs.existsSync(originalUrl)) {
+            try {
+              fs.unlinkSync(originalUrl); // Delete the original image
+              console.log("Original image deleted successfully");
+            } catch (error) {
+              console.error("Error deleting original image:", error);
+            }
+          } else {
+            console.log("Doesn't exist", originalUrl);
+          }
+        }
+
+        imagePath = `${baseUrl}/img/${req.file.filename}`;
+      }
+
       const updatedUser = await UserModel.findByIdAndUpdate(
         req.params.id,
         {
           username: req.body.username,
           password: hashedPassword,
-          avatar: req.body.avatar,
           bio: req.body.bio,
+          avatar: imagePath,
         },
         { new: true } // to return the updated document
       );
