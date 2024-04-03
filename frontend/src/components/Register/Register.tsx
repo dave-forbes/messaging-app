@@ -10,6 +10,7 @@ export default function Register() {
     password: "",
     confirmPassword: "",
     bio: "",
+    avatar: "",
   });
   const [error, setError] = useState("");
   const { register, login } = useAuth();
@@ -18,12 +19,32 @@ export default function Register() {
   const { username, password, confirmPassword, bio } = formData;
 
   const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "avatar") {
+      setFormData({ ...formData, avatar: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await register(formData);
+    const formDataToSend = new FormData();
+    if (formData.username) {
+      formDataToSend.append("username", formData.username);
+    }
+    if (formData.password) {
+      formDataToSend.append("password", formData.password);
+    }
+    if (formData.confirmPassword) {
+      formDataToSend.append("confirmPassword", formData.confirmPassword);
+    }
+    if (formData.bio) {
+      formDataToSend.append("bio", formData.bio);
+    }
+    if (formData.avatar) {
+      formDataToSend.append("avatar", formData.avatar);
+    }
+    const response = await register(formDataToSend);
     if (response.success) {
       const { username, password } = formData;
       const loginResponse = await login({ username, password });
@@ -84,6 +105,16 @@ export default function Register() {
               value={bio}
               onChange={handleChange}
               rows={4}
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="avatar">Avatar:</label>
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              accept="image/*"
+              onChange={handleChange}
             />
           </div>
           <p>{error}</p>
