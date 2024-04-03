@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { UserI } from "../interfaces/interfaces";
 import API_URL from "../utils/apiConfig";
-import apiErrorHandling from "../utils/apiErrorHandling";
+import authFetch from "../utils/authFetch";
 
 interface AuthContextType {
   user: UserI | null;
@@ -32,62 +32,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const register = async (userData: UserI) => {
     try {
-      const response = await fetch(`${API_URL}/users/create`, {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify(userData),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        if (data.errors && Array.isArray(data.errors)) {
-          const errorMessages = data.errors.map(
-            (error: { msg: string }) => error.msg
-          );
-          const formattedErrorMessage = errorMessages.join(", ");
-          throw new Error(`${response.status}: ${formattedErrorMessage}`);
-        } else {
-          throw new Error(`${response.status}: ${data.message}`);
-        }
-      }
+      const data = await authFetch(`${API_URL}/users/create`, userData);
       return data;
     } catch (error) {
-      return apiErrorHandling(error);
+      return error;
     }
   };
 
   const login = async (userData: UserI) => {
     try {
-      const response = await fetch(`${API_URL}/users/login`, {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify(userData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(`${response.status}: ${data.message}`);
-      }
+      const data = await authFetch(`${API_URL}/users/login`, userData);
       const { token, user } = data;
       user.token = token;
-
       if (token) {
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
       }
       return data;
     } catch (error: any) {
-      return apiErrorHandling(error);
+      return error;
     }
   };
 
