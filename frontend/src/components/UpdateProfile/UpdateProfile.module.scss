@@ -17,6 +17,8 @@
   flex-direction: column;
   gap:variables.$spacing-lg;
   align-items: center;
+  height: 60vh;
+  overflow: scroll;
 }
 
 .inputGroup {
