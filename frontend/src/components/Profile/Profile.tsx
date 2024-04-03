@@ -17,7 +17,7 @@ export default function Profile() {
 
   return (
     <div className={styles.profileContainer}>
-      <Avatar />
+      <Avatar user={user} />
       <h1>{user?.username}</h1>
       <p>{user?.bio}</p>
       <button className="button" onClick={handleLogoutClick}>
