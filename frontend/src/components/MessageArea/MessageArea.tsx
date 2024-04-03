@@ -65,7 +65,7 @@ export default function MessageArea() {
   return (
     <div className={styles.messageAreaContainer}>
       <div className={styles.messageAreaInnerWrapper}>
-        {error && error.length > 0 && <p className={styles.error}>{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
         {!currentConversation && !error && (
           <div className={styles.noConversation}>
             <ArrowBackIcon />

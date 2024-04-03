@@ -57,7 +57,7 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
         placeholder="write a message..."
       />
       <SendIcon onClick={handleSendMessage} style={{ cursor: "pointer" }} />
-      <p className={styles.error}>{error}</p>
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 }
