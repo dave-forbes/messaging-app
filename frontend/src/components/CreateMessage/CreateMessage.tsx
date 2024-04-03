@@ -35,12 +35,19 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
           body: JSON.stringify(formData),
         });
 
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(`${response.status}: ${data.message}`);
-        }
-
         const data = await response.json();
+
+        if (!response.ok) {
+          if (data.errors && Array.isArray(data.errors)) {
+            const errorMessages = data.errors.map(
+              (error: { msg: string }) => error.msg
+            );
+            const formattedErrorMessage = errorMessages.join(", ");
+            throw new Error(`${response.status}: ${formattedErrorMessage}`);
+          } else {
+            throw new Error(`${response.status}: ${data.message}`);
+          }
+        }
         console.log(data);
         setCurrentConversation(data.updatedConversation);
         onMessageSent();
