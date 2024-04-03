@@ -2,6 +2,8 @@ import express from "express";
 import { NextFunction, Request, Response } from "express";
 import { MessageModel } from "../models/message";
 import { ConversationModel } from "../models/conversation";
+import authenticateToken from "../utils/authenticateToken";
+import { body, validationResult } from "express-validator";
 const router = express.Router();
 
 // get all messages for a specifc conversation
@@ -27,8 +29,21 @@ router.get(
 
 router.post(
   "/create",
+  authenticateToken,
+  body("content")
+    .trim()
+    .notEmpty()
+    .withMessage("Message content is required")
+    .isLength({ max: 50 })
+    .withMessage("Message cannot exceed 50 characters"),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
       const messageData = req.body;
       const { conversationId, senderId, content } = messageData;
       const newMessage = await MessageModel.create({
