@@ -1,4 +1,4 @@
-import React, {
+import {
   createContext,
   useState,
   useContext,
@@ -17,6 +17,8 @@ interface NavContextType {
   setIsCreateConversationOpen: Dispatch<SetStateAction<boolean>>;
   isAppInfoOpen: boolean;
   setIsAppInfoOpen: Dispatch<SetStateAction<boolean>>;
+  isUpdateProfileOpen: boolean;
+  setIsUpdateProfileOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultContextValue: NavContextType = {
@@ -28,6 +30,8 @@ const defaultContextValue: NavContextType = {
   setIsCreateConversationOpen: () => {},
   isAppInfoOpen: false,
   setIsAppInfoOpen: () => {},
+  isUpdateProfileOpen: false,
+  setIsUpdateProfileOpen: () => {},
 };
 
 const NavbarContext = createContext(defaultContextValue);
@@ -42,38 +46,35 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
   const [isCreateConversationOpen, setIsCreateConversationOpen] =
     useState(false);
   const [isAppInfoOpen, setIsAppInfoOpen] = useState(false);
+  const [isUpdateProfileOpen, setIsUpdateProfileOpen] = useState(false);
 
-  useEffect(() => {
-    if (isConversationListOpen) {
-      setIsProfileOpen(false);
-      setIsCreateConversationOpen(false);
-      setIsAppInfoOpen(false);
-    }
-  }, [isConversationListOpen]);
+  const allSetStates = [
+    setIsAppInfoOpen,
+    setIsConversationListOpen,
+    setIsCreateConversationOpen,
+    setIsProfileOpen,
+    setIsUpdateProfileOpen,
+  ];
 
-  useEffect(() => {
-    if (isProfileOpen) {
-      setIsConversationListOpen(false);
-      setIsCreateConversationOpen(false);
-      setIsAppInfoOpen(false);
-    }
-  }, [isProfileOpen]);
+  const useEffectNavElements = (
+    state: Boolean,
+    setState: Dispatch<SetStateAction<boolean>>
+  ) => {
+    useEffect(() => {
+      if (state) {
+        const excludedSetStates = allSetStates.filter(
+          (item) => setState !== item
+        );
+        excludedSetStates.forEach((setState) => setState(false));
+      }
+    }, [state]);
+  };
 
-  useEffect(() => {
-    if (isCreateConversationOpen) {
-      setIsConversationListOpen(false);
-      setIsProfileOpen(false);
-      setIsAppInfoOpen(false);
-    }
-  }, [isCreateConversationOpen]);
-
-  useEffect(() => {
-    if (isAppInfoOpen) {
-      setIsConversationListOpen(false);
-      setIsProfileOpen(false);
-      setIsCreateConversationOpen(false);
-    }
-  }, [isAppInfoOpen]);
+  useEffectNavElements(isConversationListOpen, setIsConversationListOpen);
+  useEffectNavElements(isProfileOpen, setIsProfileOpen);
+  useEffectNavElements(isCreateConversationOpen, setIsCreateConversationOpen);
+  useEffectNavElements(isAppInfoOpen, setIsAppInfoOpen);
+  useEffectNavElements(isUpdateProfileOpen, setIsUpdateProfileOpen);
 
   return (
     <NavbarContext.Provider
@@ -86,6 +87,8 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
         setIsCreateConversationOpen,
         isAppInfoOpen,
         setIsAppInfoOpen,
+        isUpdateProfileOpen,
+        setIsUpdateProfileOpen,
       }}
     >
       {children}
