@@ -5,6 +5,7 @@ import { useConversation } from "../../contexts/ConversationContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import API_URL from "../../utils/apiConfig";
+import apiErrorHandling from "../../utils/apiErrorHandling";
 
 interface CreateMessageProps {
   onMessageSent: () => void;
@@ -14,6 +15,7 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
   const [content, setContent] = useState("");
   const { currentConversation, setCurrentConversation } = useConversation();
   const { user } = useAuth();
+  const [error, setError] = useState("");
 
   const handleSendMessage = async () => {
     if (content.trim() !== "") {
@@ -48,11 +50,11 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
             throw new Error(`${response.status}: ${data.message}`);
           }
         }
-        console.log(data);
         setCurrentConversation(data.updatedConversation);
         onMessageSent();
+        setError("");
       } catch (error: any) {
-        console.log(error);
+        setError(apiErrorHandling(error).toString());
       }
       setContent("");
     }
@@ -74,6 +76,7 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
         placeholder="write a message..."
       />
       <SendIcon onClick={handleSendMessage} style={{ cursor: "pointer" }} />
+      <p className={styles.error}>{error}</p>
     </div>
   );
 }
