@@ -4,6 +4,7 @@
   display: flex;
   justify-content: space-between;
   padding-top: variables.$spacing-sm;
+  position: relative;
 
   svg {
     width: 40px;
@@ -39,5 +40,14 @@
       padding: 5px;
     }
   }
+}
+
+.error {
+  position: absolute;
+  top: -100px;
+  background-color: variables.$background-color;
+  text-align: center;
+  padding: variables.$spacing-sm;
+  color: red;
 }
 
