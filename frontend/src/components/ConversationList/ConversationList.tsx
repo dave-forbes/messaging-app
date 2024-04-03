@@ -6,6 +6,7 @@ import { useConversation } from "../../contexts/ConversationContext";
 import { useNavbar } from "../../contexts/NavbarContext";
 import API_URL from "../../utils/apiConfig";
 import CircularProgress from "@mui/material/CircularProgress";
+import apiErrorHandling from "../../utils/apiErrorHandling";
 
 export default function ConversationList() {
   const { user } = useAuth();
@@ -39,12 +40,8 @@ export default function ConversationList() {
         );
 
         if (!response.ok) {
-          if (response.status === 404) {
-            throw new Error("Network Error: Failed to connect to server.");
-          } else {
-            const data = await response.json();
-            throw new Error(`${response.status}: ${data.message}`);
-          }
+          const data = await response.json();
+          throw new Error(`${response.status}: ${data.message}`);
         }
         const data = await response.json();
         setConversations(data);
@@ -52,7 +49,7 @@ export default function ConversationList() {
         setLoading(false);
       }
     } catch (error: any) {
-      setError(error.toString());
+      setError(apiErrorHandling(error).toString());
       setLoading(false);
     }
   };

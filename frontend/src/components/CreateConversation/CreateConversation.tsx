@@ -76,9 +76,6 @@ export default function CreateConversation() {
         body: JSON.stringify(formData),
       });
       if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error("Network error: Unable to connect to the server.");
-        }
         const data = await response.json();
         throw new Error(`${response.status}: ${data.message}`);
       }
