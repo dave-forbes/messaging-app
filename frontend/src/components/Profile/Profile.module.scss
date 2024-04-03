@@ -7,8 +7,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: variables.$spacing-md;
+  gap: variables.$spacing-lg;
   padding: 0 variables.$spacing-sm;
+  text-align: center;
+}
+
+.profileControls {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 @media (max-width: 1400px) {
