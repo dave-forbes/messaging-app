@@ -82,15 +82,12 @@ export default function MessageArea() {
           <>
             <div className={styles.topDiv}>
               <div className={styles.flex}>
-                <Avatar user={null} size={40} />
-                <div className={styles.flex}>
-                  {currentConversation?.participants.map((participant) => (
-                    <h1 key={participant._id}>
-                      {participant.username !== user?.username &&
-                        `${participant.username}, `}
-                    </h1>
-                  ))}
-                </div>
+                {currentConversation?.participants.map((participant) => (
+                  <div className={styles.flex} key={participant._id}>
+                    <Avatar user={participant} size={40} />
+                    <h1 key={participant._id}>{`${participant.username}, `}</h1>
+                  </div>
+                ))}
               </div>
               <MoreVertIcon />
             </div>
@@ -102,7 +99,7 @@ export default function MessageArea() {
                   <MessageRecieved
                     key={message._id}
                     content={message.content}
-                    sender={message.senderId.username}
+                    sender={message.senderId}
                   />
                 )
               )}
