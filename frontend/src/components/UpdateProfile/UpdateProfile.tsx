@@ -7,23 +7,33 @@ export default function UpdateProfile() {
     password: "",
     confirmPassword: "",
     bio: "",
+    avatar: null, // New field to store the uploaded avatar
   });
   const [error, setError] = useState("");
 
   const { username, password, confirmPassword, bio } = formData;
 
   const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "avatar") {
+      setFormData({ ...formData, avatar: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
+    try {
+      setError("");
+    } catch (error: any) {
+      console.log(error);
+    }
   };
   return (
     <div className={styles.updateProfileContainer}>
-      <h1>Update Profile</h1>;
-      <form onSubmit={handleSubmit} className={styles.registerForm}>
+      <h1>Update Profile</h1>
+      <form onSubmit={handleSubmit} className={styles.updateForm}>
         <div className={styles.inputGroup}>
           <label htmlFor="username">Username:</label>
           <input
@@ -67,9 +77,19 @@ export default function UpdateProfile() {
             rows={4}
           />
         </div>
+        <div className={styles.inputGroup}>
+          <label htmlFor="avatar">Avatar:</label>
+          <input
+            type="file"
+            id="avatar"
+            name="avatar"
+            accept="image/*"
+            onChange={handleChange}
+          />
+        </div>
         <p>{error}</p>
         <button className="button" type="submit">
-          Register
+          Update
         </button>
       </form>
     </div>
