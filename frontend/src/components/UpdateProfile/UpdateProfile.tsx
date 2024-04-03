@@ -1,17 +1,21 @@
 import { FormEvent, useState } from "react";
 import styles from "./UpdateProfile.module.scss";
+import { useAuth } from "../../contexts/AuthContext";
+import apiFetch from "../../utils/apiFetch";
+import API_URL from "../../utils/apiConfig";
+import { useNavbar } from "../../contexts/NavbarContext";
 
 export default function UpdateProfile() {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
-    bio: "",
-    avatar: null, // New field to store the uploaded avatar
+    username: user?.username,
+    bio: user?.bio,
+    avatar: null,
   });
   const [error, setError] = useState("");
+  const { setIsProfileOpen, setIsUpdateProfileOpen } = useNavbar();
 
-  const { username, password, confirmPassword, bio } = formData;
+  const { username, bio } = formData;
 
   const handleChange = (e: any) => {
     if (e.target.name === "avatar") {
@@ -23,17 +27,39 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
     try {
+      const formDataToSend = new FormData();
+      if (formData.username) {
+        formDataToSend.append("username", formData.username);
+      }
+      if (formData.bio) {
+        formDataToSend.append("bio", formData.bio);
+      }
+      if (formData.avatar) {
+        formDataToSend.append("avatar", formData.avatar);
+      }
+
+      await apiFetch(
+        `${API_URL}/users/update/${user?._id}`,
+        formDataToSend,
+        user?.token,
+        "PUT",
+        false
+      );
+      setIsProfileOpen(true);
       setError("");
     } catch (error: any) {
-      console.log(error);
+      setError(error.toString());
     }
   };
   return (
     <div className={styles.updateProfileContainer}>
       <h1>Update Profile</h1>
-      <form onSubmit={handleSubmit} className={styles.updateForm}>
+      <form
+        onSubmit={handleSubmit}
+        className={styles.updateForm}
+        encType="multipart/form-data"
+      >
         <div className={styles.inputGroup}>
           <label htmlFor="username">Username:</label>
           <input
@@ -45,7 +71,7 @@ export default function UpdateProfile() {
             required
           />
         </div>
-        <div className={styles.inputGroup}>
+        {/* <div className={styles.inputGroup}>
           <label htmlFor="password">Password:</label>
           <input
             type="password"
@@ -66,7 +92,7 @@ export default function UpdateProfile() {
             onChange={handleChange}
             required
           />
-        </div>
+        </div> */}
         <div className={styles.inputGroup}>
           <label htmlFor="bio">Bio:</label>
           <textarea
@@ -88,9 +114,17 @@ export default function UpdateProfile() {
           />
         </div>
         <p>{error}</p>
-        <button className="button" type="submit">
-          Update
-        </button>
+        <div className={styles.updateProfileControls}>
+          <button className="button" type="submit">
+            Update
+          </button>
+          <button
+            className="button"
+            onClick={() => setIsUpdateProfileOpen(false)}
+          >
+            Close
+          </button>
+        </div>
       </form>
     </div>
   );
