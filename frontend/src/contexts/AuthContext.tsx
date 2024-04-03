@@ -16,7 +16,7 @@ interface AuthContextType {
   setUser: Dispatch<SetStateAction<UserI | null>>;
   login: (userData: UserI) => any;
   logout: () => void;
-  register: (userData: UserI) => any;
+  register: (userData: FormData) => any;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,14 +33,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, []);
 
-  const register = async (userData: UserI) => {
+  const register = async (userData: FormData) => {
     try {
       const data = await apiFetch(
         `${API_URL}/users/create`,
         userData,
         undefined,
         "POST",
-        true
+        false
       );
       return data;
     } catch (error) {
