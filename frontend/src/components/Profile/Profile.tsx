@@ -20,12 +20,14 @@ export default function Profile() {
       <Avatar user={user} size={150} />
       <h1>{user?.username}</h1>
       <p>{user?.bio}</p>
-      <button className="button" onClick={handleLogoutClick}>
-        logout
-      </button>
-      <button className="button" onClick={() => setIsUpdateProfileOpen(true)}>
-        edit profile
-      </button>
+      <div className={styles.profileControls}>
+        <button className="button" onClick={handleLogoutClick}>
+          Logout
+        </button>
+        <button className="button" onClick={() => setIsUpdateProfileOpen(true)}>
+          Update profile
+        </button>
+      </div>
     </div>
   );
 }
