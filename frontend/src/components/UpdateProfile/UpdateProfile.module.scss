@@ -43,6 +43,12 @@
   }
 }
 
+.updateProfileControls {
+  display: flex;
+  justify-content: space-evenly;
+  width: 80%;
+}
+
 @media (max-width: 1400px) {
   .updateProfileContainer {
   position: absolute;
