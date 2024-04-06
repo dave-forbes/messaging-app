@@ -6,10 +6,10 @@ import React, {
   ReactNode,
   Dispatch,
   SetStateAction,
-} from "react";
-import { UserI } from "../interfaces/interfaces";
-import API_URL from "../utils/apiConfig";
-import apiFetch from "../utils/apiFetch";
+} from 'react';
+import { UserI } from '../interfaces/interfaces';
+import API_URL from '../utils/apiConfig';
+import apiFetch from '../utils/apiFetch';
 
 interface AuthContextType {
   user: UserI | null;
@@ -19,7 +19,9 @@ interface AuthContextType {
   register: (userData: FormData) => any;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -27,7 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [user, setUser] = useState<UserI | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -39,7 +41,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         `${API_URL}/users/create`,
         userData,
         undefined,
-        "POST",
+        'POST',
         false
       );
       return data;
@@ -54,14 +56,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         `${API_URL}/users/login`,
         userData,
         undefined,
-        "POST",
+        'POST',
         true
       );
       const { token, user } = data;
       user.token = token;
       if (token) {
         setUser(user);
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
       }
       return data;
     } catch (error: any) {
@@ -70,12 +72,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, setUser }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, register, setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -84,7 +88,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

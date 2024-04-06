@@ -6,7 +6,7 @@ import {
   Dispatch,
   SetStateAction,
   useEffect,
-} from "react";
+} from 'react';
 
 interface NavContextType {
   isConversationListOpen: boolean;
@@ -41,12 +41,14 @@ export const useNavbar = () => useContext(NavbarContext);
 export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isConversationListOpen, setIsConversationListOpen] = useState(false);
+  const [isConversationListOpen, setIsConversationListOpen] =
+    useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCreateConversationOpen, setIsCreateConversationOpen] =
     useState(false);
   const [isAppInfoOpen, setIsAppInfoOpen] = useState(false);
-  const [isUpdateProfileOpen, setIsUpdateProfileOpen] = useState(false);
+  const [isUpdateProfileOpen, setIsUpdateProfileOpen] =
+    useState(false);
 
   const allSetStates = [
     setIsAppInfoOpen,
@@ -70,9 +72,15 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
     }, [state]);
   };
 
-  useEffectNavElements(isConversationListOpen, setIsConversationListOpen);
+  useEffectNavElements(
+    isConversationListOpen,
+    setIsConversationListOpen
+  );
   useEffectNavElements(isProfileOpen, setIsProfileOpen);
-  useEffectNavElements(isCreateConversationOpen, setIsCreateConversationOpen);
+  useEffectNavElements(
+    isCreateConversationOpen,
+    setIsCreateConversationOpen
+  );
   useEffectNavElements(isAppInfoOpen, setIsAppInfoOpen);
   useEffectNavElements(isUpdateProfileOpen, setIsUpdateProfileOpen);
 

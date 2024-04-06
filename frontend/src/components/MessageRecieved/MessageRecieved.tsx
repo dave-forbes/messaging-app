@@ -1,6 +1,6 @@
-import styles from "./MessageRecieved.module.scss";
-import Avatar from "../Avatar/Avatar";
-import { UserI } from "../../interfaces/interfaces";
+import styles from './MessageRecieved.module.scss';
+import Avatar from '../Avatar/Avatar';
+import { UserI } from '../../interfaces/interfaces';
 
 interface MessageRecievedProps {
   content: string;

@@ -1,24 +1,27 @@
-import SendIcon from "@mui/icons-material/Send";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-import styles from "./CreateMessage.module.scss";
-import { useConversation } from "../../contexts/ConversationContext";
-import { useAuth } from "../../contexts/AuthContext";
-import { useState } from "react";
-import API_URL from "../../utils/apiConfig";
-import apiFetch from "../../utils/apiFetch";
+import SendIcon from '@mui/icons-material/Send';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import styles from './CreateMessage.module.scss';
+import { useConversation } from '../../contexts/ConversationContext';
+import { useAuth } from '../../contexts/AuthContext';
+import { useState } from 'react';
+import API_URL from '../../utils/apiConfig';
+import apiFetch from '../../utils/apiFetch';
 
 interface CreateMessageProps {
   onMessageSent: () => void;
 }
 
-export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
-  const [content, setContent] = useState("");
-  const { currentConversation, setCurrentConversation } = useConversation();
+export default function CreateMessage({
+  onMessageSent,
+}: CreateMessageProps) {
+  const [content, setContent] = useState('');
+  const { currentConversation, setCurrentConversation } =
+    useConversation();
   const { user } = useAuth();
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const handleSendMessage = async () => {
-    if (content.trim() !== "") {
+    if (content.trim() !== '') {
       const formData = {
         content: content,
         conversationId: currentConversation?._id,
@@ -29,16 +32,16 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
           `${API_URL}/messages/create`,
           formData,
           user?.token,
-          "POST",
+          'POST',
           true
         );
         setCurrentConversation(data.updatedConversation);
         onMessageSent();
-        setError("");
+        setError('');
       } catch (error: any) {
         setError(error.toString());
       }
-      setContent("");
+      setContent('');
     }
   };
 
@@ -50,14 +53,17 @@ export default function CreateMessage({ onMessageSent }: CreateMessageProps) {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === "Enter") {
+          if (e.key === 'Enter') {
             handleSendMessage();
           }
         }}
         required
         placeholder="write a message..."
       />
-      <SendIcon onClick={handleSendMessage} style={{ cursor: "pointer" }} />
+      <SendIcon
+        onClick={handleSendMessage}
+        style={{ cursor: 'pointer' }}
+      />
       {error && (
         <div className={styles.errorContainer}>
           <p className={styles.error}>{error}</p>

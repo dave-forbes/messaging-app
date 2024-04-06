@@ -1,25 +1,25 @@
-import { useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
-import styles from "./Register.module.scss";
-import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useState, FormEvent } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './Register.module.scss';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
-    bio: "",
-    avatar: "",
+    username: '',
+    password: '',
+    confirmPassword: '',
+    bio: '',
+    avatar: '',
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const { register, login } = useAuth();
   const navigate = useNavigate();
 
   const { username, password, confirmPassword, bio } = formData;
 
   const handleChange = (e: any) => {
-    if (e.target.name === "avatar") {
+    if (e.target.name === 'avatar') {
       setFormData({ ...formData, avatar: e.target.files[0] });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,27 +30,30 @@ export default function Register() {
     e.preventDefault();
     const formDataToSend = new FormData();
     if (formData.username) {
-      formDataToSend.append("username", formData.username);
+      formDataToSend.append('username', formData.username);
     }
     if (formData.password) {
-      formDataToSend.append("password", formData.password);
+      formDataToSend.append('password', formData.password);
     }
     if (formData.confirmPassword) {
-      formDataToSend.append("confirmPassword", formData.confirmPassword);
+      formDataToSend.append(
+        'confirmPassword',
+        formData.confirmPassword
+      );
     }
     if (formData.bio) {
-      formDataToSend.append("bio", formData.bio);
+      formDataToSend.append('bio', formData.bio);
     }
     if (formData.avatar) {
-      formDataToSend.append("avatar", formData.avatar);
+      formDataToSend.append('avatar', formData.avatar);
     }
     const response = await register(formDataToSend);
     if (response.success) {
       const { username, password } = formData;
       const loginResponse = await login({ username, password });
       if (loginResponse.success) {
-        setError("");
-        navigate("/app");
+        setError('');
+        navigate('/app');
       } else {
         setError(loginResponse.toString());
       }

@@ -1,19 +1,19 @@
-import express from "express";
-import { NextFunction, Request, Response } from "express";
-import { ConversationModel } from "../models/conversation";
-import authenticateToken from "../utils/authenticateToken";
-import { body, validationResult } from "express-validator";
-import mongoose from "mongoose";
+import express from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { ConversationModel } from '../models/conversation';
+import authenticateToken from '../utils/authenticateToken';
+import { body, validationResult } from 'express-validator';
+import mongoose from 'mongoose';
 const router = express.Router();
 
 // get all conversations
 
-router.get("/", [
+router.get('/', [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const conversations = await ConversationModel.find().populate(
-        "participants"
+        'participants'
       );
       res.json(conversations);
     } catch (error: any) {
@@ -27,14 +27,14 @@ router.get("/", [
 
 // get all conversations that the user is a part of
 
-router.get("/user/:userId", [
+router.get('/user/:userId', [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const participantId = req.params.userId;
       const conversations = await ConversationModel.find({
         participants: { $in: [participantId] },
-      }).populate("participants");
+      }).populate('participants');
       res.json(conversations);
     } catch (error: any) {
       console.log(error);
@@ -47,15 +47,17 @@ router.get("/user/:userId", [
 
 // get one specific conversation
 
-router.get("/:id", [
+router.get('/:id', [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const conversation = await ConversationModel.findById(req.params.id);
+      const conversation = await ConversationModel.findById(
+        req.params.id
+      );
       if (!conversation) {
         res.status(404).json({
           success: false,
-          message: "Conversation not found",
+          message: 'Conversation not found',
         });
         return;
       }
@@ -71,12 +73,12 @@ router.get("/:id", [
 
 // create new conversation
 
-router.post("/create", [
+router.post('/create', [
   authenticateToken,
-  body("title")
+  body('title')
     .trim()
     .isLength({ max: 30 })
-    .withMessage("Title cannot exceed 30 characters"),
+    .withMessage('Title cannot exceed 30 characters'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const errors = validationResult(req);
@@ -88,12 +90,13 @@ router.post("/create", [
       const conversation = req.body;
       const { title, participants } = conversation;
 
-      const doesConversationAllReadyExist = await ConversationModel.findOne({
-        title: title,
-      });
+      const doesConversationAllReadyExist =
+        await ConversationModel.findOne({
+          title: title,
+        });
       if (doesConversationAllReadyExist) {
         res.status(400).json({
-          message: "Conversation with this title already exists",
+          message: 'Conversation with this title already exists',
         });
         return;
       }
@@ -103,11 +106,11 @@ router.post("/create", [
         participants,
       });
 
-      await newConversation.populate("participants");
+      await newConversation.populate('participants');
 
       res.status(200).json({
         success: true,
-        message: "Conversation created Successfully",
+        message: 'Conversation created Successfully',
         conversation: newConversation,
       });
     } catch (error: any) {
@@ -121,7 +124,7 @@ router.post("/create", [
 
 // add new user to conversation
 
-router.put("/:conversationId/participants/add/:userId", [
+router.put('/:conversationId/participants/add/:userId', [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -129,13 +132,18 @@ router.put("/:conversationId/participants/add/:userId", [
       const userId = req.params.userId;
       const userObjectId = new mongoose.Types.ObjectId(userId);
 
-      const conversation = await ConversationModel.findById(conversationId);
+      const conversation = await ConversationModel.findById(
+        conversationId
+      );
       if (!conversation) {
-        return res.status(404).json({ message: "Conversation not found" });
+        return res
+          .status(404)
+          .json({ message: 'Conversation not found' });
       }
       if (conversation.participants.includes(userObjectId)) {
         return res.status(400).json({
-          message: "User is already a participant in the conversation",
+          message:
+            'User is already a participant in the conversation',
         });
       }
       conversation.participants.push(userObjectId);
@@ -143,7 +151,9 @@ router.put("/:conversationId/participants/add/:userId", [
 
       res
         .status(200)
-        .json({ message: "User added to the conversation successfully" });
+        .json({
+          message: 'User added to the conversation successfully',
+        });
     } catch (error: any) {
       console.log(error);
       res.status(400).json({
@@ -155,7 +165,7 @@ router.put("/:conversationId/participants/add/:userId", [
 
 // remove user from conversation
 
-router.put("/:conversationId/participants/remove/:userId", [
+router.put('/:conversationId/participants/remove/:userId', [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -163,13 +173,17 @@ router.put("/:conversationId/participants/remove/:userId", [
       const userId = req.params.userId;
       const userObjectId = new mongoose.Types.ObjectId(userId);
 
-      const conversation = await ConversationModel.findById(conversationId);
+      const conversation = await ConversationModel.findById(
+        conversationId
+      );
       if (!conversation) {
-        return res.status(404).json({ message: "Conversation not found" });
+        return res
+          .status(404)
+          .json({ message: 'Conversation not found' });
       }
       if (!conversation.participants.includes(userObjectId)) {
         return res.status(400).json({
-          message: "User is not participant in the conversation",
+          message: 'User is not participant in the conversation',
         });
       }
 
@@ -180,7 +194,9 @@ router.put("/:conversationId/participants/remove/:userId", [
 
       res
         .status(200)
-        .json({ message: "User removed to the conversation successfully" });
+        .json({
+          message: 'User removed to the conversation successfully',
+        });
     } catch (error: any) {
       console.log(error);
       res.status(400).json({
@@ -193,7 +209,7 @@ router.put("/:conversationId/participants/remove/:userId", [
 // delete conversation
 
 router.delete(
-  "/delete/:id",
+  '/delete/:id',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       // id is the conversation to be deleted

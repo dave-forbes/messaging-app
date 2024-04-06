@@ -1,5 +1,5 @@
-import mongoose, { Schema } from "mongoose";
-import { Message } from "./message";
+import mongoose, { Schema } from 'mongoose';
+import { Message } from './message';
 
 interface Conversation {
   title: string;
@@ -11,12 +11,19 @@ interface Conversation {
 
 const ConversationSchema = new Schema({
   title: { type: String, required: true },
-  participants: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
-  messages: [{ type: Schema.Types.ObjectId, ref: "Message", required: true }],
+  participants: [
+    { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  ],
+  messages: [
+    { type: Schema.Types.ObjectId, ref: 'Message', required: true },
+  ],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
 
-const ConversationModel = mongoose.model("Conversation", ConversationSchema);
+const ConversationModel = mongoose.model(
+  'Conversation',
+  ConversationSchema
+);
 
 export { ConversationModel, Conversation };

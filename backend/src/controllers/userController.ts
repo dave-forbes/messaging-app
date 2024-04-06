@@ -1,15 +1,15 @@
-import express from "express";
-import { NextFunction, Request, Response } from "express";
-import { UserModel } from "../models/user";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import authenticateToken from "../utils/authenticateToken";
-import { body, validationResult } from "express-validator";
-import authorizeUser from "../utils/authorizeUser";
-import upload from "../utils/multerSetup";
-import fs from "fs";
-import path from "path";
+import express from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { UserModel } from '../models/user';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import authenticateToken from '../utils/authenticateToken';
+import { body, validationResult } from 'express-validator';
+import authorizeUser from '../utils/authorizeUser';
+import upload from '../utils/multerSetup';
+import fs from 'fs';
+import path from 'path';
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ const router = express.Router();
 
 // get all users
 
-router.get("/", [
+router.get('/', [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -34,7 +34,7 @@ router.get("/", [
 
 // get one specific user
 
-router.get("/:id", [
+router.get('/:id', [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -42,7 +42,7 @@ router.get("/:id", [
       if (!user) {
         res.status(404).json({
           success: false,
-          message: "User not found",
+          message: 'User not found',
         });
         return;
       }
@@ -58,22 +58,25 @@ router.get("/:id", [
 
 // create new user
 
-router.post("/create", [
-  upload.single("avatar"),
-  body("username").trim().notEmpty().withMessage("Username is required"),
-  body("password")
+router.post('/create', [
+  upload.single('avatar'),
+  body('username')
+    .trim()
+    .notEmpty()
+    .withMessage('Username is required'),
+  body('password')
     .isLength({ min: 8 })
-    .withMessage("Password must be at least 8 characters long"),
-  body("confirmPassword").custom((value, { req }) => {
+    .withMessage('Password must be at least 8 characters long'),
+  body('confirmPassword').custom((value, { req }) => {
     if (value !== req.body.password) {
-      throw new Error("Passwords do not match");
+      throw new Error('Passwords do not match');
     }
     return true;
   }),
-  body("bio")
+  body('bio')
     .trim()
     .isLength({ max: 100 })
-    .withMessage("Bio cannot exceed 100 characters"),
+    .withMessage('Bio cannot exceed 100 characters'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const errors = validationResult(req);
@@ -88,14 +91,16 @@ router.post("/create", [
       });
       if (doesUsernameAllReadyExist) {
         res.status(400).json({
-          message: "Username all ready in use",
+          message: 'Username all ready in use',
         });
         return;
       }
 
-      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
 
-      const imagePath = req.file ? `${baseUrl}/img/${req.file.filename}` : "";
+      const imagePath = req.file
+        ? `${baseUrl}/img/${req.file.filename}`
+        : '';
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -108,7 +113,7 @@ router.post("/create", [
 
       res.status(200).json({
         success: true,
-        message: " User created Successfully",
+        message: ' User created Successfully',
         user: newUser,
       });
     } catch (error: any) {
@@ -123,7 +128,7 @@ router.post("/create", [
 // log in user
 
 router.post(
-  "/login",
+  '/login',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = req.body;
@@ -134,7 +139,7 @@ router.post(
       if (!doesUserExist) {
         res.status(404).json({
           success: false,
-          message: "User not found",
+          message: 'User not found',
         });
         return;
       }
@@ -145,7 +150,7 @@ router.post(
       if (!validPassword) {
         res.status(400).json({
           success: false,
-          message: "wrong password",
+          message: 'wrong password',
         });
         return;
       }
@@ -154,7 +159,7 @@ router.post(
       if (!process.env.JWT_SECRET) {
         return res.status(500).json({
           message:
-            "Server Error: JWT_SECRET not found in environment variables",
+            'Server Error: JWT_SECRET not found in environment variables',
         });
       }
 
@@ -163,12 +168,12 @@ router.post(
         { _id: doesUserExist?._id, email: doesUserExist?.username },
         process.env.JWT_SECRET,
         {
-          expiresIn: "1d",
+          expiresIn: '1d',
         }
       );
       res.status(200).json({
         success: true,
-        message: "login success",
+        message: 'login success',
         token: token,
         user: doesUserExist,
       });
@@ -182,11 +187,14 @@ router.post(
 
 // update user
 
-router.put("/update/:id", [
+router.put('/update/:id', [
   authenticateToken,
   authorizeUser,
-  upload.single("avatar"),
-  body("username").trim().notEmpty().withMessage("Username is required"),
+  upload.single('avatar'),
+  body('username')
+    .trim()
+    .notEmpty()
+    .withMessage('Username is required'),
   // body("password")
   //   .isLength({ min: 8 })
   //   .withMessage("Password must be at least 8 characters long"),
@@ -196,10 +204,10 @@ router.put("/update/:id", [
   //   }
   //   return true;
   // }),
-  body("bio")
+  body('bio')
     .trim()
     .isLength({ max: 500 })
-    .withMessage("Bio cannot exceed 500 characters"),
+    .withMessage('Bio cannot exceed 500 characters'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const errors = validationResult(req);
@@ -212,30 +220,33 @@ router.put("/update/:id", [
       if (!user) {
         res.status(404).json({
           success: false,
-          message: "User not found",
+          message: 'User not found',
         });
         return;
       }
 
-      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
       let imagePath = user.avatar;
 
       if (req.file) {
         if (imagePath) {
-          const relativeImagePath = imagePath.replace(`${baseUrl}/img/`, "");
-          const parentDir = path.resolve(__dirname, "../..");
+          const relativeImagePath = imagePath.replace(
+            `${baseUrl}/img/`,
+            ''
+          );
+          const parentDir = path.resolve(__dirname, '../..');
           const originalUrl = path.join(
             parentDir,
-            "public/img/",
+            'public/img/',
             relativeImagePath
           );
 
           if (fs.existsSync(originalUrl)) {
             try {
               fs.unlinkSync(originalUrl); // Delete the original image
-              console.log("Original image deleted successfully");
+              console.log('Original image deleted successfully');
             } catch (error) {
-              console.error("Error deleting original image:", error);
+              console.error('Error deleting original image:', error);
             }
           } else {
             console.log("Doesn't exist", originalUrl);
@@ -263,7 +274,7 @@ router.put("/update/:id", [
       );
       res.status(200).json({
         success: true,
-        message: "User updated Successfully",
+        message: 'User updated Successfully',
         user: updatedUser,
       });
     } catch (error: any) {
@@ -276,7 +287,7 @@ router.put("/update/:id", [
 
 // delete user
 
-router.delete("/delete/:id", [
+router.delete('/delete/:id', [
   authenticateToken,
   authorizeUser,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -285,13 +296,13 @@ router.delete("/delete/:id", [
       if (!user) {
         res.status(404).json({
           success: false,
-          message: "User not found",
+          message: 'User not found',
         });
         return;
       }
       res.status(200).json({
         success: true,
-        message: " User deleted Successfully",
+        message: ' User deleted Successfully',
       });
     } catch (error: any) {
       res.status(400).json({

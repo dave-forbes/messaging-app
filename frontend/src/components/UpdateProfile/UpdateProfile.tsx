@@ -1,9 +1,9 @@
-import { FormEvent, useState } from "react";
-import styles from "./UpdateProfile.module.scss";
-import { useAuth } from "../../contexts/AuthContext";
-import apiFetch from "../../utils/apiFetch";
-import API_URL from "../../utils/apiConfig";
-import { useNavbar } from "../../contexts/NavbarContext";
+import { FormEvent, useState } from 'react';
+import styles from './UpdateProfile.module.scss';
+import { useAuth } from '../../contexts/AuthContext';
+import apiFetch from '../../utils/apiFetch';
+import API_URL from '../../utils/apiConfig';
+import { useNavbar } from '../../contexts/NavbarContext';
 
 export default function UpdateProfile() {
   const { user } = useAuth();
@@ -12,13 +12,13 @@ export default function UpdateProfile() {
     bio: user?.bio,
     avatar: null,
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const { setIsProfileOpen, setIsUpdateProfileOpen } = useNavbar();
 
   const { username, bio } = formData;
 
   const handleChange = (e: any) => {
-    if (e.target.name === "avatar") {
+    if (e.target.name === 'avatar') {
       setFormData({ ...formData, avatar: e.target.files[0] });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,24 +30,24 @@ export default function UpdateProfile() {
     try {
       const formDataToSend = new FormData();
       if (formData.username) {
-        formDataToSend.append("username", formData.username);
+        formDataToSend.append('username', formData.username);
       }
       if (formData.bio) {
-        formDataToSend.append("bio", formData.bio);
+        formDataToSend.append('bio', formData.bio);
       }
       if (formData.avatar) {
-        formDataToSend.append("avatar", formData.avatar);
+        formDataToSend.append('avatar', formData.avatar);
       }
 
       await apiFetch(
         `${API_URL}/users/update/${user?._id}`,
         formDataToSend,
         user?.token,
-        "PUT",
+        'PUT',
         false
       );
       setIsProfileOpen(true);
-      setError("");
+      setError('');
     } catch (error: any) {
       setError(error.toString());
     }

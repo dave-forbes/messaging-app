@@ -1,17 +1,17 @@
-import Avatar from "../Avatar/Avatar";
-import styles from "./MessageArea.module.scss";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import MessageSent from "../MessageSent/MessageSent";
-import MessageRecieved from "../MessageRecieved/MessageRecieved";
-import { useConversation } from "../../contexts/ConversationContext";
-import { useEffect, useRef, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import CreateMessage from "../CreateMessage/CreateMessage";
-import { MessageI } from "../../interfaces/interfaces";
-import API_URL from "../../utils/apiConfig";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CircularProgress from "@mui/material/CircularProgress";
-import apiFetch from "../../utils/apiFetch";
+import Avatar from '../Avatar/Avatar';
+import styles from './MessageArea.module.scss';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MessageSent from '../MessageSent/MessageSent';
+import MessageRecieved from '../MessageRecieved/MessageRecieved';
+import { useConversation } from '../../contexts/ConversationContext';
+import { useEffect, useRef, useState } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import CreateMessage from '../CreateMessage/CreateMessage';
+import { MessageI } from '../../interfaces/interfaces';
+import API_URL from '../../utils/apiConfig';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CircularProgress from '@mui/material/CircularProgress';
+import apiFetch from '../../utils/apiFetch';
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
@@ -19,7 +19,7 @@ export default function MessageArea() {
   const { user } = useAuth();
   const centralDivRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (currentConversation) {
@@ -34,12 +34,12 @@ export default function MessageArea() {
         `${API_URL}/messages/${conversationId}`,
         {},
         user?.token,
-        "GET",
+        'GET',
         true
       );
       setMessages(data);
       setLoading(false);
-      setError("");
+      setError('');
     } catch (error: any) {
       setError(error.toString());
       setLoading(false);
@@ -82,19 +82,29 @@ export default function MessageArea() {
           <>
             <div className={styles.topDiv}>
               <div className={styles.flex}>
-                {currentConversation?.participants.map((participant) => (
-                  <div className={styles.flex} key={participant._id}>
-                    <Avatar user={participant} size={40} />
-                    <h1 key={participant._id}>{`${participant.username}, `}</h1>
-                  </div>
-                ))}
+                {currentConversation?.participants.map(
+                  (participant) => (
+                    <div
+                      className={styles.flex}
+                      key={participant._id}
+                    >
+                      <Avatar user={participant} size={40} />
+                      <h1
+                        key={participant._id}
+                      >{`${participant.username}, `}</h1>
+                    </div>
+                  )
+                )}
               </div>
               <MoreVertIcon />
             </div>
             <div className={styles.centralDiv} ref={centralDivRef}>
               {messages.map((message: any) =>
                 message.senderId._id === user?._id ? (
-                  <MessageSent key={message._id} content={message.content} />
+                  <MessageSent
+                    key={message._id}
+                    content={message.content}
+                  />
                 ) : (
                   <MessageRecieved
                     key={message._id}

@@ -1,21 +1,21 @@
-import express from "express";
-import { NextFunction, Request, Response } from "express";
-import { MessageModel } from "../models/message";
-import { ConversationModel } from "../models/conversation";
-import authenticateToken from "../utils/authenticateToken";
-import { body, validationResult } from "express-validator";
+import express from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { MessageModel } from '../models/message';
+import { ConversationModel } from '../models/conversation';
+import authenticateToken from '../utils/authenticateToken';
+import { body, validationResult } from 'express-validator';
 const router = express.Router();
 
 // get all messages for a specifc conversation
 
 router.get(
-  "/:conversationId",
+  '/:conversationId',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const conversationId = req.params.conversationId;
       const messages = await MessageModel.find({
         conversationId: conversationId,
-      }).populate("senderId");
+      }).populate('senderId');
       res.json(messages);
     } catch (error) {
       next(error);
@@ -28,14 +28,14 @@ router.get(
 // TODO add validation and error handling
 
 router.post(
-  "/create",
+  '/create',
   authenticateToken,
-  body("content")
+  body('content')
     .trim()
     .notEmpty()
-    .withMessage("Message content is required")
+    .withMessage('Message content is required')
     .isLength({ max: 500 })
-    .withMessage("Message cannot exceed 500 characters"),
+    .withMessage('Message cannot exceed 500 characters'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const errors = validationResult(req);
@@ -52,18 +52,19 @@ router.post(
         content,
       });
 
-      const updatedConversation = await ConversationModel.findByIdAndUpdate(
-        conversationId,
-        {
-          $push: { messages: newMessage._id },
-          $set: { updatedAt: new Date() }, // Set the updatedAt field to the current date/time
-        },
-        { new: true }
-      ).populate("participants");
+      const updatedConversation =
+        await ConversationModel.findByIdAndUpdate(
+          conversationId,
+          {
+            $push: { messages: newMessage._id },
+            $set: { updatedAt: new Date() }, // Set the updatedAt field to the current date/time
+          },
+          { new: true }
+        ).populate('participants');
 
       res.status(200).json({
         success: true,
-        message: "Message created successfully",
+        message: 'Message created successfully',
         newMessage: newMessage,
         updatedConversation: updatedConversation, // Optionally, you can send back the updated conversation
       });
@@ -79,7 +80,7 @@ router.post(
 // update message
 
 router.put(
-  "/update/:id",
+  '/update/:id',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
     } catch (error) {
@@ -91,7 +92,7 @@ router.put(
 // delete message
 
 router.put(
-  "/delete/:id",
+  '/delete/:id',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
     } catch (error) {

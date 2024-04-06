@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
-import Conversation from "../Conversation/Conversation";
-import styles from "./ConversationList.module.scss";
-import { useAuth } from "../../contexts/AuthContext";
-import { useConversation } from "../../contexts/ConversationContext";
-import { useNavbar } from "../../contexts/NavbarContext";
-import API_URL from "../../utils/apiConfig";
-import CircularProgress from "@mui/material/CircularProgress";
-import apiFetch from "../../utils/apiFetch";
+import { useEffect, useState } from 'react';
+import Conversation from '../Conversation/Conversation';
+import styles from './ConversationList.module.scss';
+import { useAuth } from '../../contexts/AuthContext';
+import { useConversation } from '../../contexts/ConversationContext';
+import { useNavbar } from '../../contexts/NavbarContext';
+import API_URL from '../../utils/apiConfig';
+import CircularProgress from '@mui/material/CircularProgress';
+import apiFetch from '../../utils/apiFetch';
 
 export default function ConversationList() {
   const { user } = useAuth();
   const { setIsConversationListOpen, setIsCreateConversationOpen } =
     useNavbar();
-  const { currentConversation, setCurrentConversation } = useConversation();
+  const { currentConversation, setCurrentConversation } =
+    useConversation();
   const [conversations, setConversations] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,11 +29,11 @@ export default function ConversationList() {
         `${API_URL}/conversations/user/${user?._id}`,
         {},
         user?.token,
-        "GET",
+        'GET',
         true
       );
       setConversations(data);
-      setError("");
+      setError('');
       setLoading(false);
     } catch (error: any) {
       setError(error.toString());

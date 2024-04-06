@@ -1,4 +1,4 @@
-import styles from "./MessageSent.module.scss";
+import styles from './MessageSent.module.scss';
 // import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 interface MessageSentProps {

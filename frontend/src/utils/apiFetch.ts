@@ -8,19 +8,19 @@ export default async function apiFetch(
   try {
     const options: any = {
       method: method,
-      mode: "cors",
-      cache: "no-cache",
+      mode: 'cors',
+      cache: 'no-cache',
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      referrerPolicy: "no-referrer",
+      referrerPolicy: 'no-referrer',
     };
 
     if (sendJSON) {
-      options.headers["Content-Type"] = "application/json";
+      options.headers['Content-Type'] = 'application/json';
     }
 
-    if (method !== "GET") {
+    if (method !== 'GET') {
       if (sendJSON) {
         options.body = JSON.stringify(formData);
       } else {
@@ -37,8 +37,10 @@ export default async function apiFetch(
         const errorMessages = data.errors.map(
           (error: { msg: string }) => error.msg
         );
-        const formattedErrorMessage = errorMessages.join(", ");
-        throw new Error(`${response.status}: ${formattedErrorMessage}`);
+        const formattedErrorMessage = errorMessages.join(', ');
+        throw new Error(
+          `${response.status}: ${formattedErrorMessage}`
+        );
       } else {
         throw new Error(`${response.status}: ${data.message}`);
       }
@@ -46,7 +48,10 @@ export default async function apiFetch(
 
     return data;
   } catch (error: any) {
-    if (error instanceof TypeError && error.message === "Failed to fetch") {
+    if (
+      error instanceof TypeError &&
+      error.message === 'Failed to fetch'
+    ) {
       throw new Error(
         "Sorry, we're experiencing technical difficulties. Please try again later."
       );

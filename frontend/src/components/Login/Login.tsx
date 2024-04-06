@@ -1,25 +1,25 @@
-import { useState, FormEvent, ChangeEvent, useEffect } from "react";
-import styles from "./Login.module.scss";
-import PersonIcon from "@mui/icons-material/Person";
-import LockIcon from "@mui/icons-material/Lock";
-import HearingIcon from "@mui/icons-material/Hearing";
-import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useState, FormEvent, ChangeEvent, useEffect } from 'react';
+import styles from './Login.module.scss';
+import PersonIcon from '@mui/icons-material/Person';
+import LockIcon from '@mui/icons-material/Lock';
+import HearingIcon from '@mui/icons-material/Hearing';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
   const { username, password } = formData;
   const { login, user } = useAuth();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (user) {
-      navigate("/app");
+      navigate('/app');
     }
   }, [user, navigate]);
 
@@ -32,8 +32,8 @@ export default function Login() {
 
     const response = await login(formData);
     if (response.success) {
-      setError("");
-      navigate("/app");
+      setError('');
+      navigate('/app');
     } else {
       setError(response.toString());
     }

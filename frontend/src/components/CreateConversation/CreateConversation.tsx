@@ -1,23 +1,25 @@
-import { useState, useEffect, FormEvent } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
-import styles from "./CreateConversation.module.scss";
-import { useNavbar } from "../../contexts/NavbarContext";
-import { useConversation } from "../../contexts/ConversationContext";
-import { UserI } from "../../interfaces/interfaces";
-import API_URL from "../../utils/apiConfig";
-import apiFetch from "../../utils/apiFetch";
+import { useState, useEffect, FormEvent } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+import styles from './CreateConversation.module.scss';
+import { useNavbar } from '../../contexts/NavbarContext';
+import { useConversation } from '../../contexts/ConversationContext';
+import { UserI } from '../../interfaces/interfaces';
+import API_URL from '../../utils/apiConfig';
+import apiFetch from '../../utils/apiFetch';
 
 export default function CreateConversation() {
   const { user } = useAuth();
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
   const [selectedUsers, setSelectedUsers] = useState<[] | any>([]);
-  const [users, setUsers] = useState<{ value: string; label: string }[]>([]);
+  const [users, setUsers] = useState<
+    { value: string; label: string }[]
+  >([]);
   const animatedComponents = makeAnimated();
   const { setIsCreateConversationOpen } = useNavbar();
   const { setCurrentConversation } = useConversation();
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   // Fetch users from API
   useEffect(() => {
@@ -30,7 +32,7 @@ export default function CreateConversation() {
         `${API_URL}/users/`,
         {},
         user?.token,
-        "GET",
+        'GET',
         true
       );
       const options = data.map((user: UserI) => ({
@@ -62,14 +64,14 @@ export default function CreateConversation() {
         `${API_URL}/conversations/create`,
         formData,
         user?.token,
-        "POST",
+        'POST',
         true
       );
-      setTitle("");
+      setTitle('');
       setSelectedUsers([]);
       setIsCreateConversationOpen(false);
       setCurrentConversation(data.conversation);
-      setError("");
+      setError('');
     } catch (error: any) {
       setError(error.toString());
     }
@@ -96,7 +98,8 @@ export default function CreateConversation() {
             isMulti
             options={users.filter((item) => item.value !== user?._id)}
             onChange={
-              (selectedOptions) => setSelectedUsers(selectedOptions || []) // Handle null case
+              (selectedOptions) =>
+                setSelectedUsers(selectedOptions || []) // Handle null case
             }
             required
           />

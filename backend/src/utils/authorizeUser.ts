@@ -1,8 +1,12 @@
-import { NextFunction, Request, Response } from "express";
-const authorizeUser = (req: Request, res: Response, next: NextFunction) => {
+import { NextFunction, Request, Response } from 'express';
+const authorizeUser = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   if (!req.user) {
     return res.status(403).json({
-      message: "Forbidden: Access forbidden.",
+      message: 'Forbidden: Access forbidden.',
     });
   }
   const authenticatedUserId = req.user._id;
@@ -11,7 +15,8 @@ const authorizeUser = (req: Request, res: Response, next: NextFunction) => {
   // Check if the authenticated user is the owner of the account
   if (authenticatedUserId !== userId) {
     return res.status(403).json({
-      message: "Unauthorized: You are not allowed to perform this action",
+      message:
+        'Unauthorized: You are not allowed to perform this action',
     });
   }
   next();

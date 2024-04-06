@@ -1,11 +1,11 @@
 const corsOptions = {
   origin: [
-    "https://discussr.netlify.app",
-    "https://main--discussr.netlify.app",
-    "http://localhost:5173",
+    'https://discussr.netlify.app',
+    'https://main--discussr.netlify.app',
+    'http://localhost:5173',
   ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 export default corsOptions;

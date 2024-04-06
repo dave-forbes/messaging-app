@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import { useConversation } from "../../contexts/ConversationContext";
-import { useNavbar } from "../../contexts/NavbarContext";
-import Avatar from "../Avatar/Avatar";
-import styles from "./Profile.module.scss";
-import apiFetch from "../../utils/apiFetch";
-import API_URL from "../../utils/apiConfig";
-import { UserI } from "../../interfaces/interfaces";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useEffect, useState } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import { useConversation } from '../../contexts/ConversationContext';
+import { useNavbar } from '../../contexts/NavbarContext';
+import Avatar from '../Avatar/Avatar';
+import styles from './Profile.module.scss';
+import apiFetch from '../../utils/apiFetch';
+import API_URL from '../../utils/apiConfig';
+import { UserI } from '../../interfaces/interfaces';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Profile() {
   const { setCurrentConversation } = useConversation();
   const { logout, user } = useAuth();
   const { setIsProfileOpen, setIsUpdateProfileOpen } = useNavbar();
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [userData, setUserData] = useState<UserI | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -27,11 +27,11 @@ export default function Profile() {
         `${API_URL}/users/${user?._id}`,
         {},
         user?.token,
-        "GET",
+        'GET',
         true
       );
       setUserData(data);
-      setError("");
+      setError('');
       setLoading(false);
     } catch (error: any) {
       setError(error.toString());
@@ -55,7 +55,10 @@ export default function Profile() {
         <button className="button" onClick={handleLogoutClick}>
           Logout
         </button>
-        <button className="button" onClick={() => setIsUpdateProfileOpen(true)}>
+        <button
+          className="button"
+          onClick={() => setIsUpdateProfileOpen(true)}
+        >
           Update profile
         </button>
       </div>

@@ -1,6 +1,6 @@
-import Avatar from "../Avatar/Avatar";
-import styles from "./Conversation.module.scss";
-import formatTimeAgo from "../../utils/formatTimeAgo";
+import Avatar from '../Avatar/Avatar';
+import styles from './Conversation.module.scss';
+import formatTimeAgo from '../../utils/formatTimeAgo';
 
 interface ConversationProps {
   title: string;
