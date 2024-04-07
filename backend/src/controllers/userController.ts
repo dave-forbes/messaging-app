@@ -7,9 +7,13 @@ import dotenv from 'dotenv';
 import authenticateToken from '../utils/authenticateToken';
 import { body, validationResult } from 'express-validator';
 import authorizeUser from '../utils/authorizeUser';
-import upload from '../utils/multerSetup';
-import fs from 'fs';
-import path from 'path';
+import { upload } from '../utils/multerSetup';
+import {
+  getImageUrl,
+  addImageToS3,
+  deleteImageFromS3,
+} from '../utils/s3Config';
+import randomImageName from '../utils/randomImageName';
 
 dotenv.config();
 
@@ -46,6 +50,17 @@ router.get('/:id', [
         });
         return;
       }
+
+      const imageUrl = await getImageUrl(user.avatar);
+      if (!imageUrl) {
+        res.status(500).json({
+          success: false,
+          message: 'Failed to retrieve image URL',
+        });
+        return;
+      }
+
+      user.avatar = imageUrl;
       res.json(user);
     } catch (error: any) {
       console.log(error);
@@ -96,11 +111,14 @@ router.post('/create', [
         return;
       }
 
-      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const imageName = randomImageName();
 
-      const imagePath = req.file
-        ? `${baseUrl}/img/${req.file.filename}`
-        : '';
+      try {
+        await addImageToS3(req.file, imageName);
+      } catch (error) {
+        console.error('Error uploading image to S3:', error);
+        throw new Error('Failed to upload image to S3');
+      }
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -108,7 +126,7 @@ router.post('/create', [
         username,
         password: hashedPassword,
         bio,
-        avatar: imagePath,
+        avatar: imageName,
       });
 
       res.status(200).json({
@@ -225,35 +243,11 @@ router.put('/update/:id', [
         return;
       }
 
-      const baseUrl = `${req.protocol}://${req.get('host')}`;
-      let imagePath = user.avatar;
-
-      if (req.file) {
-        if (imagePath) {
-          const relativeImagePath = imagePath.replace(
-            `${baseUrl}/img/`,
-            ''
-          );
-          const parentDir = path.resolve(__dirname, '../..');
-          const originalUrl = path.join(
-            parentDir,
-            'public/img/',
-            relativeImagePath
-          );
-
-          if (fs.existsSync(originalUrl)) {
-            try {
-              fs.unlinkSync(originalUrl); // Delete the original image
-              console.log('Original image deleted successfully');
-            } catch (error) {
-              console.error('Error deleting original image:', error);
-            }
-          } else {
-            console.log("Doesn't exist", originalUrl);
-          }
-        }
-
-        imagePath = `${baseUrl}/img/${req.file.filename}`;
+      try {
+        await addImageToS3(req.file, user.avatar);
+      } catch (error) {
+        console.error('Error updating image on S3:', error);
+        throw new Error('Error updating image on S3');
       }
 
       if (!errors.isEmpty()) {
@@ -268,7 +262,6 @@ router.put('/update/:id', [
           username: req.body.username,
           // password: hashedPassword,
           bio: req.body.bio,
-          avatar: imagePath,
         },
         { new: true } // to return the updated document
       );
@@ -300,6 +293,14 @@ router.delete('/delete/:id', [
         });
         return;
       }
+
+      try {
+        await deleteImageFromS3(user.avatar);
+      } catch (error) {
+        console.error('Error deleting image on S3:', error);
+        throw new Error('Failed to delete image on S3');
+      }
+
       res.status(200).json({
         success: true,
         message: ' User deleted Successfully',
