@@ -12,6 +12,8 @@
   "author": "Dave Forbes",
   "license": "MIT",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.550.0",
+    "@aws-sdk/s3-request-presigner": "^3.550.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -19,7 +21,8 @@
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.3",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "sharp": "^0.33.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
