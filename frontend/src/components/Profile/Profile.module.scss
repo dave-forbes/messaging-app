@@ -2,7 +2,7 @@
 
 .profileContainer {
   border-inline: 2px solid variables.$secondary-color;
-  width: 300px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
