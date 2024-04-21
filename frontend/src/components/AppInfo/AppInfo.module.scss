@@ -23,8 +23,6 @@
   flex-direction: column;
   text-align: center;
   gap: variables.$spacing-lg;
-  max-height: 50vh;
-  overflow-y: scroll;
 }
 
 @media (max-width: 1400px) {
@@ -43,4 +41,9 @@
     top:0;
     height: calc(100dvh - 104px);
   }
+
+    .appInfoText {
+      max-height: 50vh;
+      overflow-y: scroll;
+    }
 }
