@@ -69,17 +69,19 @@ const addImageToS3 = async (file: any, imageName: string) => {
 };
 
 const deleteImageFromS3 = async (key: string) => {
-  try {
-    const params = {
-      Bucket: bucketName,
-      Key: key,
-    };
+  if (key !== '') {
+    try {
+      const params = {
+        Bucket: bucketName,
+        Key: key,
+      };
 
-    const command = new DeleteObjectCommand(params);
-    await s3.send(command);
-  } catch (error) {
-    console.error('Error deleting image on S3:', error);
-    throw error;
+      const command = new DeleteObjectCommand(params);
+      await s3.send(command);
+    } catch (error) {
+      console.error('Error deleting image on S3:', error);
+      throw error;
+    }
   }
 };
 
