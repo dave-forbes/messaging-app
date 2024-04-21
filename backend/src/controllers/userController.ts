@@ -243,11 +243,16 @@ router.put('/update/:id', [
         return;
       }
 
-      try {
-        await addImageToS3(req.file, user.avatar);
-      } catch (error) {
-        console.error('Error updating image on S3:', error);
-        throw new Error('Error updating image on S3');
+      const imageName = randomImageName();
+
+      if (req.file) {
+        try {
+          await addImageToS3(req.file, imageName);
+          await deleteImageFromS3(user.avatar);
+        } catch (error) {
+          console.error('Error updating image on S3:', error);
+          throw new Error('Error updating image on S3');
+        }
       }
 
       if (!errors.isEmpty()) {
@@ -262,6 +267,7 @@ router.put('/update/:id', [
           username: req.body.username,
           // password: hashedPassword,
           bio: req.body.bio,
+          avatar: imageName,
         },
         { new: true } // to return the updated document
       );
