@@ -4,6 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import apiFetch from '../../utils/apiFetch';
 import API_URL from '../../utils/apiConfig';
 import { useNavbar } from '../../contexts/NavbarContext';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function UpdateProfile() {
   const { user } = useAuth();
@@ -14,6 +15,7 @@ export default function UpdateProfile() {
   });
   const [error, setError] = useState('');
   const { setIsProfileOpen, setIsUpdateProfileOpen } = useNavbar();
+  const [loading, setLoading] = useState(false);
 
   const { username, bio } = formData;
 
@@ -27,6 +29,7 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const formDataToSend = new FormData();
       if (formData.username) {
@@ -46,32 +49,36 @@ export default function UpdateProfile() {
         'PUT',
         false
       );
-      setIsProfileOpen(true);
+      setLoading(false);
       setError('');
+      setIsProfileOpen(true);
     } catch (error: any) {
+      setLoading(false);
       setError(error.toString());
     }
   };
   return (
-    <div className={styles.updateProfileContainer}>
-      <h1>Update Profile</h1>
-      <form
-        onSubmit={handleSubmit}
-        className={styles.updateForm}
-        encType="multipart/form-data"
-      >
-        <div className={styles.inputGroup}>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {/* <div className={styles.inputGroup}>
+    <>
+      {loading && <CircularProgress />}
+      <div className={styles.updateProfileContainer}>
+        <h1>Update Profile</h1>
+        <form
+          onSubmit={handleSubmit}
+          className={styles.updateForm}
+          encType="multipart/form-data"
+        >
+          <div className={styles.inputGroup}>
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          {/* <div className={styles.inputGroup}>
           <label htmlFor="password">Password:</label>
           <input
             type="password"
@@ -93,39 +100,40 @@ export default function UpdateProfile() {
             required
           />
         </div> */}
-        <div className={styles.inputGroup}>
-          <label htmlFor="bio">Bio:</label>
-          <textarea
-            id="bio"
-            name="bio"
-            value={bio}
-            onChange={handleChange}
-            rows={4}
-          />
-        </div>
-        <div className={styles.inputGroup}>
-          <label htmlFor="avatar">Avatar:</label>
-          <input
-            type="file"
-            id="avatar"
-            name="avatar"
-            accept="image/*"
-            onChange={handleChange}
-          />
-        </div>
-        <p>{error}</p>
-        <div className={styles.updateProfileControls}>
-          <button className="button" type="submit">
-            Update
-          </button>
-          <button
-            className="button"
-            onClick={() => setIsUpdateProfileOpen(false)}
-          >
-            Close
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="bio">Bio:</label>
+            <textarea
+              id="bio"
+              name="bio"
+              value={bio}
+              onChange={handleChange}
+              rows={4}
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="avatar">Avatar:</label>
+            <input
+              type="file"
+              id="avatar"
+              name="avatar"
+              accept="image/*"
+              onChange={handleChange}
+            />
+          </div>
+          <p>{error}</p>
+          <div className={styles.updateProfileControls}>
+            <button className="button" type="submit">
+              Update
+            </button>
+            <button
+              className="button"
+              onClick={() => setIsUpdateProfileOpen(false)}
+            >
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
