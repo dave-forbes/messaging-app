@@ -48,7 +48,7 @@ export default function Profile() {
   return (
     <div className={styles.profileContainer}>
       {loading && <CircularProgress />}
-      <Avatar user={userData} size={150} />
+      <Avatar user={user} size={150} />
       <h1>{userData?.username}</h1>
       <p>{userData?.bio}</p>
       <div className={styles.profileControls}>
