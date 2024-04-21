@@ -149,11 +149,9 @@ router.put('/:conversationId/participants/add/:userId', [
       conversation.participants.push(userObjectId);
       await conversation.save();
 
-      res
-        .status(200)
-        .json({
-          message: 'User added to the conversation successfully',
-        });
+      res.status(200).json({
+        message: 'User added to the conversation successfully',
+      });
     } catch (error: any) {
       console.log(error);
       res.status(400).json({
@@ -192,11 +190,9 @@ router.put('/:conversationId/participants/remove/:userId', [
       );
       await conversation.save();
 
-      res
-        .status(200)
-        .json({
-          message: 'User removed to the conversation successfully',
-        });
+      res.status(200).json({
+        message: 'User removed to the conversation successfully',
+      });
     } catch (error: any) {
       console.log(error);
       res.status(400).json({
