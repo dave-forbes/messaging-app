@@ -1,4 +1,3 @@
-import Avatar from '../Avatar/Avatar';
 import styles from './Conversation.module.scss';
 import formatTimeAgo from '../../utils/formatTimeAgo';
 
@@ -15,7 +14,6 @@ export default function Conversation({
 }: ConversationProps) {
   return (
     <li className={styles.conversation} onClick={onClick}>
-      <Avatar user={null} size={40} />
       <div className={styles.conversationContent}>
         <div className={styles.flex}>
           <p>{title}</p>
