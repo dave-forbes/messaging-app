@@ -8,24 +8,6 @@
   justify-content: space-evenly;
 }
 
-@media (max-width: 1400px) {
-  .conversationListContainer {
-  position: absolute;
-  background-color: white;
-  height: 100vh;
-  left: 100px;
-  z-index: 1;
-  }
-}
-
-@media (max-width:600px) {
-  .conversationListContainer {
-    left:0;
-    top:0;
-    height: calc(100dvh - 104px);
-  }
-}
-
 .title {
   font-weight: 500;
   color: variables.$text-color;
@@ -39,8 +21,7 @@
   flex-direction: column;
   align-items: center;
   gap: variables.$spacing-lg;
-  max-height: 50vh;
-  overflow-y: scroll;
+
 }
 
 .listWrapper {
@@ -48,6 +29,30 @@
   flex-direction: column;
   gap: variables.$spacing-lg;
 }
+
+@media (max-width: 1400px) {
+  .conversationListContainer {
+    position: absolute;
+    background-color: white;
+    height: 100vh;
+    left: 100px;
+    z-index: 1;
+  }
+}
+
+@media (max-width:600px) {
+  .conversationListContainer {
+    left: 0;
+    top: 0;
+    height: calc(100dvh - 104px);
+  }
+
+  .conversationList {
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
+}
+
 
 
 
