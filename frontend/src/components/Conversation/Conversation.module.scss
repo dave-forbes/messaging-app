@@ -3,11 +3,9 @@
 .conversation {
   list-style: none;
   height: 50px;
-  display: flex;
-  align-items: center;
-  gap:variables.$spacing-lg;
   padding: variables.$spacing-md;
   transition: box-shadow 0.3s;
+  width: 200px;
 }
 
 .conversation:hover,.conversation:focus {
