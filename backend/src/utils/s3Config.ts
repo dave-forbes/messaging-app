@@ -50,8 +50,8 @@ const getImageUrl = async (avatar: string) => {
 const addImageToS3 = async (file: any, imageName: string) => {
   try {
     const buffer = await sharp(file.buffer)
+      .rotate()
       .resize({ height: 1080, width: 1080 })
-      .withMetadata()
       .toBuffer();
 
     const params = {
