@@ -13,6 +13,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CircularProgress from '@mui/material/CircularProgress';
 import apiFetch from '../../utils/apiFetch';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { useNavbar } from '../../contexts/NavbarContext';
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
@@ -21,6 +22,7 @@ export default function MessageArea() {
   const centralDivRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { setIsConversationOptionsOpen } = useNavbar();
 
   useEffect(() => {
     if (currentConversation) {
@@ -63,7 +65,7 @@ export default function MessageArea() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       scrollToBottom();
-    }, 100); // Adjust the delay as needed
+    }, 500); // Adjust the delay as needed
     return () => clearTimeout(timeout);
   }, [messages]);
 
@@ -106,7 +108,9 @@ export default function MessageArea() {
                     fetchMessages(currentConversation._id)
                   }
                 />
-                <MoreVertIcon />
+                <MoreVertIcon
+                  onClick={() => setIsConversationOptionsOpen(true)}
+                />
               </div>
             </div>
             <div className={styles.centralDiv} ref={centralDivRef}>
@@ -128,7 +132,10 @@ export default function MessageArea() {
               )}
             </div>
             <div className={styles.bottomDiv}>
-              <CreateMessage onMessageSent={handleMessageSent} />
+              <CreateMessage
+                onMessageSent={handleMessageSent}
+                setLoading={() => setLoading(true)}
+              />
             </div>
           </>
         )}
