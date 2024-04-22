@@ -104,12 +104,14 @@ export default function MessageArea() {
                   <MessageSent
                     key={message._id}
                     content={message.content}
+                    image={message.image}
                   />
                 ) : (
                   <MessageRecieved
                     key={message._id}
                     content={message.content}
                     sender={message.senderId}
+                    image={message.image}
                   />
                 )
               )}
