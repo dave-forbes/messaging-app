@@ -55,13 +55,17 @@ router.post(
 
       const messageData = req.body;
 
-      const imageName = randomImageName();
+      let imageName = '';
 
-      try {
-        await addImageToS3(req.file, imageName);
-      } catch (error) {
-        console.error('Error uploading image to S3:', error);
-        throw new Error('Failed to upload image to S3');
+      if (req.file) {
+        imageName = randomImageName();
+
+        try {
+          await addImageToS3(req.file, imageName);
+        } catch (error) {
+          console.error('Error uploading image to S3:', error);
+          throw new Error('Failed to upload image to S3');
+        }
       }
 
       const { conversationId, senderId, content } = messageData;
