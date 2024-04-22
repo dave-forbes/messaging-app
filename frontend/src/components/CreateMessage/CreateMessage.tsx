@@ -10,10 +10,12 @@ import apiFetch from '../../utils/apiFetch';
 
 interface CreateMessageProps {
   onMessageSent: () => void;
+  setLoading: () => any;
 }
 
 export default function CreateMessage({
   onMessageSent,
+  setLoading,
 }: CreateMessageProps) {
   const [content, setContent] = useState('');
   const { currentConversation, setCurrentConversation } =
@@ -39,6 +41,7 @@ export default function CreateMessage({
       }
 
       try {
+        setLoading();
         const data = await apiFetch(
           `${API_URL}/messages/create`,
           formData,
@@ -64,12 +67,7 @@ export default function CreateMessage({
     const target = e.target as HTMLInputElement & {
       files: FileList;
     };
-    if (target.files[0].size > 3145728) {
-      setError('Error: Image file too large.');
-    } else {
-      setError('');
-      setImgFile(target.files[0]);
-    }
+    setImgFile(target.files[0]);
   };
 
   return (
