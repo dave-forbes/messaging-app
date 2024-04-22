@@ -8,7 +8,25 @@
   align-items: center;
   gap: variables.$spacing-md;
   padding: 0 variables.$spacing-sm;
-}
+  position: relative;
+
+
+    .closeIcon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      padding: variables.$spacing-sm;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    .closeIcon:hover {
+      background-color: variables.$secondary-color;
+    }
+  }
 
 .updateForm {
   width: 100%;
@@ -62,10 +80,8 @@
     left:0;
     top:0;
     height: calc(100dvh - 104px);
-  }
-
-  .updateForm {
-    height: 60vh;
-    overflow: scroll;
+    border: none;
+    width: 100vw;
+    padding: 0;
   }
 }
