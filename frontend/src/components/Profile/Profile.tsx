@@ -8,6 +8,7 @@ import apiFetch from '../../utils/apiFetch';
 import API_URL from '../../utils/apiConfig';
 import { UserI } from '../../interfaces/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Profile() {
   const { setCurrentConversation } = useConversation();
@@ -47,6 +48,10 @@ export default function Profile() {
 
   return (
     <div className={styles.profileContainer}>
+      <CloseIcon
+        className={styles.closeIcon}
+        onClick={() => setIsProfileOpen(false)}
+      />
       {loading && <CircularProgress />}
       <Avatar user={user} size={150} />
       <h1>{userData?.username}</h1>
