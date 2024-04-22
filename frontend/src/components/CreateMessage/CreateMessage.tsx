@@ -64,7 +64,7 @@ export default function CreateMessage({
     const target = e.target as HTMLInputElement & {
       files: FileList;
     };
-    if (target.files[0].size > 2621440) {
+    if (target.files[0].size > 3145728) {
       setError('Error: Image file too large.');
     } else {
       setError('');
