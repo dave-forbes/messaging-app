@@ -4,6 +4,9 @@ import { MessageModel } from '../models/message';
 import { ConversationModel } from '../models/conversation';
 import authenticateToken from '../utils/authenticateToken';
 import { body, validationResult } from 'express-validator';
+import { upload } from '../utils/multerSetup';
+import randomImageName from '../utils/randomImageName';
+import { addImageToS3, getImageUrl } from '../utils/s3Config';
 const router = express.Router();
 
 // get all messages for a specifc conversation
@@ -16,6 +19,13 @@ router.get(
       const messages = await MessageModel.find({
         conversationId: conversationId,
       }).populate('senderId');
+
+      for (const message of messages) {
+        if (message.image) {
+          const signedUrl = await getImageUrl(message.image);
+          message.image = signedUrl;
+        }
+      }
       res.json(messages);
     } catch (error) {
       next(error);
@@ -25,11 +35,10 @@ router.get(
 
 // create new message
 
-// TODO add validation and error handling
-
 router.post(
   '/create',
   authenticateToken,
+  upload.single('image'),
   body('content')
     .trim()
     .notEmpty()
@@ -45,11 +54,22 @@ router.post(
       }
 
       const messageData = req.body;
+
+      const imageName = randomImageName();
+
+      try {
+        await addImageToS3(req.file, imageName);
+      } catch (error) {
+        console.error('Error uploading image to S3:', error);
+        throw new Error('Failed to upload image to S3');
+      }
+
       const { conversationId, senderId, content } = messageData;
       const newMessage = await MessageModel.create({
         conversationId,
         senderId,
         content,
+        image: imageName,
       });
 
       const updatedConversation =
@@ -66,7 +86,7 @@ router.post(
         success: true,
         message: 'Message created successfully',
         newMessage: newMessage,
-        updatedConversation: updatedConversation, // Optionally, you can send back the updated conversation
+        updatedConversation: updatedConversation,
       });
     } catch (error: any) {
       console.log(error);
