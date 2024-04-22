@@ -33,6 +33,18 @@
   p {
     font-size: variables.$small-font-size
   }
+  .participants {
+    display: flex;
+    gap: variables.$spacing-sm;
+    align-items: center;
+    max-width: 60%;
+    overflow: auto;
+  }
+
+  .conversationControls {
+    display: flex;
+    gap: variables.$spacing-lg;
+  }
 }
 
 .centralDiv {
@@ -66,7 +78,6 @@
   display: flex;
   gap: variables.$spacing-sm;
   align-items: center;
-  overflow: auto;
 }
 
 .noConversation {
