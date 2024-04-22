@@ -52,6 +52,7 @@ const addImageToS3 = async (file: any, imageName: string) => {
     const buffer = await sharp(file.buffer)
       .rotate()
       .resize({ height: 1080, width: 1080 })
+      .jpeg({ quality: 80 })
       .toBuffer();
 
     const params = {
