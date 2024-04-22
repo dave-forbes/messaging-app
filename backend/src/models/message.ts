@@ -5,6 +5,7 @@ interface Message {
   senderId: string;
   content: string;
   createdAt: Date;
+  image?: string;
 }
 
 const MessageSchema = new Schema({
@@ -15,6 +16,7 @@ const MessageSchema = new Schema({
   senderId: { type: Schema.Types.ObjectId, ref: 'User' },
   content: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
+  image: { type: String },
 });
 
 const MessageModel = mongoose.model('Message', MessageSchema);
