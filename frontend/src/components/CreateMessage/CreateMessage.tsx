@@ -1,9 +1,10 @@
 import SendIcon from '@mui/icons-material/Send';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import styles from './CreateMessage.module.scss';
 import { useConversation } from '../../contexts/ConversationContext';
 import { useAuth } from '../../contexts/AuthContext';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import API_URL from '../../utils/apiConfig';
 import apiFetch from '../../utils/apiFetch';
 
@@ -19,21 +20,31 @@ export default function CreateMessage({
     useConversation();
   const { user } = useAuth();
   const [error, setError] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [imgFile, setImgFile] = useState<File | undefined>();
 
   const handleSendMessage = async () => {
     if (content.trim() !== '') {
-      const formData = {
-        content: content,
-        conversationId: currentConversation?._id,
-        senderId: user?._id,
-      };
+      const formData = new FormData();
+
+      formData.append('content', content);
+      if (currentConversation) {
+        formData.append('conversationId', currentConversation._id);
+      }
+      if (user?._id) {
+        formData.append('senderId', user._id);
+      }
+      if (imgFile) {
+        formData.append('image', imgFile);
+      }
+
       try {
         const data = await apiFetch(
           `${API_URL}/messages/create`,
           formData,
           user?.token,
           'POST',
-          true
+          false
         );
         setCurrentConversation(data.updatedConversation);
         onMessageSent();
@@ -45,9 +56,37 @@ export default function CreateMessage({
     }
   };
 
+  const handleSVGClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement & {
+      files: FileList;
+    };
+    if (target.files[0].size > 2621440) {
+      setError('Error: Image file too large.');
+    } else {
+      setError('');
+      setImgFile(target.files[0]);
+    }
+  };
+
   return (
     <div className={styles.form}>
-      <AttachFileIcon />
+      {imgFile ? (
+        <CheckBoxIcon />
+      ) : (
+        <AddPhotoAlternateIcon onClick={handleSVGClick} />
+      )}
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
       <input
         type="text"
         value={content}
