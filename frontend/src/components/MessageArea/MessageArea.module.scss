@@ -44,6 +44,17 @@
   .conversationControls {
     display: flex;
     gap: variables.$spacing-lg;
+
+    svg {
+      width: 30px;
+      height: 30px;
+      padding: variables.$spacing-sm;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    svg:hover {
+      background-color: variables.$secondary-color;
+    }
   }
 }
 
@@ -61,6 +72,11 @@
 @media (max-width:600px) {
   .centralDiv {
     height:50vh;
+  }
+  .topDiv {
+  .conversationControls {
+    gap:0;
+  }
   }
 }
 
