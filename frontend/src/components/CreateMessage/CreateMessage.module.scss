@@ -39,10 +39,12 @@
 
 .errorContainer {
   position: absolute;
-  top: 90px;
+  top: -100px;
   width: 100%;
   display: flex;
   justify-content: center;
+  padding: variables.$spacing-md;
+  border-radius: 10px;
 }
 
 @media (max-width: 600px) {
@@ -62,10 +64,6 @@
       font-size: 20px;
       padding: 5px;
     }
-
-        .errorContainer {
-          top: 60px;
-        }
   }
 }
 
