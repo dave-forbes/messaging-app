@@ -44,10 +44,14 @@ export default function Avatar({ user, size }: AvatarProps) {
       className={styles.avatar}
       style={{ width: size, height: size }}
     >
-      <img
-        src={userData?.avatar}
-        alt={`A picture of ${userData?.username}`}
-      />
+      {userData?.avatar ? (
+        <img
+          src={userData?.avatar}
+          alt={`A picture of ${userData?.username}`}
+        />
+      ) : (
+        <div className={styles.noImg}></div>
+      )}
     </div>
   );
 }
