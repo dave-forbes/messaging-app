@@ -1,20 +1,20 @@
 import styles from './MessageSent.module.scss';
-// import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 interface MessageSentProps {
   content: string;
+  image: string;
 }
 
-export default function MessageSent({ content }: MessageSentProps) {
+export default function MessageSent({
+  content,
+  image,
+}: MessageSentProps) {
   return (
     <>
       <div className={styles.messageSent}>
         <div className={styles.messageContent}>
           <p>{content}</p>
-          {/* <div className={styles.messageInfo}>
-            <p>{createdAt}</p>
-            <DoneAllIcon />
-          </div> */}
+          {image && <img src={image} />}
         </div>
       </div>
     </>
