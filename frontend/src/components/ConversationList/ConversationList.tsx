@@ -7,6 +7,7 @@ import { useNavbar } from '../../contexts/NavbarContext';
 import API_URL from '../../utils/apiConfig';
 import CircularProgress from '@mui/material/CircularProgress';
 import apiFetch from '../../utils/apiFetch';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function ConversationList() {
   const { user } = useAuth();
@@ -43,6 +44,10 @@ export default function ConversationList() {
 
   return (
     <div className={styles.conversationListContainer}>
+      <CloseIcon
+        className={styles.closeIcon}
+        onClick={() => setIsConversationListOpen(false)}
+      />
       <div className={styles.listWrapper}>
         <h1 className={styles.title}>Conversations</h1>
         <ul className={styles.conversationList}>
