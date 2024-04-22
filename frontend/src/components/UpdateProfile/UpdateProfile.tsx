@@ -5,6 +5,7 @@ import apiFetch from '../../utils/apiFetch';
 import API_URL from '../../utils/apiConfig';
 import { useNavbar } from '../../contexts/NavbarContext';
 import CircularProgress from '@mui/material/CircularProgress';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function UpdateProfile() {
   const { user } = useAuth();
@@ -61,6 +62,10 @@ export default function UpdateProfile() {
     <>
       {loading && <CircularProgress />}
       <div className={styles.updateProfileContainer}>
+        <CloseIcon
+          className={styles.closeIcon}
+          onClick={() => setIsUpdateProfileOpen(false)}
+        />
         <h1>Update Profile</h1>
         <form
           onSubmit={handleSubmit}
@@ -123,13 +128,7 @@ export default function UpdateProfile() {
           <p>{error}</p>
           <div className={styles.updateProfileControls}>
             <button className="button" type="submit">
-              Update
-            </button>
-            <button
-              className="button"
-              onClick={() => setIsUpdateProfileOpen(false)}
-            >
-              Close
+              Update Profile
             </button>
           </div>
         </form>
