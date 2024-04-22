@@ -45,6 +45,7 @@
 .listWrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: variables.$spacing-lg;
 }
 
