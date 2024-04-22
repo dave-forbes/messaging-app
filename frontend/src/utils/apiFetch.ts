@@ -49,8 +49,9 @@ export default async function apiFetch(
     return data;
   } catch (error: any) {
     if (
-      error instanceof TypeError &&
-      error.message === 'Failed to fetch'
+      (error instanceof TypeError &&
+        error.message === 'Failed to fetch') ||
+      error instanceof SyntaxError
     ) {
       throw new Error(
         "Sorry, we're experiencing technical difficulties. Please try again later."
