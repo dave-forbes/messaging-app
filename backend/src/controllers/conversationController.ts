@@ -122,15 +122,18 @@ router.post('/create', [
   },
 ]);
 
-// add new user to conversation
+// add new user(s) to conversation
 
-router.put('/:conversationId/participants/add/:userId', [
+router.put('/:conversationId/participants/add/', [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const users = req.body;
       const conversationId = req.params.conversationId;
-      const userId = req.params.userId;
-      const userObjectId = new mongoose.Types.ObjectId(userId);
+      const objectIds = users.map(
+        (user: { value: string; label: string }) =>
+          new mongoose.Types.ObjectId(user.value)
+      );
 
       const conversation = await ConversationModel.findById(
         conversationId
@@ -140,17 +143,17 @@ router.put('/:conversationId/participants/add/:userId', [
           .status(404)
           .json({ message: 'Conversation not found' });
       }
-      if (conversation.participants.includes(userObjectId)) {
-        return res.status(400).json({
-          message:
-            'User is already a participant in the conversation',
-        });
+      for (const objectId of objectIds) {
+        conversation.participants.push(objectId);
       }
-      conversation.participants.push(userObjectId);
+
       await conversation.save();
 
+      await conversation.populate('participants');
+
       res.status(200).json({
-        message: 'User added to the conversation successfully',
+        message: 'User(s) added to the conversation successfully',
+        updatedConversation: conversation,
       });
     } catch (error: any) {
       console.log(error);
@@ -161,15 +164,18 @@ router.put('/:conversationId/participants/add/:userId', [
   },
 ]);
 
-// remove user from conversation
+// remove user(s) from conversation
 
-router.put('/:conversationId/participants/remove/:userId', [
+router.put('/:conversationId/participants/remove/', [
   authenticateToken,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const users = req.body;
       const conversationId = req.params.conversationId;
-      const userId = req.params.userId;
-      const userObjectId = new mongoose.Types.ObjectId(userId);
+      const objectIds = users.map(
+        (user: { value: string; label: string }) =>
+          new mongoose.Types.ObjectId(user.value)
+      );
 
       const conversation = await ConversationModel.findById(
         conversationId
@@ -179,19 +185,27 @@ router.put('/:conversationId/participants/remove/:userId', [
           .status(404)
           .json({ message: 'Conversation not found' });
       }
-      if (!conversation.participants.includes(userObjectId)) {
-        return res.status(400).json({
-          message: 'User is not participant in the conversation',
-        });
+
+      for (const objectId of objectIds) {
+        conversation.participants = conversation.participants.filter(
+          (item) => !item.equals(objectId)
+        );
       }
 
-      conversation.participants = conversation.participants.filter(
-        (item) => !item.equals(userObjectId)
-      );
-      await conversation.save();
+      if (conversation.participants.length === 0) {
+        await ConversationModel.findByIdAndDelete(conversationId);
+        return res.status(200).json({
+          message: 'Conversation deleted successfully',
+        });
+      } else {
+        await conversation.save();
+      }
+
+      await conversation.populate('participants');
 
       res.status(200).json({
-        message: 'User removed to the conversation successfully',
+        message: 'User removed from the conversation successfully',
+        updatedConversation: conversation,
       });
     } catch (error: any) {
       console.log(error);
