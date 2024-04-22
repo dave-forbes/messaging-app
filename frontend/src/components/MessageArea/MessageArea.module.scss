@@ -39,7 +39,7 @@
   display:flex;
   flex-direction: column;
   padding-block: variables.$spacing-lg;
-  padding-inline:variables.$spacing-sm;
+  // padding-inline:variables.$spacing-sm;
   gap: variables.$spacing-lg;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -90,7 +90,11 @@
       transform: rotate(-90deg);
     }
   }
-  
+
+  .messageAreaContainer {
+    padding-bottom: 0;
+  }
+
 }
 
 .loadingSpinner, error {
