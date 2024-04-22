@@ -12,6 +12,7 @@ import API_URL from '../../utils/apiConfig';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CircularProgress from '@mui/material/CircularProgress';
 import apiFetch from '../../utils/apiFetch';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
@@ -60,7 +61,10 @@ export default function MessageArea() {
   };
 
   useEffect(() => {
-    scrollToBottom();
+    const timeout = setTimeout(() => {
+      scrollToBottom();
+    }, 100); // Adjust the delay as needed
+    return () => clearTimeout(timeout);
   }, [messages]);
 
   return (
@@ -81,7 +85,7 @@ export default function MessageArea() {
         {currentConversation && !loading && !error && (
           <>
             <div className={styles.topDiv}>
-              <div className={styles.flex}>
+              <div className={styles.participants}>
                 {currentConversation?.participants.map(
                   (participant) => (
                     <div
@@ -96,7 +100,14 @@ export default function MessageArea() {
                   )
                 )}
               </div>
-              <MoreVertIcon />
+              <div className={styles.conversationControls}>
+                <RefreshIcon
+                  onClick={() =>
+                    fetchMessages(currentConversation._id)
+                  }
+                />
+                <MoreVertIcon />
+              </div>
             </div>
             <div className={styles.centralDiv} ref={centralDivRef}>
               {messages.map((message: any) =>
