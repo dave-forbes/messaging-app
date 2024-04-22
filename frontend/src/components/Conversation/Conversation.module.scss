@@ -4,15 +4,15 @@
   list-style: none;
   height: 50px;
   padding: variables.$spacing-md;
-  transition: box-shadow 0.3s;
+  transition: border 0.3s;
   width: 200px;
+  border: 1px solid variables.$secondary-color;
+  border-radius: 5px;
 }
 
 .conversation:hover,.conversation:focus {
   cursor: pointer;
-  border-left: 2px solid rgb(246, 246, 246);
-  border-top: 2px solid rgb(246, 246, 246);
-  box-shadow: variables.$box-shadow;
+  border: 1px solid variables.$text-color;
 }
 
 .conversationContent {
