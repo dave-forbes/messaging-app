@@ -1,3 +1,6 @@
+// The purpose of this context is to manage the open and closed states of all the 'menu' items
+// I have set it up so only one can be open at any one time
+
 import {
   createContext,
   useState,
@@ -19,6 +22,8 @@ interface NavContextType {
   setIsAppInfoOpen: Dispatch<SetStateAction<boolean>>;
   isUpdateProfileOpen: boolean;
   setIsUpdateProfileOpen: Dispatch<SetStateAction<boolean>>;
+  isConversationOptionsOpen: boolean;
+  setIsConversationOptionsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultContextValue: NavContextType = {
@@ -32,6 +37,8 @@ const defaultContextValue: NavContextType = {
   setIsAppInfoOpen: () => {},
   isUpdateProfileOpen: false,
   setIsUpdateProfileOpen: () => {},
+  isConversationOptionsOpen: false,
+  setIsConversationOptionsOpen: () => {},
 };
 
 const NavbarContext = createContext(defaultContextValue);
@@ -49,6 +56,8 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
   const [isAppInfoOpen, setIsAppInfoOpen] = useState(false);
   const [isUpdateProfileOpen, setIsUpdateProfileOpen] =
     useState(false);
+  const [isConversationOptionsOpen, setIsConversationOptionsOpen] =
+    useState(false);
 
   const allSetStates = [
     setIsAppInfoOpen,
@@ -56,6 +65,7 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
     setIsCreateConversationOpen,
     setIsProfileOpen,
     setIsUpdateProfileOpen,
+    setIsConversationOptionsOpen,
   ];
 
   const useEffectNavElements = (
@@ -83,6 +93,10 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
   );
   useEffectNavElements(isAppInfoOpen, setIsAppInfoOpen);
   useEffectNavElements(isUpdateProfileOpen, setIsUpdateProfileOpen);
+  useEffectNavElements(
+    isConversationOptionsOpen,
+    setIsConversationOptionsOpen
+  );
 
   return (
     <NavbarContext.Provider
@@ -97,6 +111,8 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
         setIsAppInfoOpen,
         isUpdateProfileOpen,
         setIsUpdateProfileOpen,
+        isConversationOptionsOpen,
+        setIsConversationOptionsOpen,
       }}
     >
       {children}
