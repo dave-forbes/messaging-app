@@ -8,6 +8,7 @@ import { useConversation } from '../../contexts/ConversationContext';
 import { UserI } from '../../interfaces/interfaces';
 import API_URL from '../../utils/apiConfig';
 import apiFetch from '../../utils/apiFetch';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function CreateConversation() {
   const { user } = useAuth();
@@ -79,6 +80,10 @@ export default function CreateConversation() {
 
   return (
     <div className={styles.createConversationContainer}>
+      <CloseIcon
+        className={styles.closeIcon}
+        onClick={() => setIsCreateConversationOpen(false)}
+      />
       <h2>Create Conversation</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
@@ -106,12 +111,6 @@ export default function CreateConversation() {
         </div>
         <button className="button" type="submit">
           Create Conversation
-        </button>
-        <button
-          className="button"
-          onClick={() => setIsCreateConversationOpen(false)}
-        >
-          Close
         </button>
         <p>{error}</p>
       </form>
