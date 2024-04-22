@@ -10,6 +10,7 @@ import CreateConversation from './components/CreateConversation/CreateConversati
 import { useEffect } from 'react';
 import AppInfo from './components/AppInfo/AppInfo';
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
+import ConversationOptions from './components/ConversationOptions/ConversationOptions';
 
 export default function App() {
   const {
@@ -18,6 +19,7 @@ export default function App() {
     isCreateConversationOpen,
     isAppInfoOpen,
     isUpdateProfileOpen,
+    isConversationOptionsOpen,
   } = useNavbar();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ export default function App() {
       {isCreateConversationOpen && <CreateConversation />}
       {isAppInfoOpen && <AppInfo />}
       {isUpdateProfileOpen && <UpdateProfile />}
+      {isConversationOptionsOpen && <ConversationOptions />}
       <MessageArea />
     </div>
   );
