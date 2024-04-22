@@ -53,13 +53,13 @@
   .form {
 
     svg {
-      width: 25px;
-      height: 25px;
+      width: 40px;
+      height: 40px;
     }
 
     input {
       flex: 1;
-      margin-inline: 5px;
+      margin-inline: 2px;
       background-color: variables.$background-color;
       border: none;
       border-bottom: 2px solid black;
