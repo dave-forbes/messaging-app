@@ -32,6 +32,10 @@
   display: flex;
   flex-direction: column;
   gap: variables.$spacing-lg;
+
+  button {
+    align-self: center;
+  }
 }
 
 .inputGroup {
