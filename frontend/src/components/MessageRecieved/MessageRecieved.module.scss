@@ -4,7 +4,8 @@
 .messageRecieved {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
+
   gap: variables.$spacing-md;
   .messageContent {
     background-color: variables.$secondary-color;
@@ -12,21 +13,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column-reverse;
+      align-items: center;
     padding: variables.$spacing-md;
     gap: variables.$spacing-md;
     width: 40%;
     p {
       word-wrap: break-word;
     }
+    img {
+          width: 50%;
+          height: auto;
+          border-radius: 10px;
     }
-    
+    }
+
+}
+
+.flex {
+  display: flex;
+  gap: variables.$spacing-md;
 }
 
 
 @media (max-width:600px) {
   .messageRecieved {
   .messageContent {
-   
+
     width:70%;
   }
   p {
