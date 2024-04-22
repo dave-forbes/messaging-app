@@ -1,9 +1,16 @@
 import HearingIcon from '@mui/icons-material/Hearing';
 import styles from './AppInfo.module.scss';
+import CloseIcon from '@mui/icons-material/Close';
+import { useNavbar } from '../../contexts/NavbarContext';
 
 export default function AppInfo() {
+  const { setIsAppInfoOpen } = useNavbar();
   return (
     <div className={styles.appInfoContainer}>
+      <CloseIcon
+        className={styles.closeIcon}
+        onClick={() => setIsAppInfoOpen(false)}
+      />
       <HearingIcon />
       <h1>Welcome to Discussr</h1>
       <div className={styles.appInfoText}>
