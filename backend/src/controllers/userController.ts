@@ -186,7 +186,7 @@ router.post(
         { _id: doesUserExist?._id, email: doesUserExist?.username },
         process.env.JWT_SECRET,
         {
-          expiresIn: '1d',
+          expiresIn: '6h',
         }
       );
       res.status(200).json({
