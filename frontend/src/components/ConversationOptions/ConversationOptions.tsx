@@ -143,7 +143,7 @@ export default function ConversationOptions() {
         onClick={() => setIsConversationOptionsOpen(false)}
       />
       <h1 className={styles.title}>Conversation Options</h1>
-      {user?._id === currentConversation?.creator && (
+      {user?._id === currentConversation?.creator?._id && (
         <>
           <p className={styles.text}>
             You are the conversation creator, so can add or remove
@@ -199,9 +199,9 @@ export default function ConversationOptions() {
           </div>
         </>
       )}
-      {user?._id !== currentConversation?.creator && (
+      {user?._id !== currentConversation?.creator?._id && (
         <p className={styles.text}>
-          Contact conversation creator{' '}
+          Contact conversation creator
           <strong>{currentConversation?.creator?.username}</strong> to
           add or remove participants.
         </p>
