@@ -29,6 +29,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<UserI | null>(null);
 
+  const checkTokenIsValid = async (user: UserI) => {
+    try {
+      const { _id, token } = user;
+      const response = await fetch(`${API_URL}/users/${_id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        referrerPolicy: 'no-referrer',
+      });
+      if (!response.ok) {
+        return false;
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   const userExists = async () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -84,27 +105,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const logout = () => {
     localStorage.removeItem('user');
     setUser(null);
-  };
-
-  const checkTokenIsValid = async (user: UserI) => {
-    try {
-      const { _id, token } = user;
-      const response = await fetch(`${API_URL}/users/${_id}`, {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        referrerPolicy: 'no-referrer',
-      });
-      if (!response.ok) {
-        return false;
-      }
-      return true;
-    } catch (error) {
-      return false;
-    }
   };
 
   return (
