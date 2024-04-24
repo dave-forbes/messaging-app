@@ -32,7 +32,8 @@ const authenticateToken = (
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
       return res.status(403).json({
-        message: 'Forbidden: Access forbidden.',
+        message:
+          'Access forbidden, invalid token or session expired, refresh and log in.',
       });
     }
     req.user = user as JwtPayload | undefined;
