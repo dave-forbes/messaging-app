@@ -58,6 +58,7 @@ export default function CreateConversation() {
     const formData = {
       title,
       participants,
+      creator: user?._id,
     };
 
     try {
