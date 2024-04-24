@@ -9,6 +9,7 @@
   gap: variables.$spacing-lg;
   text-align: center;
   position: relative;
+  width: 300px;
 
   p {
     width: 80%;
@@ -42,7 +43,7 @@
   position: absolute;
   background-color: white;
   height: 100vh;
-  left: 100px;
+  left: 102px;
   z-index: 1;
   }
 }
