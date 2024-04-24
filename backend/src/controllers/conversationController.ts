@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { ConversationModel } from '../models/conversation';
 import authenticateToken from '../utils/authenticateToken';
 import { body, validationResult } from 'express-validator';
-import mongoose from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 const router = express.Router();
 
 // get all conversations
@@ -34,7 +34,9 @@ router.get('/user/:userId', [
       const participantId = req.params.userId;
       const conversations = await ConversationModel.find({
         participants: { $in: [participantId] },
-      }).populate('participants');
+      })
+        .populate('participants')
+        .populate('creator');
       res.json(conversations);
     } catch (error: any) {
       console.log(error);
@@ -88,7 +90,10 @@ router.post('/create', [
       }
 
       const conversation = req.body;
-      const { title, participants } = conversation;
+      const { title, participants, creator } = conversation;
+
+      const objID =
+        mongoose.Types.ObjectId.createFromHexString(creator);
 
       const doesConversationAllReadyExist =
         await ConversationModel.findOne({
@@ -104,6 +109,7 @@ router.post('/create', [
       const newConversation = await ConversationModel.create({
         title,
         participants,
+        creator: objID,
       });
 
       await newConversation.populate('participants');
