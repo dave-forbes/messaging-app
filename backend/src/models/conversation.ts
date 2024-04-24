@@ -3,6 +3,7 @@ import { Message } from './message';
 
 interface Conversation {
   title: string;
+  creator: string;
   participants: string[];
   messages: Message[];
   createdAt: Date;
@@ -11,6 +12,11 @@ interface Conversation {
 
 const ConversationSchema = new Schema({
   title: { type: String, required: true },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   participants: [
     { type: Schema.Types.ObjectId, ref: 'User', required: true },
   ],
