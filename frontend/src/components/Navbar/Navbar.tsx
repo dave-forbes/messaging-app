@@ -12,6 +12,7 @@ export default function Navbar() {
     setIsProfileOpen,
     setIsAppInfoOpen,
     isAppInfoOpen,
+    setProfileToView,
   } = useNavbar();
   return (
     <div className={styles.navbarContainer}>
@@ -22,7 +23,10 @@ export default function Navbar() {
         }
       />
       <AccountCircleIcon
-        onClick={() => setIsProfileOpen(!isProfileOpen)}
+        onClick={() => {
+          setIsProfileOpen(!isProfileOpen);
+          setProfileToView('');
+        }}
       />
     </div>
   );

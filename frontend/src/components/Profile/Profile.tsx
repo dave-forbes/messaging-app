@@ -13,8 +13,12 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function Profile() {
   const { setCurrentConversation } = useConversation();
   const { logout, user } = useAuth();
-  const { setIsProfileOpen, setIsUpdateProfileOpen, profileToView } =
-    useNavbar();
+  const {
+    setIsProfileOpen,
+    setIsUpdateProfileOpen,
+    profileToView,
+    setProfileToView,
+  } = useNavbar();
   const [error, setError] = useState('');
   const [userData, setUserData] = useState<UserI | null>(null);
   const [loading, setLoading] = useState(true);
@@ -51,7 +55,10 @@ export default function Profile() {
     <div className={styles.profileContainer}>
       <CloseIcon
         className={styles.closeIcon}
-        onClick={() => setIsProfileOpen(false)}
+        onClick={() => {
+          setIsProfileOpen(false);
+          setProfileToView('');
+        }}
       />
       {loading && <CircularProgress />}
       {userData && <Avatar user={userData} size={150} />}
