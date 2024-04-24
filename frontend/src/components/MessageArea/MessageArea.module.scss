@@ -68,7 +68,7 @@
   padding-block: variables.$spacing-lg;
   // padding-inline:variables.$spacing-sm;
   gap: variables.$spacing-lg;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   height:60vh;
 }
