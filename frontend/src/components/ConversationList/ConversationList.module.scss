@@ -1,7 +1,8 @@
 @use '../../styles/variables' as variables;
 
 .conversationListContainer {
-  border-right: 2px solid variables.$secondary-color;
+  background-color: var(--light-background-color);
+  border-right: 2px solid var(--secondary-color);
   padding: 0 variables.$spacing-lg;
   display: flex;
   flex-direction: column;
@@ -23,13 +24,13 @@
     }
 
     .closeIcon:hover {
-      background-color: variables.$secondary-color;
+      background-color: var(--secondary-color);
     }
 }
 
 .title {
   font-weight: 500;
-  color: variables.$text-color;
+  color: var(--text-color);
   margin: 0;
 }
 
@@ -55,9 +56,9 @@
 @media (max-width: 1400px) {
   .conversationListContainer {
     position: absolute;
-    background-color: white;
+    background-color: var(--light-background-color);
     height: 100vh;
-    left: 100px;
+    left: 102px;
     z-index: 1;
   }
 }

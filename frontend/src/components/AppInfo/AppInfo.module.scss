@@ -9,7 +9,7 @@
   max-width: 300px;
   gap: variables.$spacing-lg;
   padding: 0 variables.$spacing-lg;
-  border-right: 2px solid variables.$secondary-color;
+  border-right: 2px solid var(--secondary-color);
   position: relative;
 
   svg {
@@ -30,7 +30,7 @@
   }
 
   .closeIcon:hover {
-    background-color: variables.$secondary-color;
+    background-color: var(--secondary-color);
   }
 }
 
@@ -45,9 +45,9 @@
 @media (max-width: 1400px) {
   .appInfoContainer {
   position: absolute;
-  background-color: white;
+  background-color: var(--light-background-color);
   height: 100vh;
-  left: 100px;
+  left: 102px;
   z-index: 1;
   }
 }

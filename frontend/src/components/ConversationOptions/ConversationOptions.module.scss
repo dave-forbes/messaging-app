@@ -1,13 +1,14 @@
 @use '../../styles/variables' as variables;
 
 .conversationOptionsContainer {
+  background-color: var(--light-background-color);
   width: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: variables.$spacing-lg;
-  border-right: 2px solid variables.$secondary-color;
+  border-right: 2px solid var(--secondary-color);
   padding: 0 variables.$spacing-lg;
   position: relative;
 
@@ -29,7 +30,7 @@
   }
 
   .closeIcon:hover {
-    background-color: variables.$secondary-color;
+    background-color: var(--secondary-color);
   }
 }
 
@@ -50,9 +51,9 @@
 @media (max-width: 1400px) {
   .conversationOptionsContainer {
     position: absolute;
-    background-color: white;
+    background-color: var(--light-background-color);
     height: 100vh;
-    left: 100px;
+    left: 102px;
     z-index: 1;
   }
 }

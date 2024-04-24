@@ -1,6 +1,7 @@
 @use '../../styles/variables' as variables;
 
 .navbarContainer {
+  background-color: var(--light-background-color);
   width: 100px;
   display: flex;
   flex-direction: column;
@@ -8,7 +9,7 @@
   align-items: center;
   justify-content: space-around;
   flex-shrink: 0;
-    border-right: 2px solid variables.$secondary-color;
+  border-right: 2px solid var(--secondary-color);
 
   svg {
     transition: 0.3s;
@@ -18,7 +19,7 @@
     height: 50px;
   }
   svg:hover {
-    background-color: variables.$secondary-color;
+    background-color: var(--secondary-color);
     cursor:pointer;
   }
 }
@@ -29,7 +30,7 @@
     width: 100vw;
     padding-block: variables.$spacing-lg;
     border-right: none;
-    border-top: 2px solid variables.$secondary-color;
+    border-top: 2px solid var(--secondary-color);
     svg {
       width: 40px;
       height: 40px;

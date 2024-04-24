@@ -14,13 +14,13 @@
 }
 
 .modal {
-  background-color: variables.$background-color;
+  background-color: var(--light-background-color);
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: variables.$spacing-md;
   max-width: 80%;
   overflow: hidden;
-  border: 2px solid variables.$secondary-color;
+  border: 2px solid var(--secondary-color);
   position: relative;
 }
 

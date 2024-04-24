@@ -10,7 +10,7 @@
 }
 
 .registerFormContainer {
-  border: 1px solid variables.$secondary-color;
+  border: 1px solid var(--secondary-color);
   padding: variables.$spacing-lg;
   border-radius: variables.$border-radius-lg;
   width: 30%;

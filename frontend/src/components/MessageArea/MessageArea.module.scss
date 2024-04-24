@@ -2,7 +2,7 @@
 
 .messageAreaContainer {
   flex: 1;
-  background-color: variables.$background-color;
+  background-color: var(--background-color);
   padding: 2% 5%;
   display: flex;
   flex-direction: column;
@@ -29,7 +29,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid variables.$secondary-color;
+  border-bottom: 2px solid var(--secondary-color);
   padding-bottom:variables.$spacing-sm;;
   h1 {
     font-size: variables.$heading-font-size;
@@ -57,7 +57,7 @@
       cursor: pointer;
     }
     svg:hover {
-      background-color: variables.$secondary-color;
+      background-color: var(--secondary-color);
     }
   }
 }
@@ -86,11 +86,11 @@
 
 .date {
   text-align: center;
-  color: variables.$text-color
+  color: var(--text-color);
 }
 
 .bottomDiv {
-  border-top: 2px solid variables.$secondary-color;
+  border-top: 2px solid var(--secondary-color);
   padding-top: variables.$spacing-lg;
 }
 

@@ -12,7 +12,7 @@
   flex-direction: column-reverse;
   align-items: center;
   justify-content: space-between;
-  color: variables.$light-text-color;
+  color: var(--light-text-color);
   padding: variables.$spacing-md;
   width: 40%;
   gap: variables.$spacing-sm;
