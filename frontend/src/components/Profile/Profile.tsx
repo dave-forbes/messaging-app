@@ -36,7 +36,7 @@ export default function Profile() {
         'GET',
         true
       );
-      setUserData(data);
+      setUserData(data.user);
       setError('');
       setLoading(false);
     } catch (error: any) {

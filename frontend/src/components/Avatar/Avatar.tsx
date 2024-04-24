@@ -34,7 +34,7 @@ export default function Avatar({ user, size }: AvatarProps) {
           'GET',
           true
         );
-        setUserData(data);
+        setUserData(data.user);
       } catch (error: any) {
         console.error(error.toString());
       }
