@@ -17,7 +17,7 @@ interface AuthContextType {
   login: (userData: UserI) => any;
   logout: () => void;
   register: (userData: FormData) => any;
-  checkTokenIsValid: any;
+  checkTokenIsValid: (user: UserI) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -29,15 +29,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<UserI | null>(null);
 
-  useEffect(() => {
+  const userExists = async () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      if (user) {
-        checkTokenIsValid(user);
+      const tokenValid = await checkTokenIsValid(parsedUser);
+      if (tokenValid) {
+        return setUser(parsedUser);
       }
     }
+    setUser(null);
+  };
+
+  useEffect(() => {
+    userExists();
   }, []);
 
   const register = async (userData: FormData) => {
@@ -94,10 +99,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         referrerPolicy: 'no-referrer',
       });
       if (!response.ok) {
-        return logout();
+        return false;
       }
+      return true;
     } catch (error) {
-      logout(); // Error occurred, log out the user
+      return false;
     }
   };
 
