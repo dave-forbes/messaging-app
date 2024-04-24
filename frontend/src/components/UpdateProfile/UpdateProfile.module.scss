@@ -1,7 +1,7 @@
 @use '../../styles/variables' as variables;
 
 .updateProfileContainer {
-  border-inline: 2px solid variables.$secondary-color;
+  border-right: 2px solid variables.$secondary-color;
   display: flex;
   flex-direction: column;
   justify-content: center;
