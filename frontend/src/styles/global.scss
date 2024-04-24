@@ -1,6 +1,29 @@
 @use './variables' as variables;
 @import 'normalize.css';
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: #{variables.$background-color};
+    --light-background-color: #{variables.$light-background-color};
+    --text-color: #{variables.$text-color};
+    --secondary-color: #{variables.$secondary-color};
+    --placeholder-color: #{variables.$placeholder-color};
+    --light-text-color: #{variables.$light-text-color};
+  }
+}
+
+// Media query for dark mode
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #{variables.$dark-background-color};
+    --light-background-color: #{variables.$dark-light-background-color};
+    --text-color: #{variables.$dark-text-color};
+    --secondary-color: #{variables.$dark-secondary-color};
+    --placeholder-color: #{variables.$dark-placeholder-color};
+    --light-text-color: #{variables.$dark-light-text-color};
+  }
+}
+
 :root {
   box-sizing: border-box;
 }
@@ -13,9 +36,32 @@ body {
 .appContainer {
   height: 100svh;
   display: flex;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-h1, p {
+body div {
+  &::-webkit-scrollbar {
+      background-color: var(--background-color);
+      width: 10px;
+      /* Width of the scrollbar */
+    }
+
+    /* Styles for the scrollbar thumb */
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--light-text-color);
+      border-radius: 5px;
+      /* Border radius of the thumb */
+    }
+
+    /* Styles for the scrollbar track */
+    &::-webkit-scrollbar-track {
+      background-color: var(--background-color);
+    }
+}
+
+h1,
+p {
   margin: 0;
 }
 
@@ -26,14 +72,17 @@ h1, p {
 }
 
 .button {
-  background-color: white;
+  background-color: var(--background-color);
+  color: var(--text-color);
   border-radius: 5px;
   padding: variables.$spacing-sm;
   transition: 0.2s;
 }
 
-.button:hover, .button:focus {
-  background-color: black;
-  color: white;
+.button:hover,
+.button:focus {
+  background-color: var(--text-color);
+  color: var(--background-color);
   cursor: pointer;
 }
+
