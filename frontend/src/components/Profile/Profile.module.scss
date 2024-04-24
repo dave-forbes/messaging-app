@@ -2,15 +2,17 @@
 
 .profileContainer {
   border-inline: 2px solid variables.$secondary-color;
-  width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: variables.$spacing-lg;
-  padding: 0 variables.$spacing-sm;
   text-align: center;
   position: relative;
+
+  p {
+    width: 80%;
+  }
 
   .closeIcon {
       position: absolute;
