@@ -13,19 +13,20 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function Profile() {
   const { setCurrentConversation } = useConversation();
   const { logout, user } = useAuth();
-  const { setIsProfileOpen, setIsUpdateProfileOpen } = useNavbar();
+  const { setIsProfileOpen, setIsUpdateProfileOpen, profileToView } =
+    useNavbar();
   const [error, setError] = useState('');
   const [userData, setUserData] = useState<UserI | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchUser();
+    fetchUser(profileToView ? profileToView : undefined);
   }, []);
 
-  const fetchUser = async () => {
+  const fetchUser = async (userId = user?._id) => {
     try {
       const data = await apiFetch(
-        `${API_URL}/users/${user?._id}`,
+        `${API_URL}/users/${userId}`,
         {},
         user?.token,
         'GET',
@@ -53,20 +54,22 @@ export default function Profile() {
         onClick={() => setIsProfileOpen(false)}
       />
       {loading && <CircularProgress />}
-      <Avatar user={user} size={150} />
+      {userData && <Avatar user={userData} size={150} />}
       <h1>{userData?.username}</h1>
       <p>{userData?.bio}</p>
-      <div className={styles.profileControls}>
-        <button className="button" onClick={handleLogoutClick}>
-          Logout
-        </button>
-        <button
-          className="button"
-          onClick={() => setIsUpdateProfileOpen(true)}
-        >
-          Update profile
-        </button>
-      </div>
+      {user?._id === userData?._id && (
+        <div className={styles.profileControls}>
+          <button className="button" onClick={handleLogoutClick}>
+            Logout
+          </button>
+          <button
+            className="button"
+            onClick={() => setIsUpdateProfileOpen(true)}
+          >
+            Update profile
+          </button>
+        </div>
+      )}
       <p>{error}</p>
     </div>
   );
