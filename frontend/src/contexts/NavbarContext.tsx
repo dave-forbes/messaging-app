@@ -24,6 +24,8 @@ interface NavContextType {
   setIsUpdateProfileOpen: Dispatch<SetStateAction<boolean>>;
   isConversationOptionsOpen: boolean;
   setIsConversationOptionsOpen: Dispatch<SetStateAction<boolean>>;
+  profileToView: string | undefined;
+  setProfileToView: Dispatch<SetStateAction<string | undefined>>;
 }
 
 const defaultContextValue: NavContextType = {
@@ -39,6 +41,8 @@ const defaultContextValue: NavContextType = {
   setIsUpdateProfileOpen: () => {},
   isConversationOptionsOpen: false,
   setIsConversationOptionsOpen: () => {},
+  profileToView: '',
+  setProfileToView: () => {},
 };
 
 const NavbarContext = createContext(defaultContextValue);
@@ -58,6 +62,9 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
     useState(false);
   const [isConversationOptionsOpen, setIsConversationOptionsOpen] =
     useState(false);
+  const [profileToView, setProfileToView] = useState<
+    string | undefined
+  >('');
 
   const allSetStates = [
     setIsAppInfoOpen,
@@ -113,6 +120,8 @@ export const NavbarProvider: React.FC<{ children: ReactNode }> = ({
         setIsUpdateProfileOpen,
         isConversationOptionsOpen,
         setIsConversationOptionsOpen,
+        profileToView,
+        setProfileToView,
       }}
     >
       {children}
