@@ -8,7 +8,8 @@
   align-items: center;
   justify-content: space-around;
   flex-shrink: 0;
-  
+    border-right: 2px solid variables.$secondary-color;
+
   svg {
     transition: 0.3s;
     padding: variables.$spacing-sm;
@@ -27,6 +28,8 @@
     flex-direction: row;
     width: 100vw;
     padding-block: variables.$spacing-lg;
+    border-right: none;
+    border-top: 2px solid variables.$secondary-color;
     svg {
       width: 40px;
       height: 40px;
