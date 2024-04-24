@@ -31,6 +31,15 @@
 body {
   font-family: 'Roboto', sans-serif;
   letter-spacing: 1px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+input, textarea, button {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
 }
 
 .appContainer {
@@ -75,7 +84,7 @@ p {
   background-color: var(--background-color);
   color: var(--text-color);
   border-radius: 5px;
-  padding: variables.$spacing-sm;
+  padding: variables.$spacing-md;
   transition: 0.2s;
 }
 
