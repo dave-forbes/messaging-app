@@ -4,22 +4,20 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import styles from './CreateMessage.module.scss';
 import { useConversation } from '../../contexts/ConversationContext';
 import { useAuth } from '../../contexts/AuthContext';
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import API_URL from '../../utils/apiConfig';
 import apiFetch from '../../utils/apiFetch';
+import { MessageI } from '../../interfaces/interfaces';
 
 interface CreateMessageProps {
-  onMessageSent: () => void;
-  setLoading: () => any;
+  setMessages: Dispatch<SetStateAction<MessageI[]>>;
 }
 
 export default function CreateMessage({
-  onMessageSent,
-  setLoading,
+  setMessages,
 }: CreateMessageProps) {
   const [content, setContent] = useState('');
-  const { currentConversation, setCurrentConversation } =
-    useConversation();
+  const { currentConversation } = useConversation();
   const { user } = useAuth();
   const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -41,7 +39,6 @@ export default function CreateMessage({
       }
 
       try {
-        setLoading();
         const data = await apiFetch(
           `${API_URL}/messages/create`,
           formData,
@@ -49,9 +46,12 @@ export default function CreateMessage({
           'POST',
           false
         );
-        setCurrentConversation(data.updatedConversation);
-        onMessageSent();
+        setMessages((prevMessages: MessageI[]) => [
+          ...prevMessages,
+          data.newMessage,
+        ]);
         setError('');
+        setImgFile(undefined);
       } catch (error: any) {
         setError(error.toString());
       }
