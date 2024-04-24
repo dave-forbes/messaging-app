@@ -49,12 +49,6 @@ export default function MessageArea() {
     }
   };
 
-  const handleMessageSent = () => {
-    if (currentConversation) {
-      fetchMessages(currentConversation._id);
-    }
-  };
-
   const scrollToBottom = () => {
     const ref = centralDivRef.current;
     if (ref) {
@@ -65,7 +59,7 @@ export default function MessageArea() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       scrollToBottom();
-    }, 500); // Adjust the delay as needed
+    }, 500); // Delay to wait for images to load in.
     return () => clearTimeout(timeout);
   }, [messages]);
 
@@ -132,10 +126,7 @@ export default function MessageArea() {
               )}
             </div>
             <div className={styles.bottomDiv}>
-              <CreateMessage
-                onMessageSent={handleMessageSent}
-                setLoading={() => setLoading(true)}
-              />
+              <CreateMessage setMessages={setMessages} />
             </div>
           </>
         )}
