@@ -69,7 +69,7 @@ export default function ConversationList() {
           className="button"
           onClick={() => setIsCreateConversationOpen(true)}
         >
-          Create
+          Create Conversation
         </button>
       </div>
     </div>
