@@ -21,25 +21,14 @@ export default function App() {
     isUpdateProfileOpen,
     isConversationOptionsOpen,
   } = useNavbar();
-  const { user, checkTokenIsValid } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const validateToken = async () => {
-      const tokenIsValid = await checkTokenIsValid();
-      if (!tokenIsValid) {
-        // Token is invalid, log out the user and redirect to login page
-        navigate('/login');
-      }
-    };
-
-    // Check token validity when component mounts and user changes
-    if (user) {
-      validateToken();
-    } else {
+    if (!user) {
       navigate('/login'); // Redirect to login page if user is not logged in
     }
-  }, [user, checkTokenIsValid, navigate]);
+  }, [user, navigate]);
 
   return (
     <div className="appContainer">

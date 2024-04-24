@@ -32,7 +32,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      if (user) {
+        checkTokenIsValid(user);
+      }
     }
   }, []);
 
@@ -77,19 +81,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUser(null);
   };
 
-  const checkTokenIsValid = async () => {
+  const checkTokenIsValid = async (user: UserI) => {
     try {
-      const storedUser = localStorage.getItem('user');
-      if (!storedUser) return false; // No user stored, token is invalid
-      const { _id, token } = JSON.parse(storedUser);
-      await apiFetch(
-        `${API_URL}/users/${_id}`, // Assuming this endpoint checks token validity
-        {},
-        token,
-        'GET',
-        true
-      );
-      return true;
+      const { _id, token } = user;
+      const response = await fetch(`${API_URL}/users/${_id}`, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        referrerPolicy: 'no-referrer',
+      });
+      if (!response.ok) {
+        return logout();
+      }
     } catch (error) {
       logout(); // Error occurred, log out the user
     }
