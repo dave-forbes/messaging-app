@@ -13,9 +13,14 @@
   border: 1px solid var(--secondary-color);
   padding: variables.$spacing-lg;
   border-radius: variables.$border-radius-lg;
+  background-color: var(--light-background-color);
   width: 30%;
   h2, p {
     text-align: center;
+  }
+
+  button {
+    background-color: var(--secondary-color);
   }
 }
 

@@ -8,6 +8,10 @@
   align-items: center;
   flex-direction: column;
   text-align: center;
+
+  button {
+    background-color: var(--secondary-color);
+  }
 }
 
 .appDescription {
@@ -27,6 +31,7 @@
   padding: variables.$spacing-lg;
   border-radius: variables.$border-radius-lg;
   width: 30%;
+  background-color: var(--light-background-color);
   h2 {
     text-align: center;
   }
