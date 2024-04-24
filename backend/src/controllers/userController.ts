@@ -61,7 +61,11 @@ router.get('/:id', [
       }
 
       user.avatar = imageUrl;
-      res.json(user);
+      // res.json(user);
+      res.status(200).json({
+        success: true,
+        user: user,
+      });
     } catch (error: any) {
       console.log(error);
       res.status(400).json({
