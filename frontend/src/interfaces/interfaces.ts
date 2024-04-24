@@ -20,4 +20,5 @@ export interface ConversationI {
   createdAt: Date;
   updatedAt: Date;
   _id: string;
+  creator?: UserI;
 }
