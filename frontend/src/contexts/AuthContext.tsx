@@ -17,6 +17,7 @@ interface AuthContextType {
   login: (userData: UserI) => any;
   logout: () => void;
   register: (userData: FormData) => any;
+  checkTokenIsValid: any;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -76,9 +77,34 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUser(null);
   };
 
+  const checkTokenIsValid = async () => {
+    try {
+      const storedUser = localStorage.getItem('user');
+      if (!storedUser) return false; // No user stored, token is invalid
+      const { _id, token } = JSON.parse(storedUser);
+      await apiFetch(
+        `${API_URL}/users/${_id}`, // Assuming this endpoint checks token validity
+        {},
+        token,
+        'GET',
+        true
+      );
+      return true;
+    } catch (error) {
+      logout(); // Error occurred, log out the user
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, register, setUser }}
+      value={{
+        user,
+        login,
+        logout,
+        register,
+        setUser,
+        checkTokenIsValid,
+      }}
     >
       {children}
     </AuthContext.Provider>
