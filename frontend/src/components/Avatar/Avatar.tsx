@@ -3,6 +3,7 @@ import { UserI } from '../../interfaces/interfaces';
 import styles from './Avatar.module.scss';
 import apiFetch from '../../utils/apiFetch';
 import API_URL from '../../utils/apiConfig';
+import { useNavbar } from '../../contexts/NavbarContext';
 
 interface AvatarProps {
   user: UserI | null;
@@ -11,6 +12,7 @@ interface AvatarProps {
 
 export default function Avatar({ user, size }: AvatarProps) {
   const [userData, setUserData] = useState<UserI | null>(null);
+  const { setIsProfileOpen, setProfileToView } = useNavbar();
   if (user) {
     const userLocalStorage = localStorage.getItem('user');
     let token: string;
@@ -42,7 +44,11 @@ export default function Avatar({ user, size }: AvatarProps) {
   return (
     <div
       className={styles.avatar}
-      style={{ width: size, height: size }}
+      style={{ width: size, height: size, cursor: 'pointer' }}
+      onClick={() => {
+        setProfileToView(userData?._id);
+        setIsProfileOpen(true);
+      }}
     >
       {userData?.avatar ? (
         <img
