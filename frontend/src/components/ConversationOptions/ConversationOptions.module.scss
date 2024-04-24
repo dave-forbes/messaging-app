@@ -11,8 +11,9 @@
   padding: 0 variables.$spacing-lg;
   position: relative;
 
-  h1, p {
+  .title, .text {
     text-align: center;
+    max-width: 80%;
   }
 
   .closeIcon {
