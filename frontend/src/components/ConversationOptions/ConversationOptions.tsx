@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { UserI } from '../../interfaces/interfaces';
+import LeaveModal from '../LeaveModal/LeaveModal';
 
 export default function ConversationOptions() {
   const { setIsConversationOptionsOpen } = useNavbar();
@@ -28,6 +29,9 @@ export default function ConversationOptions() {
   const [usersToRemove, setUsersToRemove] = useState<
     { value: string; label: string }[]
   >([]);
+
+  const [showLeaveConfirmation, setShowLeaveConfirmation] =
+    useState(false);
 
   const animatedComponents = makeAnimated();
 
@@ -108,10 +112,18 @@ export default function ConversationOptions() {
   };
 
   const handleLeaveConvClick = async () => {
+    setShowLeaveConfirmation(true);
+  };
+
+  const confirmLeaveConversation = async () => {
+    const userToRemove = {
+      value: user?._id,
+      label: user?.username,
+    };
     try {
       await apiFetch(
         `${API_URL}/conversations/${currentConversation?._id}/participants/remove/`,
-        [user],
+        [userToRemove],
         user?.token,
         'PUT',
         true
@@ -173,11 +185,17 @@ export default function ConversationOptions() {
           </button>
         </div>
       </div>
-      <p>This action cannot be undone.</p>
       <button className="button" onClick={handleLeaveConvClick}>
         Leave Conversation
       </button>
       {error && <p>{error}</p>}
+      {showLeaveConfirmation && (
+        <LeaveModal
+          onClose={() => setShowLeaveConfirmation(false)}
+          onCancel={() => setShowLeaveConfirmation(false)}
+          confirmLeaveConversation={() => confirmLeaveConversation()}
+        ></LeaveModal>
+      )}
     </div>
   );
 }
