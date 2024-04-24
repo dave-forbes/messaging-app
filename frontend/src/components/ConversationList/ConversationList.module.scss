@@ -40,13 +40,15 @@
   flex-direction: column;
   align-items: center;
   gap: variables.$spacing-lg;
-
+  max-height: 70%;
+  overflow-y: scroll;
 }
 
 .listWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: variables.$spacing-lg;
 }
 
