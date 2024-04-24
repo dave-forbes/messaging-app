@@ -142,49 +142,70 @@ export default function ConversationOptions() {
         className={styles.closeIcon}
         onClick={() => setIsConversationOptionsOpen(false)}
       />
-      <h1>Conversation Options</h1>
-      <div className={styles.inputGroup}>
-        <label>Add participant(s):</label>
-        <div className={styles.flex}>
-          <Select
-            closeMenuOnSelect={false}
-            components={animatedComponents}
-            isMulti
-            options={usersToAdd.filter(
-              (item) => item.value !== user?._id
-            )}
-            onChange={
-              (selectedOptions) =>
-                setSelectedUsersToAdd(selectedOptions || []) // Handle null case
-            }
-            required
-          />
-          <button className="button" onClick={handleAddUsersClick}>
-            Add
-          </button>
-        </div>
-      </div>
-      <div className={styles.inputGroup}>
-        <label>Remove participant(s):</label>
-        <div className={styles.flex}>
-          <Select
-            closeMenuOnSelect={false}
-            components={animatedComponents}
-            isMulti
-            options={usersToRemove.filter(
-              (item) => item.value !== user?._id
-            )}
-            onChange={
-              (selectedOptions) =>
-                setSelectedUsersToRemove(selectedOptions || []) // Handle null case
-            }
-            required
-          />
-          <button className="button" onClick={handleRemoveUsersClick}>
-            Remove
-          </button>
-        </div>
-      </div>
+      <h1 className={styles.title}>Conversation Options</h1>
+      {user?._id === currentConversation?.creator && (
+        <>
+          <p className={styles.text}>
+            You are the conversation creator, so can add or remove
+            participants.
+          </p>
+          <div className={styles.inputGroup}>
+            <label>Add participant(s):</label>
+            <div className={styles.flex}>
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti
+                options={usersToAdd.filter(
+                  (item) => item.value !== user?._id
+                )}
+                onChange={
+                  (selectedOptions) =>
+                    setSelectedUsersToAdd(selectedOptions || []) // Handle null case
+                }
+                required
+              />
+              <button
+                className="button"
+                onClick={handleAddUsersClick}
+              >
+                Add
+              </button>
+            </div>
+          </div>
+          <div className={styles.inputGroup}>
+            <label>Remove participant(s):</label>
+            <div className={styles.flex}>
+              <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
+                isMulti
+                options={usersToRemove.filter(
+                  (item) => item.value !== user?._id
+                )}
+                onChange={
+                  (selectedOptions) =>
+                    setSelectedUsersToRemove(selectedOptions || []) // Handle null case
+                }
+                required
+              />
+              <button
+                className="button"
+                onClick={handleRemoveUsersClick}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+      {user?._id !== currentConversation?.creator && (
+        <p className={styles.text}>
+          Contact conversation creator{' '}
+          <strong>{currentConversation?.creator?.username}</strong> to
+          add or remove participants.
+        </p>
+      )}
       <button className="button" onClick={handleLeaveConvClick}>
         Leave Conversation
       </button>
