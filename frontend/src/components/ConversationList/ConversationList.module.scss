@@ -40,8 +40,8 @@
   flex-direction: column;
   align-items: center;
   gap: variables.$spacing-lg;
-  max-height: 70%;
-  overflow-y: scroll;
+  max-height: 90%;
+  overflow-y: auto;
 }
 
 .listWrapper {
@@ -75,7 +75,7 @@
 
   .conversationList {
     max-height: 50vh;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 }
 
