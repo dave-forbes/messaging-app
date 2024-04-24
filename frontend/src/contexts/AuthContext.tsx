@@ -18,6 +18,8 @@ interface AuthContextType {
   logout: () => void;
   register: (userData: FormData) => any;
   checkTokenIsValid: (user: UserI) => Promise<boolean>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(
@@ -28,6 +30,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<UserI | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const checkTokenIsValid = async (user: UserI) => {
     try {
@@ -51,14 +54,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const userExists = async () => {
+    setLoading(true);
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       const tokenValid = await checkTokenIsValid(parsedUser);
       if (tokenValid) {
+        setLoading(false);
         return setUser(parsedUser);
       }
     }
+    setLoading(false);
     setUser(null);
   };
 
@@ -116,6 +122,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         register,
         setUser,
         checkTokenIsValid,
+        loading,
+        setLoading,
       }}
     >
       {children}

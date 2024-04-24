@@ -6,6 +6,7 @@ import HearingIcon from '@mui/icons-material/Hearing';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ export default function Login() {
     password: '',
   });
   const { username, password } = formData;
-  const { login, user } = useAuth();
+  const { login, user, loading } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -41,52 +42,55 @@ export default function Login() {
 
   return (
     <div className={styles.loginPageWrapper}>
-      <div className={styles.loginFormContainer}>
-        <div className={styles.appDescription}>
-          <HearingIcon />
-          <h1>Welcome to Discussr</h1>
-          <p>An app for sending messages.</p>
+      {loading && <CircularProgress />}
+      {!loading && (
+        <div className={styles.loginFormContainer}>
+          <div className={styles.appDescription}>
+            <HearingIcon />
+            <h1>Welcome to Discussr</h1>
+            <p>An app for sending messages.</p>
+          </div>
+          <form className={styles.loginForm} onSubmit={handleSubmit}>
+            <div className={styles.inputGroup}>
+              <label htmlFor="username">
+                <PersonIcon />
+                username
+              </label>
+
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <label htmlFor="password">
+                <LockIcon />
+                password
+              </label>
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <p>{error}</p>
+            <button className="button" type="submit">
+              Login
+            </button>
+            <p>
+              New user? <Link to="/register">Create an acccount</Link>
+            </p>
+          </form>
         </div>
-        <form className={styles.loginForm} onSubmit={handleSubmit}>
-          <div className={styles.inputGroup}>
-            <label htmlFor="username">
-              <PersonIcon />
-              username
-            </label>
-
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={username}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <label htmlFor="password">
-              <LockIcon />
-              password
-            </label>
-
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <p>{error}</p>
-          <button className="button" type="submit">
-            Login
-          </button>
-          <p>
-            New user? <Link to="/register">Create an acccount</Link>
-          </p>
-        </form>
-      </div>
+      )}
     </div>
   );
 }
