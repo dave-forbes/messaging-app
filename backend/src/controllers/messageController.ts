@@ -76,21 +76,17 @@ router.post(
         image: imageName,
       });
 
-      const updatedConversation =
-        await ConversationModel.findByIdAndUpdate(
-          conversationId,
-          {
-            $push: { messages: newMessage._id },
-            $set: { updatedAt: new Date() }, // Set the updatedAt field to the current date/time
-          },
-          { new: true }
-        ).populate('participants');
+      await newMessage.populate('senderId');
+
+      if (imageName !== '') {
+        const signedUrl = await getImageUrl(imageName);
+        newMessage.image = signedUrl;
+      }
 
       res.status(200).json({
         success: true,
         message: 'Message created successfully',
         newMessage: newMessage,
-        updatedConversation: updatedConversation,
       });
     } catch (error: any) {
       console.log(error);
