@@ -50,21 +50,23 @@ export default function ConversationList() {
       />
       <div className={styles.listWrapper}>
         <h1 className={styles.title}>Conversations</h1>
-        <ul className={styles.conversationList}>
-          {loading && <CircularProgress />}
-          {conversations.map((conversation: any): any => (
-            <Conversation
-              key={conversation._id}
-              title={conversation.title}
-              lastUpdated={conversation.updatedAt}
-              onClick={() => {
-                setCurrentConversation(conversation);
-                setIsConversationListOpen(false);
-              }}
-            />
-          ))}
-          {error}
-        </ul>
+        {loading && <CircularProgress />}
+        {!loading && (
+          <ul className={styles.conversationList}>
+            {conversations.map((conversation: any): any => (
+              <Conversation
+                key={conversation._id}
+                title={conversation.title}
+                lastUpdated={conversation.updatedAt}
+                onClick={() => {
+                  setCurrentConversation(conversation);
+                  setIsConversationListOpen(false);
+                }}
+              />
+            ))}
+          </ul>
+        )}
+        {error && <p>{error}</p>}
         <button
           className="button"
           onClick={() => setIsCreateConversationOpen(true)}
