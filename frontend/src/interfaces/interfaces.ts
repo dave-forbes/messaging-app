@@ -1,9 +1,10 @@
 export interface MessageI {
   conversationId: string;
-  senderId: string;
+  senderId: UserI;
   content: string;
-  createdAt: Date;
-  image?: File;
+  createdAt: string;
+  image?: string;
+  _id: string;
 }
 
 export interface UserI {
