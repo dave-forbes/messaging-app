@@ -10,6 +10,7 @@
   border-right: 2px solid var(--secondary-color);
   padding: 0 variables.$spacing-lg;
   position: relative;
+  z-index: 2;
 
 
   .closeIcon {
