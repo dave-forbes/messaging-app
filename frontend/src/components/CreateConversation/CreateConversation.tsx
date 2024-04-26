@@ -9,6 +9,7 @@ import { UserI } from '../../interfaces/interfaces';
 import API_URL from '../../utils/apiConfig';
 import apiFetch from '../../utils/apiFetch';
 import CloseIcon from '@mui/icons-material/Close';
+import reactSelectStyles from '../../utils/reactSelectStyles';
 
 export default function CreateConversation() {
   const { user } = useAuth();
@@ -87,7 +88,7 @@ export default function CreateConversation() {
       />
       <h2>Create Conversation</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.inputGroup}>
+        <div className="inputGroup">
           <label>Title:</label>
           <input
             type="text"
@@ -96,7 +97,7 @@ export default function CreateConversation() {
             required
           />
         </div>
-        <div className={styles.inputGroup}>
+        <div className="inputGroup">
           <label>Select Users:</label>
           <Select
             closeMenuOnSelect={false}
@@ -107,6 +108,7 @@ export default function CreateConversation() {
               (selectedOptions) =>
                 setSelectedUsers(selectedOptions || []) // Handle null case
             }
+            styles={reactSelectStyles}
             required
           />
         </div>
