@@ -56,6 +56,8 @@ export default function CreateMessage({
         setError(error.toString());
       }
       setContent('');
+    } else {
+      setError('Please enter some text for your message');
     }
   };
 
@@ -88,7 +90,10 @@ export default function CreateMessage({
       <input
         type="text"
         value={content}
-        onChange={(e) => setContent(e.target.value)}
+        onChange={(e) => {
+          setError('');
+          setContent(e.target.value);
+        }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             handleSendMessage();
