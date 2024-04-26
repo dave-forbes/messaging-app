@@ -7,6 +7,7 @@ import { body, validationResult } from 'express-validator';
 import { upload } from '../utils/multerSetup';
 import randomImageName from '../utils/randomImageName';
 import { addImageToS3, getImageUrl } from '../utils/s3Config';
+import { User } from '../models/user';
 const router = express.Router();
 
 // get all messages for a specifc conversation
@@ -24,6 +25,12 @@ router.get(
         if (message.image) {
           const signedUrl = await getImageUrl(message.image);
           message.image = signedUrl;
+        }
+        const sender: any = message.senderId;
+        if (sender.avatar && !sender.processed) {
+          const signedUrl = await getImageUrl(sender.avatar);
+          sender.avatar = signedUrl;
+          sender.processed = true;
         }
       }
       res.json(messages);
@@ -81,6 +88,12 @@ router.post(
       if (imageName !== '') {
         const signedUrl = await getImageUrl(imageName);
         newMessage.image = signedUrl;
+      }
+
+      const sender: any = newMessage.senderId;
+      if (sender.avatar) {
+        const signedUrl = await getImageUrl(sender.avatar);
+        sender.avatar = signedUrl;
       }
 
       res.status(200).json({
