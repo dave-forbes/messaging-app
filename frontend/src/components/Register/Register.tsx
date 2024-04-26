@@ -67,7 +67,7 @@ export default function Register() {
       <div className={styles.registerFormContainer}>
         <h2>Register</h2>
         <form onSubmit={handleSubmit} className={styles.registerForm}>
-          <div className={styles.inputGroup}>
+          <div className="inputGroup">
             <label htmlFor="username">Username:</label>
             <input
               type="text"
@@ -78,7 +78,7 @@ export default function Register() {
               required
             />
           </div>
-          <div className={styles.inputGroup}>
+          <div className="inputGroup">
             <label htmlFor="password">Password:</label>
             <input
               type="password"
@@ -89,7 +89,7 @@ export default function Register() {
               required
             />
           </div>
-          <div className={styles.inputGroup}>
+          <div className="inputGroup">
             <label htmlFor="confirmPassword">Confirm Password:</label>
             <input
               type="password"
@@ -100,7 +100,7 @@ export default function Register() {
               required
             />
           </div>
-          <div className={styles.inputGroup}>
+          <div className="inputGroup">
             <label htmlFor="bio">Bio:</label>
             <textarea
               id="bio"
@@ -110,7 +110,7 @@ export default function Register() {
               rows={4}
             />
           </div>
-          <div className={styles.inputGroup}>
+          <div className="inputGroup">
             <label htmlFor="avatar">Avatar:</label>
             <input
               type="file"
