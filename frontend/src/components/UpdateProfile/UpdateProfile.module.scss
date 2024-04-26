@@ -38,28 +38,6 @@
 
 }
 
-.inputGroup {
-  width: 70%;
-  label {
-    font-size: variables.$base-font-size;
-    display: flex;
-    align-items: center;
-    gap: variables.$spacing-xs;
-    svg {
-      width: variables.$base-font-size;
-      height: variables.$base-font-size;
-    }
-
-  }
-  input, textarea {
-    font-size: variables.$base-font-size;
-    padding: variables.$spacing-xs;
-    width: 100%;
-    box-sizing: border-box;
-    resize: none;
-  }
-}
-
 .updateProfileControls {
   display: flex;
   justify-content: space-evenly;
@@ -80,7 +58,7 @@
   .updateProfileContainer {
     left:0;
     top:0;
-    height: calc(100dvh - 104px);
+    height: calc(100svh - 108px);
     border: none;
     width: 100vw;
     padding: 0;
