@@ -9,6 +9,7 @@ import API_URL from '../../utils/apiConfig';
 import { UserI } from '../../interfaces/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
 import CloseIcon from '@mui/icons-material/Close';
+import DarkModeToggle from '../DarkModeToggle/DarkModeToggle';
 
 export default function Profile() {
   const { setCurrentConversation } = useConversation();
@@ -67,17 +68,20 @@ export default function Profile() {
       <h1>{userData?.username}</h1>
       <p>{userData?.bio}</p>
       {user?._id === userData?._id && (
-        <div className={styles.profileControls}>
-          <button className="button" onClick={handleLogoutClick}>
-            Logout
-          </button>
-          <button
-            className="button"
-            onClick={() => setIsUpdateProfileOpen(true)}
-          >
-            Update profile
-          </button>
-        </div>
+        <>
+          <DarkModeToggle />
+          <div className={styles.profileControls}>
+            <button className="button" onClick={handleLogoutClick}>
+              Logout
+            </button>
+            <button
+              className="button"
+              onClick={() => setIsUpdateProfileOpen(true)}
+            >
+              Update profile
+            </button>
+          </div>
+        </>
       )}
       <p>{error}</p>
     </div>
