@@ -33,26 +33,11 @@
   display: flex;
   flex-direction: column;
   gap: variables.$spacing-lg;
+  width: 100%;
+  align-items: center;
 
   button {
     align-self: center;
-  }
-}
-
-.inputGroup {
-  label {
-    font-size: variables.$base-font-size;
-    gap: variables.$spacing-xs;
-    svg {
-      width: variables.$base-font-size;
-      height: variables.$base-font-size;
-    }
-  }
-  input {
-    font-size: variables.$base-font-size;
-    padding: variables.$spacing-xs;
-    width: 100%;
-    box-sizing: border-box;
   }
 }
 
@@ -70,7 +55,7 @@
   .createConversationContainer {
     left:0;
     top:0;
-    height: calc(100dvh - 104px);
+    height: calc(100svh - 108px);
     width: 100vw;
     border: none;
     padding: 0;
