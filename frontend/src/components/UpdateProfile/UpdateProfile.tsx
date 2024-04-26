@@ -72,7 +72,7 @@ export default function UpdateProfile() {
           className={styles.updateForm}
           encType="multipart/form-data"
         >
-          <div className={styles.inputGroup}>
+          <div className="inputGroup">
             <label htmlFor="username">Username:</label>
             <input
               type="text"
@@ -105,7 +105,7 @@ export default function UpdateProfile() {
             required
           />
         </div> */}
-          <div className={styles.inputGroup}>
+          <div className="inputGroup">
             <label htmlFor="bio">Bio:</label>
             <textarea
               id="bio"
@@ -115,7 +115,7 @@ export default function UpdateProfile() {
               rows={4}
             />
           </div>
-          <div className={styles.inputGroup}>
+          <div className="inputGroup">
             <label htmlFor="avatar">Avatar:</label>
             <input
               type="file"
