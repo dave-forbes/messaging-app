@@ -88,7 +88,11 @@ export default function MessageArea() {
                       className={styles.flex}
                       key={participant._id}
                     >
-                      <Avatar user={participant} size={40} />
+                      <Avatar
+                        userToDisplay={participant}
+                        size={40}
+                        getURL={true}
+                      />
                       <h1
                         key={participant._id}
                       >{`${participant.username}, `}</h1>
@@ -108,20 +112,13 @@ export default function MessageArea() {
               </div>
             </div>
             <div className={styles.centralDiv} ref={centralDivRef}>
-              {messages.map((message: any) =>
+              {messages.map((message: MessageI) =>
                 message.senderId._id === user?._id ? (
-                  <MessageSent
-                    key={message._id}
-                    content={message.content}
-                    sender={message.senderId}
-                    image={message.image}
-                  />
+                  <MessageSent key={message._id} message={message} />
                 ) : (
                   <MessageRecieved
                     key={message._id}
-                    content={message.content}
-                    sender={message.senderId}
-                    image={message.image}
+                    message={message}
                   />
                 )
               )}
