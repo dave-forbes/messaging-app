@@ -33,13 +33,22 @@ body {
   letter-spacing: 1px;
   background-color: var(--background-color);
   color: var(--text-color);
-}
+  div, ul {
+      &::-webkit-scrollbar {
+        background-color: var(--background-color);
+        width: 10px;
+        height: 8px;
+      }
 
-input, textarea, button {
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  border: none;
-  border-radius: 5px;
+      /* Styles for the scrollbar thumb */
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--placeholder-color);
+        border-radius: 5px;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: var(--background-color);
+      }
+    }
 }
 
 .appContainer {
@@ -49,24 +58,10 @@ input, textarea, button {
   color: var(--text-color);
 }
 
-body div {
-  &::-webkit-scrollbar {
-      background-color: var(--background-color);
-      width: 10px;
-      /* Width of the scrollbar */
-    }
-
-    /* Styles for the scrollbar thumb */
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--light-text-color);
-      border-radius: 5px;
-      /* Border radius of the thumb */
-    }
-
-    /* Styles for the scrollbar track */
-    &::-webkit-scrollbar-track {
-      background-color: var(--background-color);
-    }
+@media (max-width:600px) {
+  .appContainer {
+    flex-direction: column-reverse;
+  }
 }
 
 h1,
@@ -74,17 +69,46 @@ p {
   margin: 0;
 }
 
-@media (max-width:600px) {
-  .appContainer {
-    flex-direction: column-reverse;
+input,
+textarea,
+button {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+}
+
+.inputGroup {
+  width: 70%;
+  label {
+    font-size: variables.$base-font-size;
+    display: flex;
+    align-items: center;
+    gap: variables.$spacing-xs;
+
+    svg {
+      width: variables.$base-font-size;
+      height: variables.$base-font-size;
+    }
+
+  }
+
+  input,
+  textarea {
+    border: 1px solid var(--secondary-color);
+    font-size: variables.$base-font-size;
+    padding: variables.$spacing-sm;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
   }
 }
 
 .button {
-  background-color: var(--background-color);
+  border:1px solid var(--secondary-color);
   color: var(--text-color);
   border-radius: 5px;
-  padding: variables.$spacing-md;
+  padding: variables.$spacing-sm variables.$spacing-md;
   transition: 0.2s;
 }
 
