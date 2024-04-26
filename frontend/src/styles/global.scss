@@ -58,6 +58,24 @@ body {
   color: var(--text-color);
 }
 
+.light {
+  --background-color: #{variables.$background-color};
+  --light-background-color: #{variables.$light-background-color};
+  --text-color: #{variables.$text-color};
+  --secondary-color: #{variables.$secondary-color};
+  --placeholder-color: #{variables.$placeholder-color};
+  --light-text-color: #{variables.$light-text-color};
+}
+
+.dark {
+  --background-color: #{variables.$dark-background-color};
+  --light-background-color: #{variables.$dark-light-background-color};
+  --text-color: #{variables.$dark-text-color};
+  --secondary-color: #{variables.$dark-secondary-color};
+  --placeholder-color: #{variables.$dark-placeholder-color};
+  --light-text-color: #{variables.$dark-light-text-color};
+}
+
 @media (max-width:600px) {
   .appContainer {
     flex-direction: column-reverse;
