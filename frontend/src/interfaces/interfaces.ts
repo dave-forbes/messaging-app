@@ -3,6 +3,7 @@ export interface MessageI {
   senderId: string;
   content: string;
   createdAt: Date;
+  image?: File;
 }
 
 export interface UserI {
