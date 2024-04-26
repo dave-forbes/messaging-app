@@ -10,7 +10,7 @@
   gap: variables.$spacing-lg;
   text-align: center;
   position: relative;
-  width: 300px;
+  min-width: 300px;
 
   p {
     width: 80%;
@@ -53,7 +53,7 @@
   .profileContainer {
     left:0;
     top:0;
-    height: calc(100dvh - 104px);
+    height: calc(100svh - 108px);
     width: 100vw;
     border: none;
   }
