@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 import Login from './components/Login/Login.tsx';
 import Register from './components/Register/Register.tsx';
+import { DarkModeProvider } from './contexts/DarkModeContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <AuthProvider>
       <NavbarProvider>
         <ConversationProvider>
-          <RouterProvider router={router} />
+          <DarkModeProvider>
+            <RouterProvider router={router} />
+          </DarkModeProvider>
         </ConversationProvider>
       </NavbarProvider>
     </AuthProvider>
