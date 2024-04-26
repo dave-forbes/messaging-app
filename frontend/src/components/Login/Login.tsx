@@ -51,7 +51,7 @@ export default function Login() {
             <p>An app for sending messages.</p>
           </div>
           <form className={styles.loginForm} onSubmit={handleSubmit}>
-            <div className={styles.inputGroup}>
+            <div className="inputGroup">
               <label htmlFor="username">
                 <PersonIcon />
                 username
@@ -66,7 +66,7 @@ export default function Login() {
                 required
               />
             </div>
-            <div className={styles.inputGroup}>
+            <div className="inputGroup">
               <label htmlFor="password">
                 <LockIcon />
                 password
