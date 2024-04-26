@@ -61,7 +61,9 @@ export default function Profile() {
         }}
       />
       {loading && <CircularProgress />}
-      {userData && <Avatar user={userData} size={150} />}
+      {userData && (
+        <Avatar userToDisplay={userData} size={150} getURL={false} />
+      )}
       <h1>{userData?.username}</h1>
       <p>{userData?.bio}</p>
       {user?._id === userData?._id && (
