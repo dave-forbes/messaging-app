@@ -15,9 +15,7 @@ export default function Conversation({
   return (
     <li className={styles.conversation} onClick={onClick}>
       <div className={styles.conversationContent}>
-        <div className={styles.flex}>
-          <p>{title}</p>
-        </div>
+        <p>{title}</p>
         <p className={styles.conversationText}>
           last updated {formatTimeAgo(lastUpdated)}
         </p>
