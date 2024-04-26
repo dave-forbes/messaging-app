@@ -7,42 +7,54 @@
   gap: variables.$spacing-md;
 
   .messageContent {
-  background: rgb(131,58,180);
-  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 85%, rgba(252,176,69,1) 100%);
-  border-radius: 50px 50px 0 50px;
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  justify-content: space-between;
-  color: var(--light-text-color);
-  padding: variables.$spacing-md;
-  width: 40%;
-  gap: variables.$spacing-sm;
-  p {
-    margin:variables.$spacing-sm;
-    word-wrap: break-word;
+    background: rgb(131, 58, 180);
+    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 85%, rgba(252, 176, 69, 1) 100%);
+    border-radius: 50px 50px 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: variables.$spacing-md;
+    color: var(--light-text-color);
+    padding: variables.$spacing-lg;
+    width: 40%;
+    position: relative;
+
+    p {
+      word-wrap: break-word;
+    }
+
+    .createdAt {
+      position: absolute;
+      bottom: variables.$spacing-xs;
+      right: variables.$spacing-sm;
+      font-size: variables.$small-font-size;
+    }
   }
-  }
+
   .messageInfo {
     display: flex;
     align-self: flex-end;
     align-items: center;
     gap: variables.$spacing-sm;
+
     p {
       font-size: variables.$small-font-size;
     }
   }
+
   .messageImg {
     width: 50%;
     height: auto;
     border-radius: 10px;
   }
+
+
 }
 
 @media (max-width:600px) {
   .messageSent {
-  .messageContent {
-    width:70%;
+    .messageContent {
+      width: 70%;
+    }
   }
-}
 }

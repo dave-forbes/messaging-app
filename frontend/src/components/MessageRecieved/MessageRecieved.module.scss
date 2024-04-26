@@ -7,44 +7,55 @@
   align-items: flex-end;
 
   gap: variables.$spacing-md;
+
   .messageContent {
     background-color: var(--secondary-color);
     border-radius: 50px 50px 50px 0px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column-reverse;
-      align-items: center;
-    padding: variables.$spacing-md;
+    flex-direction: column;
     gap: variables.$spacing-md;
+    padding: variables.$spacing-lg;
     width: 40%;
+    position: relative;
+
     p {
       word-wrap: break-word;
     }
+
     img {
-          width: 50%;
-          height: auto;
-          border-radius: 10px;
-    }
+      width: 50%;
+      height: auto;
+      border-radius: 10px;
     }
 
-}
+    .createdAt {
+      position: absolute;
+      bottom: variables.$spacing-xs;
+      left: variables.$spacing-sm;
+      font-size: variables.$small-font-size;
+    }
 
-.flex {
-  display: flex;
-  gap: variables.$spacing-md;
+    .flex {
+      display: flex;
+      gap: variables.$spacing-md;
+      align-items: center;
+      justify-content: space-around;
+    }
+  }
+
 }
 
 
 @media (max-width:600px) {
   .messageRecieved {
-  .messageContent {
+    .messageContent {
 
-    width:70%;
-  }
-  p {
-    margin: 0;
+      width: 70%;
+    }
+
+    p {
+      margin: 0;
+    }
   }
 }
-}
-
