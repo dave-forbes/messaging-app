@@ -10,6 +10,7 @@
   border-right: 2px solid var(--secondary-color);
   position: relative;
   max-width: 400px;
+  background-color: var(--light-background-color);
 
   svg {
     width: 100px;
@@ -45,7 +46,6 @@
 @media (max-width: 1400px) {
   .appInfoContainer {
   position: absolute;
-  background-color: var(--light-background-color);
   height: 100vh;
   left: 102px;
   z-index: 1;
