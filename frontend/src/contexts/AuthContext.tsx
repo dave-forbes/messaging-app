@@ -99,6 +99,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const { token, user } = data;
       user.token = token;
       if (token) {
+        delete user.password;
         setUser(user);
         localStorage.setItem('user', JSON.stringify(user));
       }
