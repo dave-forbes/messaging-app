@@ -10,6 +10,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { UserI } from '../../interfaces/interfaces';
 import LeaveModal from '../LeaveModal/LeaveModal';
+import reactSelectStyles from '../../utils/reactSelectStyles';
 
 export default function ConversationOptions() {
   const { setIsConversationOptionsOpen } = useNavbar();
@@ -153,6 +154,7 @@ export default function ConversationOptions() {
             <label>Add participant(s):</label>
             <div className={styles.flex}>
               <Select
+                className={styles.select}
                 closeMenuOnSelect={false}
                 components={animatedComponents}
                 isMulti
@@ -163,6 +165,7 @@ export default function ConversationOptions() {
                   (selectedOptions) =>
                     setSelectedUsersToAdd(selectedOptions || []) // Handle null case
                 }
+                styles={reactSelectStyles}
                 required
               />
               <button
@@ -187,6 +190,7 @@ export default function ConversationOptions() {
                   (selectedOptions) =>
                     setSelectedUsersToRemove(selectedOptions || []) // Handle null case
                 }
+                styles={reactSelectStyles}
                 required
               />
               <button
