@@ -18,10 +18,6 @@
   h2, p {
     text-align: center;
   }
-
-  button {
-    background-color: var(--secondary-color);
-  }
 }
 
 .registerForm {
@@ -29,30 +25,8 @@
   flex-direction: column;
   gap:variables.$spacing-lg;
   align-items: center;
-  max-height: 80vh;
+  max-height: 70vh;
   overflow-y: auto;
-}
-
-.inputGroup {
-  width: 70%;
-  label {
-    font-size: variables.$base-font-size;
-    display: flex;
-    align-items: center;
-    gap: variables.$spacing-xs;
-    svg {
-      width: variables.$base-font-size;
-      height: variables.$base-font-size;
-    }
-
-  }
-  input, textarea {
-    font-size: variables.$base-font-size;
-    padding: variables.$spacing-xs;
-    width: 100%;
-    box-sizing: border-box;
-    resize: none;
-  }
 }
 
 @media (max-width: 1200px) {
