@@ -1,0 +1,38 @@
+@use '../../styles/variables' as variables;
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-sm;
+}
+
+.toggle {
+  background-color: var(--secondary-color);
+  border-radius: variables.$border-radius;
+  width: calc(variables.$base-font-size*2.5);
+  position: relative;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.7s;
+  height: variables.$base-font-size;
+  padding: variables.$spacing-xs;
+}
+
+.toggleInner {
+  width: variables.$base-font-size;
+  height: variables.$base-font-size;
+  background-color: var(--text-color);
+  position: absolute;
+  z-index: 2;
+  border-radius: variables.$border-radius;;
+  transition: transform 0.5s;
+  left: 5px;
+}
+
+.moveToggle {
+  transform: translateX(20px);
+}
+
+.active {
+  background-color: rgb(18, 178, 1);
+}
