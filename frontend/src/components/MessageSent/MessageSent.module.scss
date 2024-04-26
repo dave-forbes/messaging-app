@@ -3,6 +3,8 @@
 .messageSent {
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
+  gap: variables.$spacing-md;
 
   .messageContent {
   background: rgb(131,58,180);
@@ -30,7 +32,7 @@
       font-size: variables.$small-font-size;
     }
   }
-  img {
+  .messageImg {
     width: 50%;
     height: auto;
     border-radius: 10px;
