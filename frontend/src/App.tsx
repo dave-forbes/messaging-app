@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import AppInfo from './components/AppInfo/AppInfo';
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
 import ConversationOptions from './components/ConversationOptions/ConversationOptions';
+import { useDarkMode } from './contexts/DarkModeContext';
 
 export default function App() {
   const {
@@ -23,6 +24,7 @@ export default function App() {
   } = useNavbar();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
 
   useEffect(() => {
     if (!user) {
@@ -31,7 +33,7 @@ export default function App() {
   }, [user, navigate]);
 
   return (
-    <div className="appContainer">
+    <div className={`appContainer ${darkMode}`}>
       <Navbar />
       {isConversationListOpen && <ConversationList />}
       {isProfileOpen && <Profile />}
