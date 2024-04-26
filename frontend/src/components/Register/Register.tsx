@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './Register.module.scss';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useDarkMode } from '../../contexts/DarkModeContext';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ export default function Register() {
   const [error, setError] = useState('');
   const { register, login } = useAuth();
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
 
   const { username, password, confirmPassword, bio } = formData;
 
@@ -63,7 +65,7 @@ export default function Register() {
   };
 
   return (
-    <div className={styles.registerPageWrapper}>
+    <div className={`${styles.registerPageWrapper} ${darkMode}`}>
       <div className={styles.registerFormContainer}>
         <h2>Register</h2>
         <form onSubmit={handleSubmit} className={styles.registerForm}>

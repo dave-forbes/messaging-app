@@ -7,6 +7,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useDarkMode } from '../../contexts/DarkModeContext';
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ export default function Login() {
   const { login, user, loading } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const { darkMode } = useDarkMode();
 
   useEffect(() => {
     if (user) {
@@ -41,7 +43,7 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.loginPageWrapper}>
+    <div className={`${styles.loginPageWrapper} ${darkMode}`}>
       {loading && <CircularProgress />}
       {!loading && (
         <div className={styles.loginFormContainer}>
