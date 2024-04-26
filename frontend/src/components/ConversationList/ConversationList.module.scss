@@ -36,7 +36,7 @@
 
 .conversationList {
   margin: 0;
-  padding: 0;
+  padding: 0 variables.$spacing-xs;
   display: flex;
   flex-direction: column;
   align-items: center;
