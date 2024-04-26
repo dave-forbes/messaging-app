@@ -35,9 +35,12 @@
 }
 
 .flex {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
   gap: variables.$spacing-md;
+  button {
+    padding: 10px;
+  }
 }
 
 .inputGroup {
@@ -62,7 +65,7 @@
   .conversationOptionsContainer {
     left: 0;
     top: 0;
-    height: calc(100dvh - 104px);
+    height: calc(100svh - 108px);
     width: 100vw;
     border: none;
     padding: 0;
