@@ -4,33 +4,33 @@ import styles from './Avatar.module.scss';
 import apiFetch from '../../utils/apiFetch';
 import API_URL from '../../utils/apiConfig';
 import { useNavbar } from '../../contexts/NavbarContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface AvatarProps {
-  user: UserI | null;
+  userToDisplay: UserI | null;
   size: number;
+  getURL: boolean;
 }
 
-export default function Avatar({ user, size }: AvatarProps) {
+export default function Avatar({
+  userToDisplay,
+  size,
+  getURL,
+}: AvatarProps) {
   const [userData, setUserData] = useState<UserI | null>(null);
   const { setIsProfileOpen, setProfileToView } = useNavbar();
-  if (user) {
-    const userLocalStorage = localStorage.getItem('user');
-    let token: string;
-    if (userLocalStorage) {
-      const obj = JSON.parse(userLocalStorage);
-      token = obj.token;
-    }
+  const { user } = useAuth();
 
+  if (getURL) {
     useEffect(() => {
       fetchUser();
     }, []);
-
     const fetchUser = async () => {
       try {
         const data = await apiFetch(
-          `${API_URL}/users/${user?._id}`,
+          `${API_URL}/users/${userToDisplay?._id}`,
           {},
-          token,
+          user?.token,
           'GET',
           true
         );
@@ -46,14 +46,14 @@ export default function Avatar({ user, size }: AvatarProps) {
       className={styles.avatar}
       style={{ width: size, height: size, cursor: 'pointer' }}
       onClick={() => {
-        setProfileToView(userData?._id);
+        setProfileToView(userToDisplay?._id);
         setIsProfileOpen(true);
       }}
     >
-      {userData?.avatar ? (
+      {userToDisplay?.avatar ? (
         <img
-          src={userData?.avatar}
-          alt={`A picture of ${userData?.username}`}
+          src={userData ? userData.avatar : userToDisplay?.avatar}
+          alt={`A picture of ${userToDisplay?.username}`}
         />
       ) : (
         <div className={styles.noImg}></div>
