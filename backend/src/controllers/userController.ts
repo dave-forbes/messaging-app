@@ -247,9 +247,10 @@ router.put('/update/:id', [
         return;
       }
 
-      const imageName = randomImageName();
+      let imageName = user.avatar;
 
       if (req.file) {
+        imageName = randomImageName();
         try {
           await addImageToS3(req.file, imageName);
           await deleteImageFromS3(user.avatar);
