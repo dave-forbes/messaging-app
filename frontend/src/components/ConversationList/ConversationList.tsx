@@ -51,7 +51,7 @@ export default function ConversationList() {
       <div className={styles.listWrapper}>
         <h1 className={styles.title}>Conversations</h1>
         {loading && <CircularProgress />}
-        {!loading && (
+        {!loading && conversations.length > 0 ? (
           <ul className={styles.conversationList}>
             {conversations.map((conversation: any): any => (
               <Conversation
@@ -65,6 +65,8 @@ export default function ConversationList() {
               />
             ))}
           </ul>
+        ) : (
+          <p>You have no conversations. Create one!</p>
         )}
         {error && <p>{error}</p>}
         <button
