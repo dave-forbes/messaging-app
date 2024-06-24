@@ -42,6 +42,19 @@ export default function Login() {
     }
   };
 
+  const handleGuestLogin = async () => {
+    const response = await login({
+      username: 'guest',
+      password: 'password',
+    });
+    if (response.success) {
+      setError('');
+      navigate('/app');
+    } else {
+      setError(response.toString());
+    }
+  };
+
   return (
     <div className={`${styles.loginPageWrapper} ${darkMode}`}>
       {loading && <CircularProgress />}
@@ -84,9 +97,14 @@ export default function Login() {
               />
             </div>
             <p>{error}</p>
-            <button className="button" type="submit">
-              Login
-            </button>
+            <div className={styles.loginButtons}>
+              <button className="button" type="submit">
+                Login
+              </button>
+              <button className="button" onClick={handleGuestLogin}>
+                Login as guest user
+              </button>
+            </div>
             <p>
               New user? <Link to="/register">Create an acccount</Link>
             </p>
