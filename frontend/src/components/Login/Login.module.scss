@@ -35,12 +35,16 @@
   }
 }
 
-
 .loginForm {
   display: flex;
   flex-direction: column;
-  gap:variables.$spacing-lg;
+  gap: variables.$spacing-lg;
   align-items: center;
+}
+
+.loginButtons {
+  display: flex;
+  gap: 1rem;
 }
 
 @media (max-width: 1200px) {
@@ -53,4 +57,3 @@
     width: 80%;
   }
 }
-
