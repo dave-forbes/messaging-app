@@ -14,6 +14,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import apiFetch from '../../utils/apiFetch';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { useNavbar } from '../../contexts/NavbarContext';
+import truncateUsername from '../../utils/truncateUsername';
 
 export default function MessageArea() {
   const { currentConversation } = useConversation();
@@ -93,9 +94,9 @@ export default function MessageArea() {
                         size={40}
                         getURL={true}
                       />
-                      <h1
-                        key={participant._id}
-                      >{`${participant.username}, `}</h1>
+                      <h1 key={participant._id}>{`${truncateUsername(
+                        participant.username
+                      )}, `}</h1>
                     </div>
                   )
                 )}
