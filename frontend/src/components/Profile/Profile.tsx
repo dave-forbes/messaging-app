@@ -65,7 +65,7 @@ export default function Profile() {
       {userData && (
         <Avatar userToDisplay={userData} size={150} getURL={false} />
       )}
-      <h1>{userData?.username}</h1>
+      <h1 className={styles.userName}>{userData?.username}</h1>
       <p>{userData?.bio}</p>
       {user?._id === userData?._id && (
         <>
