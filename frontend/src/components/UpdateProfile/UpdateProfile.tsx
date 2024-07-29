@@ -6,6 +6,7 @@ import API_URL from '../../utils/apiConfig';
 import { useNavbar } from '../../contexts/NavbarContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import CloseIcon from '@mui/icons-material/Close';
+import EnableNotifications from '../EnableNotificationToggle/EnableNotificationToggle';
 
 export default function UpdateProfile() {
   const { user } = useAuth();
@@ -13,12 +14,14 @@ export default function UpdateProfile() {
     username: user?.username,
     bio: user?.bio,
     avatar: null,
+    email: user?.email,
+    notificationsEnabled: user?.notificationsEnabled,
   });
   const [error, setError] = useState('');
   const { setIsProfileOpen, setIsUpdateProfileOpen } = useNavbar();
   const [loading, setLoading] = useState(false);
 
-  const { username, bio } = formData;
+  const { username, bio, email, notificationsEnabled } = formData;
 
   const handleChange = (e: any) => {
     if (e.target.name === 'avatar') {
@@ -43,13 +46,23 @@ export default function UpdateProfile() {
         formDataToSend.append('avatar', formData.avatar);
       }
 
-      await apiFetch(
+      if (formData.email) {
+        formDataToSend.append('email', formData.email);
+      }
+      formDataToSend.append(
+        'notificationsEnabled',
+        String(formData.notificationsEnabled)
+      );
+
+      const response = await apiFetch(
         `${API_URL}/users/update/${user?._id}`,
         formDataToSend,
         user?.token,
         'PUT',
         false
       );
+      const newUser = response.user;
+      newUser.token = user?.token;
       setLoading(false);
       setError('');
       setIsProfileOpen(true);
@@ -58,6 +71,14 @@ export default function UpdateProfile() {
       setError(error.toString());
     }
   };
+
+  const toggleNotifications = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      notificationsEnabled: !prevData.notificationsEnabled,
+    }));
+  };
+
   return (
     <>
       {loading && <CircularProgress />}
@@ -105,6 +126,21 @@ export default function UpdateProfile() {
             required
           />
         </div> */}
+          <div className="inputGroup">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <EnableNotifications
+            toggleNotifications={toggleNotifications}
+            notificationsEnabled={notificationsEnabled}
+          />
           <div className="inputGroup">
             <label htmlFor="bio">Bio:</label>
             <textarea
