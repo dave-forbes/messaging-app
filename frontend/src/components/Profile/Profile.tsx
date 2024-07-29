@@ -69,6 +69,11 @@ export default function Profile() {
       <p>{userData?.bio}</p>
       {user?._id === userData?._id && (
         <>
+          <p>
+            {userData?.notificationsEnabled
+              ? 'Email notifications enabled'
+              : 'Email notifications disabled'}
+          </p>
           <DarkModeToggle />
           <div className={styles.profileControls}>
             <button className="button" onClick={handleLogoutClick}>
