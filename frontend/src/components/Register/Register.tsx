@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../../contexts/DarkModeContext';
 import CircularProgress from '@mui/material/CircularProgress';
+import EnableNotifications from '../EnableNotificationToggle/EnableNotificationToggle';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -13,13 +14,22 @@ export default function Register() {
     confirmPassword: '',
     bio: '',
     avatar: '',
+    email: '',
+    notificationsEnabled: false,
   });
   const [error, setError] = useState('');
   const { register, login, loading, setLoading } = useAuth();
   const navigate = useNavigate();
   const { darkMode } = useDarkMode();
 
-  const { username, password, confirmPassword, bio } = formData;
+  const {
+    username,
+    password,
+    confirmPassword,
+    bio,
+    email,
+    notificationsEnabled,
+  } = formData;
 
   const handleChange = (e: any) => {
     if (e.target.name === 'avatar') {
@@ -45,6 +55,13 @@ export default function Register() {
         formData.confirmPassword
       );
     }
+    if (formData.email) {
+      formDataToSend.append('email', formData.email);
+    }
+    formDataToSend.append(
+      'notificationsEnabled',
+      String(formData.notificationsEnabled)
+    );
     if (formData.bio) {
       formDataToSend.append('bio', formData.bio);
     }
@@ -67,6 +84,13 @@ export default function Register() {
       setLoading(false);
       setError(response.toString());
     }
+  };
+
+  const toggleNotifications = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      notificationsEnabled: !prevData.notificationsEnabled,
+    }));
   };
 
   return (
@@ -114,6 +138,21 @@ export default function Register() {
                 required
               />
             </div>
+            <div className="inputGroup">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <EnableNotifications
+              toggleNotifications={toggleNotifications}
+              notificationsEnabled={notificationsEnabled}
+            />
             <div className="inputGroup">
               <label htmlFor="bio">Bio:</label>
               <textarea
