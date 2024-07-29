@@ -20,9 +20,10 @@ export default function AppInfo() {
           NodeJs/Express Rest API backend.
         </p>
         <p>
-          As the backend is a RESTful API, realtime updates are not
-          possible, so notifications can't be sent to other users when
-          sending messages.
+          Realtime updates are not possible, so you will have to
+          refresh to recieve new messages. You can however opt in to
+          email notifications to new messages, you may have to check
+          your junk folder for those!
         </p>
         <p>
           Head over to the github{' '}
