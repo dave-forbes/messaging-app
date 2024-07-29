@@ -280,16 +280,26 @@ router.put('/update/:id', [
 
       //  const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+      if (req.body.notificationsEnabled !== undefined) {
+        req.body.notificationsEnabled =
+          req.body.notificationsEnabled === 'true';
+      }
+
+      const { username, bio, email, notificationsEnabled } = req.body;
+
       const updatedUser = await UserModel.findByIdAndUpdate(
         req.params.id,
         {
-          username: req.body.username,
+          username,
           // password: hashedPassword,
-          bio: req.body.bio,
+          bio,
           avatar: imageName,
+          email,
+          notificationsEnabled,
         },
         { new: true } // to return the updated document
       );
+
       res.status(200).json({
         success: true,
         message: 'User updated Successfully',
