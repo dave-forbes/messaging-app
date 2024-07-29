@@ -143,6 +143,8 @@ router.post('/create', [
         password: hashedPassword,
         bio,
         avatar: imageName,
+        email,
+        notificationsEnabled,
       });
 
       res.status(200).json({
