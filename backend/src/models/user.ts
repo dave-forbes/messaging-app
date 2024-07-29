@@ -7,6 +7,8 @@ interface User {
   bio: string;
   createdAt: Date;
   updatedAt: Date;
+  email: String;
+  notificationsEnabled: Boolean;
 }
 
 const UserSchema = new Schema(
@@ -15,6 +17,8 @@ const UserSchema = new Schema(
     password: { type: String, required: true },
     avatar: { type: String, default: '' },
     bio: { type: String, default: '' },
+    email: { type: String, default: '' },
+    notificationsEnabled: { type: Boolean, required: true },
   },
   { timestamps: true }
 );
