@@ -7,7 +7,7 @@ import { body, validationResult } from 'express-validator';
 import { upload } from '../utils/multerSetup';
 import randomImageName from '../utils/randomImageName';
 import { addImageToS3, getImageUrl } from '../utils/s3Config';
-import { User } from '../models/user';
+import { sendEmailNotification } from '../utils/emailMessageNotification';
 const router = express.Router();
 
 // get all messages for a specifc conversation
@@ -94,6 +94,32 @@ router.post(
       if (sender.avatar) {
         const signedUrl = await getImageUrl(sender.avatar);
         sender.avatar = signedUrl;
+      }
+
+      // send email notification to participants
+
+      const conversation = await ConversationModel.findById(
+        conversationId
+      ).populate('participants');
+
+      const participants: any = conversation?.participants;
+
+      if (participants) {
+        for (const participant of participants) {
+          if (
+            participant.email &&
+            participant.notificationsEnabled &&
+            participant._id.toString() !== senderId
+          ) {
+            sendEmailNotification(
+              participant.email,
+              newMessage.content,
+              sender.username
+            );
+          }
+        }
+      } else {
+        console.log('no participants to send notification email to');
       }
 
       res.status(200).json({
