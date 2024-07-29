@@ -205,9 +205,9 @@ export default function ConversationOptions() {
       )}
       {user?._id !== currentConversation?.creator?._id && (
         <p className={styles.text}>
-          Contact conversation creator
-          <strong>{currentConversation?.creator?.username}</strong> to
-          add or remove participants.
+          Contact conversation creator,{' '}
+          <strong>{currentConversation?.creator?.username}</strong>,
+          to add or remove participants.
         </p>
       )}
       <button className="button" onClick={handleLeaveConvClick}>
