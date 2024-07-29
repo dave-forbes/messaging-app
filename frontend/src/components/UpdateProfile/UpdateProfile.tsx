@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import EnableNotifications from '../EnableNotificationToggle/EnableNotificationToggle';
 
 export default function UpdateProfile() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [formData, setFormData] = useState({
     username: user?.username,
     bio: user?.bio,
@@ -66,6 +66,8 @@ export default function UpdateProfile() {
       setLoading(false);
       setError('');
       setIsProfileOpen(true);
+      setUser(newUser);
+      localStorage.setItem('user', JSON.stringify(newUser));
     } catch (error: any) {
       setLoading(false);
       setError(error.toString());
