@@ -106,7 +106,13 @@ router.post('/create', [
         return res.status(400).json({ errors: errors.array() });
       }
       const user = req.body;
-      const { username, password, bio } = user;
+      if (user.notificationsEnabled !== undefined) {
+        user.notificationsEnabled =
+          user.notificationsEnabled === 'true';
+      }
+      const { username, password, bio, email, notificationsEnabled } =
+        user;
+
       const doesUsernameAllReadyExist = await UserModel.findOne({
         username: username,
       });
