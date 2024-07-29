@@ -51,16 +51,18 @@ router.get('/:id', [
         return;
       }
 
-      const imageUrl = await getImageUrl(user.avatar);
-      if (!imageUrl) {
-        res.status(500).json({
-          success: false,
-          message: 'Failed to retrieve image URL',
-        });
-        return;
-      }
+      if (user.avatar) {
+        const imageUrl = await getImageUrl(user.avatar);
+        if (!imageUrl) {
+          res.status(500).json({
+            success: false,
+            message: 'Failed to retrieve image URL',
+          });
+          return;
+        }
 
-      user.avatar = imageUrl;
+        user.avatar = imageUrl;
+      }
       // res.json(user);
       res.status(200).json({
         success: true,
