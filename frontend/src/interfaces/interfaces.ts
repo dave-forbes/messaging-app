@@ -14,6 +14,8 @@ export interface UserI {
   token?: string;
   _id?: string;
   avatar?: string;
+  email?: string;
+  notificationsEnabled?: boolean;
 }
 
 export interface ConversationI {
